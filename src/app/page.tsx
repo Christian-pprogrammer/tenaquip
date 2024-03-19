@@ -1,7 +1,80 @@
+import CategoryElement from "@/components/CategoryElement/CategoryElement";
+import Disclaimer from "@/components/Disclaimer/Disclaimer";
+import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
+import { Navbar } from "@/components/Navbar/Navbar";
 import Image from "next/image";
 
 export default function Home() {
+
+  const data = [
+    {
+      imageSrc: "/category2.png",
+      categoryName: "Safety"
+    },
+    {
+      imageSrc: "/category3.png",
+      categoryName: "Tools"
+    },
+    {
+      imageSrc: "/category4.png",
+      categoryName: "Material Handling & Storage"
+    },
+    {
+      imageSrc: "/category5.png",
+      categoryName: "Facility Maintainance"
+    },
+    {
+      imageSrc: "/welding.png",
+      categoryName: "Welding"
+    },
+    {
+      imageSrc: "/category6.png",
+      categoryName: "Electrical"
+    },
+    {
+      imageSrc: "/category7.png",
+      categoryName: "Office"
+    },
+    {
+      imageSrc: "/category8.png",
+      categoryName: "Fleet & Automotive"
+    },
+    {
+      imageSrc: "/category9.png",
+      categoryName: "Instruments"
+    },
+    {
+      imageSrc: "/category10.png",
+      categoryName: "Plumbing Equipment & Supplies"
+    },
+
+    {
+      imageSrc: "/category12.png",
+      categoryName: "Packaging & Shipping"
+    },
+    {
+      imageSrc: "/category14.png",
+      categoryName: "All Sale Items"
+    },
+  ]
+
   return (
-    <>Tenaquip</>
+    <div>
+      <Navbar />
+      <MenuNavbar />
+      <Disclaimer text="Shop Over 180,000 Industrial Products, Equipment & Supplies" />
+      <div className="gap-6 py-6 px-32" style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr) )"
+      }}>
+        {
+          data.map((item, key)=>(
+            <CategoryElement imageSrc={item.imageSrc} categoryName={item.categoryName} key={key} />
+          ))
+        }
+      </div>
+      <Disclaimer text="Shop Preferred Brands" />
+      
+    </div>
   );
 }
