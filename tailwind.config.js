@@ -32,6 +32,8 @@ module.exports = {
       mainColor: "#004a7d",
       darkMain: "#023364",
       lightMain: "#f3f3f5",
+      mainRed: "#ed2324",
+      mainGray: "#626262"
     },
   },
   plugins: [],

@@ -3,6 +3,7 @@ import Disclaimer from "@/components/Disclaimer/Disclaimer";
 import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
 import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
 import { Navbar } from "@/components/Navbar/Navbar";
+import PostComponent from "@/components/PostComponent/PostComponent";
 import Image from "next/image";
 
 
@@ -60,6 +61,27 @@ export default function Home() {
     },
   ]
 
+  const posts = [
+    {
+      title: "Check out our industrial",
+      subtitle: "vending machine line up.",
+      imageUrl: "https://www.tenaquip.com/tenaquip/images/banner/2022/home-ad-mailing.png?1664293500",
+      titleBg: "bg-mainRed"
+    },
+    {
+      title: "Check out our industrial",
+      subtitle: "vending machine line up.",
+      imageUrl: "https://www.tenaquip.com/tenaquip/images/banner/2022/home-ad-mailing.png?1664293500",
+      titleBg: "bg-mainColor"
+    },
+    {
+      title: "Check out our industrial",
+      subtitle: "vending machine line up.",
+      imageUrl: "https://www.tenaquip.com/tenaquip/images/banner/2022/home-ad-foundation.png?1661197307",
+      titleBg: "bg-mainGray"
+    }
+  ]
+
   return (
     <div>
       <Navbar />
@@ -79,7 +101,21 @@ export default function Home() {
       <div className="px-32">
         <ImageSwiper />
       </div>
-      
+      <div className="grid px-32 gap-10 bg-lightMain my-12 py-12" style={{
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))"
+      }}>
+        {
+          posts.map((post, index)=>(
+            <PostComponent 
+              key={index}
+              title={post.title}
+              subTitle={post.subtitle}
+              imageUrl={post.imageUrl}
+              titleBg={post.titleBg}
+            />
+          ))
+        }
+      </div>
     </div>
   );
 }
