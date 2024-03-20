@@ -18,7 +18,7 @@ const LinkList = ({linkList: {links, title}}: LinkListProps) => {
       <h2 className='text-white font-bold text-sm'>{title}</h2>
       {
         links.map((link, index)=>(
-          <Link href={link.url} key={index} className='text-white text-[12px] block my-2'>{link.linkTitle}</Link>
+          <Link href={link.url} key={index} className='text-white text-[13px] block my-2'>{link.linkTitle}</Link>
         ))
       }
     </div>

@@ -171,13 +171,13 @@ const Footer = () => {
           </p>
         </div>
         <div className="col-span-1">
-          <Link href="" className="bg-white rounded rounded-xs border-none outline-none px-[15px] py-[6px] text-xs">
+          <Link href="" className="bg-white rounded rounded-xs border-none outline-none px-[15px] py-2 text-sm">
             Join Now
           </Link>
         </div>
 
         <div className="col-span-1">
-          <h2 className='text-sm font-bold text-white'>Follow Us</h2>        
+          <h2 className='text-sm font-bold text-white mb-1'>Follow Us</h2>        
           <ul className='list-none flex gap-3'>
             <li>
               <FaFacebook
@@ -216,7 +216,7 @@ const Footer = () => {
         />
       </div>
 
-      <div className='grid md:grid-cols-3 justify-end items-center'>
+      <div className='grid md:grid-cols-3 justify-end items-center border-t-[1px] border-lightBlue pt-2 pb-6'>
         <div>
           <p className='text-white bold text-[13px] px-3 border-r-[1px] border-white inline-block'>
             1 800 661-2400

@@ -28,14 +28,14 @@ export const Navbar = () => {
         <div className='flex items-center gap-2'>
           <FaUser color={COLORS.MAIN_COLOR} size={25} />
           <div className='flex flex-col'> 
-            <Link href="/" className='text-mainColor text-sm font-bold'>Login</Link>
-            <Link href="/" className='text-mainColor text-[12px] '>Signin</Link>
+            <Link href="" className='text-mainColor text-sm font-bold'>Login</Link>
+            <Link href="/account/register" className='text-mainColor text-[12px] '>Register</Link>
           </div>
         </div>
         <div className='flex items-center gap-2'>
           <FaBagShopping color={COLORS.MAIN_COLOR} size={25} />
           <div className="flex flex-col">
-            <Link href="/" className='text-mainColor text-sm font-bold'>Cart</Link>
+            <Link href="/account/cart" className='text-mainColor text-sm font-bold'>Cart</Link>
           </div>
         </div>
       </div>

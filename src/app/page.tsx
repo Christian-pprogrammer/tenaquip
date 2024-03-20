@@ -85,8 +85,6 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar />
-      <MenuNavbar />
       <Disclaimer text="Shop Over 180,000 Industrial Products, Equipment & Supplies" />
       <div className="gap-6 py-6 px-32" style={{
         display: "grid",
@@ -117,7 +115,6 @@ export default function Home() {
           ))
         }
       </div>
-      <Footer />
     </div>
   );
 }

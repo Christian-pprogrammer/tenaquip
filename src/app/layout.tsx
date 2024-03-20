@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/Footer/Footer";
+import { Navbar } from "@/components/Navbar/Navbar";
+import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
+import { Accordion } from 'flowbite-react';
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navbar />
+        <MenuNavbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

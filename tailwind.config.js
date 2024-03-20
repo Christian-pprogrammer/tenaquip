@@ -7,6 +7,7 @@ module.exports = {
 
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -34,8 +35,12 @@ module.exports = {
       lightMain: "#f3f3f5",
       mainRed: "#ed2324",
       mainGray: "#626262",
-      lightBlue: "#005488"
+      lightBlue: "#005488",
+      Gray: "#4c4c4e"
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
+  
 };

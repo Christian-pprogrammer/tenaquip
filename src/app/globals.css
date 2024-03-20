@@ -30,3 +30,11 @@
   height: 100%;
   object-fit: cover;
 }
+
+.custom-input {
+  @apply border rounded-[3px] px-[12px] py-[10px] text-sm block w-[95%] border-[#ddd] text-Gray mb-[5px] outline-none focus:outline-none;
+}
+
+.custom-label {
+  @apply text-sm block w-[95%] text-Gray mt-[10px] mb-[3px] outline-none font-normal ;
+}
