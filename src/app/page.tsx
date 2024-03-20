@@ -1,5 +1,6 @@
 import CategoryElement from "@/components/CategoryElement/CategoryElement";
 import Disclaimer from "@/components/Disclaimer/Disclaimer";
+import Footer from "@/components/Footer/Footer";
 import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
 import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
 import { Navbar } from "@/components/Navbar/Navbar";
@@ -101,7 +102,7 @@ export default function Home() {
       <div className="px-32">
         <ImageSwiper />
       </div>
-      <div className="grid px-32 gap-10 bg-lightMain my-12 py-12" style={{
+      <div className="grid px-32 gap-10 bg-lightMain mt-12 py-12" style={{
         gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))"
       }}>
         {
@@ -116,6 +117,7 @@ export default function Home() {
           ))
         }
       </div>
+      <Footer />
     </div>
   );
 }
