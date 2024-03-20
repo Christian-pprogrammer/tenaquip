@@ -1,8 +1,10 @@
 import CategoryElement from "@/components/CategoryElement/CategoryElement";
 import Disclaimer from "@/components/Disclaimer/Disclaimer";
+import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
 import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
 import { Navbar } from "@/components/Navbar/Navbar";
 import Image from "next/image";
+
 
 export default function Home() {
 
@@ -74,6 +76,9 @@ export default function Home() {
         }
       </div>
       <Disclaimer text="Shop Preferred Brands" />
+      <div className="px-32">
+        <ImageSwiper />
+      </div>
       
     </div>
   );

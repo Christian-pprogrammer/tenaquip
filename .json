@@ -1,0 +1,278 @@
+{
+  "key": "AUTH_USER_TYPE",
+  "required": false,
+  "defaultValue": "CITIZEN",
+  "templateOptions": {
+    "required": false
+  }
+},
+{
+  "key": "APPLICATION_IDENTIFICATION_DOCUMENT_TYPE",
+  "type": "custom-select",
+  "className": "col-lg-3 col-md-3 col-sm-12 col-xs-12",
+  "hideExpression": "model.AUTH_USER_TYPE === 'CITIZEN'",
+  "templateOptions": {
+    "label": "APPLICANT_ID_DOCUMENT_TYPE",
+    "options": [
+      {
+        "name": "TextRwandanNationalId",
+        "value": "RWANDAN_NATIONAL_ID"
+      },
+      {
+        "name": "TextPassportId",
+        "value": "PASSPORT"
+      },
+      {
+        "name": "TextForeignerId",
+        "value": "FOREIGNER_ID"
+      },
+      {
+        "name": "TextRefugeeId",
+        "value": "REFUGEE_ID"
+      }
+    ],
+    "required": true,
+    "placeholder": "PSelectIdType",
+    "summarySection": "APPLICANT_DETAILS"
+  }
+},
+{
+  "key": "CITIZEN_IDENTIFICATION_DOCUMENT_TYPE",
+  "type": "custom-select",
+  "selected": false,
+  "className": "col-md-3",
+  "defaultValue": "RWANDAN_NATIONAL_ID",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "label": "APPLICANT_ID_DOCUMENT_TYPE",
+    "options": [
+      {
+        "name": "TextRwandanNationalId",
+        "value": "RWANDAN_NATIONAL_ID"
+      },
+      {
+        "name": "TextPassportId",
+        "value": "PASSPORT"
+      },
+      {
+        "name": "TextForeignerId",
+        "value": "FOREIGNER_ID"
+      },
+      {
+        "name": "TextRefugeeId",
+        "value": "REFUGEE_ID"
+      }
+    ],
+    "disabled": true,
+    "required": false
+  }
+},
+{
+  "key": "IDENTIFICATION_DOCUMENT_NUMBER_SKIP",
+  "type": "custom-input",
+  "selected": false,
+  "className": "col-3 mb-3",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "allowEmptySpace": true,
+    "readOnly": true,
+    "required": true,
+    "textlabel": "TextIdNumber",
+    "authUserValueFromKey": "registrationNumber"
+  }
+},
+{
+  "key": "IDENTIFICATION_DOCUMENT_NUMBER",
+  "type": "nid-fetch",
+  "className": "col-lg-3 col-md-3 col-sm-12 col-xd-12",
+  "hideExpression": "model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE !== 'RWANDAN_NATIONAL_ID'",
+  "templateOptions": {
+    "title": "TextIdNumber",
+    "userType": "APPLICANT",
+    "isSubLabel": true,
+    "identificationType": "NATIONAL_IDENTIFICATION",
+    "fetchedPropertiesToPrefill": [
+      {
+        "originKey": "lastName",
+        "targetFieldKey": "APPLICANT_LAST_NAME"
+      },
+      {
+        "originKey": "firstName",
+        "targetFieldKey": "APPLICANT_FIRST_NAME"
+      },
+      {
+        "originKey": "registrationNumber",
+        "targetFieldKey": "IDENTIFICATION_DOCUMENT_NUMBER"
+      }
+    ]
+  }
+},
+{
+  "key": "APPLICANT_LAST_NAME",
+  "type": "no-input",
+  "hideExpression": "model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE && model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE !== 'REFUGEE_ID'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS"
+  }
+},
+{
+  "key": "APPLICANT_FIRST_NAME",
+  "type": "no-input",
+  "hideExpression": "model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE && model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE !== 'REFUGEE_ID'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS"
+  }
+},
+{
+  "key": "IDENTIFICATION_DOCUMENT_NUMBER",
+  "type": "no-input",
+  "hideExpression": "model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE && model.APPLICATION_IDENTIFICATION_DOCUMENT_TYPE !== 'REFUGEE_ID'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS"
+  }
+},
+{
+  "key": "APPLICANT_LAST_NAME",
+  "type": "no-input",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS",
+    "authUserValueFromKey": "lastName"
+  }
+},
+{
+  "key": "APPLICANT_FIRST_NAME",
+  "type": "no-input",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS",
+    "authUserValueFromKey": "firstName"
+  }
+},
+{
+  "key": "IDENTIFICATION_DOCUMENT_NUMBER",
+  "type": "no-input",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS",
+    "authUserValueFromKey": "registrationNumber"
+  }
+},
+
+{
+  "key": "APPLICANT_CIVIL_STATE",
+  "type": "no-input",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS",
+    "authUserValueFromKey": "civilState"
+  }
+},
+{
+  "key": "APPLICANT_DETAILS",
+  "type": "information-list",
+  "className": "col-3",
+  "hideExpression": "model.AUTH_USER_TYPE !== 'CITIZEN'",
+  "templateOptions": {
+    "required": false,
+    "summarySection": "APPLICANT_DETAILS",
+    "informationTitle": "Applicant details",
+    "fieldValuesToDisplay": [
+      {
+        "label": "Surname",
+        "formFieldKey": "APPLICANT_LAST_NAME"
+      },
+      {
+        "label": "TextFirstName",
+        "formFieldKey": "APPLICANT_FIRST_NAME"
+      },
+      {
+        "label": "TextNationalId",
+        "formFieldKey": "IDENTIFICATION_DOCUMENT_NUMBER"
+      },
+      {
+        "label": "TextMaritalStatus",
+        "formFieldKey": "APPLICANT_CIVIL_STATE",
+        "templateOptions": {
+          "options": [
+            {
+              "name": "Single",
+              "value": "SINGLE"
+            },
+            {
+              "name": "Married",
+              "value": "MARRIED"
+            },
+            {
+              "name": "Divorced",
+              "value": "DIVORCED"
+            },
+            {
+              "name": "Widow",
+              "value": "WIDOW"
+            },
+            {
+              "name": "Widower",
+              "value": "WIDOWER"
+            }
+          ],
+          "summaryFormatting": {
+            "formatType": "STANDARD_OPTIONS"
+          }
+        }
+      },
+      {
+        "label": "TextGender",
+        "formFieldKey": "APPLICANT_GENDER",
+        "templateOptions": {
+          "options": [
+            {
+              "name": "Male",
+              "value": "MALE"
+            },
+            {
+              "name": "Female",
+              "value": "FEMALE"
+            }
+          ],
+          "summaryFormatting": {
+            "formatType": "STANDARD_OPTIONS"
+          }
+        }
+      },
+      {
+        "label": "APPLICANT_DATE_OF_BIRTH",
+        "formFieldKey": "APPLICANT_DATE_OF_BIRTH",
+        "templateOptions": {
+          "summaryFormatting": {
+            "dateFormat": "DD-MM-YYYY",
+            "formatType": "DATE"
+          }
+        }
+      },
+      {
+        "label": "APPLICANT_COUNTRY_OF_BIRTH_NAME",
+        "formFieldKey": "APPLICANT_COUNTRY_OF_BIRTH_NAME"
+      },
+      {
+        "label": "TextBirthLocation",
+        "formFieldKey": "APPLICANT_BIRTH_PLACE"
+      },
+      {
+        "label": "TextFatherNames",
+        "formFieldKey": "APPLICANT_FATHER_NAME"
+      },
+      {
+        "label": "TextMotherNames",
+        "formFieldKey": "APPLICANT_MOTHER_NAME"
+      }
+    ]
+  }
+},
