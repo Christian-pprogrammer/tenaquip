@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import LinkList, { LinkListProps } from '../LinkList/LinkList'
+import Image from 'next/image'
 
 const Footer = () => {
 
@@ -157,9 +158,11 @@ const Footer = () => {
     ]
   }
 
+
+
   return (
     <div className='px-32 bg-mainColor'>
-      <div className="footer-title grid grid-cols-1 md:grid-cols-4 items-center border-t-1 border-ligh py-8" style={{
+      <div className="footer-title grid grid-cols-1 md:grid-cols-4 items-center border-t-1 border-b-1 border-lightBlue py-8" style={{
       }}>
         <div className="col-span-2">
           <h3 className="text-sm font-bold text-white">Join our Email List</h3>
@@ -168,7 +171,7 @@ const Footer = () => {
           </p>
         </div>
         <div className="col-span-1">
-          <Link href="" className="bg-white rounded rounded-xs border-none outline-none px-[15px] py-[6px] text-sm">
+          <Link href="" className="bg-white rounded rounded-xs border-none outline-none px-[15px] py-[6px] text-xs">
             Join Now
           </Link>
         </div>
@@ -215,7 +218,57 @@ const Footer = () => {
 
       <div className='grid md:grid-cols-3 justify-end items-center'>
         <div>
-          
+          <p className='text-white bold text-[13px] px-3 border-r-[1px] border-white inline-block'>
+            1 800 661-2400
+          </p>
+          <p className='text-white bold text-[13px] px-3 inline-block'>
+            info@tenaquip.com
+          </p>
+          <p className='text-white bold text-[13px] px-3 py-2 block'>
+            &copy; {`${new Date().getFullYear()}`}
+          </p>
+        </div>
+        <div className='flex gap-1'>
+          <button className='bg-white rounded rounded-xs border-none outline-none px-[5px] py-[2px] text-xs'>
+            <img 
+              src="https://www.tenaquip.com/images/icon/amex_en.png?1708981870"
+              alt=''
+              style={{maxWidth: "40px"}}
+            />
+          </button>
+          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
+            <img 
+              src="https://www.tenaquip.com/images/icon/mc_en.png?1708981870"
+              alt=''
+              style={{maxWidth: "50px"}}
+            />
+          </button>
+          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
+            <img 
+              src="https://www.tenaquip.com/images/icon/visa_en.png?1708981870"
+              alt=''
+              style={{maxWidth: "50px"}}
+            />
+          </button>          
+          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
+            <img 
+              src="https://www.tenaquip.com/images/icon/pp-logo-100px.png"
+              alt=''
+              style={{maxWidth: "50px"}}
+            />
+          </button>
+          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
+            <img 
+              src="https://www.tenaquip.com/images/icon/affirm_black_logo-transparent_bg.svg?1700507571"
+              alt=''
+              style={{maxWidth: "50px"}}
+            />
+          </button>
+        </div>
+        <div>
+          <Link className='text-white text-[12px] ml-6' href="/">Help</Link>
+          <Link className='text-white text-[12px] ml-6' href="/">Privacy Policy</Link>
+          <Link className='text-white text-[12px] ml-6' href="/">Terms & Conditions</Link>
         </div>
       </div>
     </div>
