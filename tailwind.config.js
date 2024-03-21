@@ -36,7 +36,8 @@ module.exports = {
       mainRed: "#ed2324",
       mainGray: "#626262",
       lightBlue: "#005488",
-      Gray: "#4c4c4e"
+      Gray: "#4c4c4e",
+      mainGreen: "#00873c"
     },
   },
   plugins: [
