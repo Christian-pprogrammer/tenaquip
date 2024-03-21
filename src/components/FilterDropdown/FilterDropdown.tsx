@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 type FilterElement = {
   itemName: string
@@ -16,11 +17,25 @@ function FilterDropdown({title, elements}: Props) {
 
 
   return (
-    <div className="relative">
+    <div className="relative w-fit inline-block">
       <ul className="items-center font-medium text-sm h-[100%]">
-        <li className="relative flex items-center h-[100%]">
-          <button className="custom-btn text-mainGreen mr-1" onClick={()=>setOpen((value)=>!value)} aria-expanded={open}>
-            {title}
+        <li className="relative items-center h-[100%]">
+          <button 
+            className="custom-btn text-mainGreen mr-1 flex items-center gap-2" 
+            onClick={()=>setOpen((value)=>!value)} aria-expanded={open}
+            style={{
+              display: "flex !important"
+            }}
+          >
+            <span className="block">{title}</span>
+            
+            {
+              !open ? (
+                <FaChevronDown size={12} />
+              ):(
+                <FaChevronUp size={12} />
+              )
+            }
           </button>
           {/* 2nd level menu */}
           <ul className={`absolute top-full bg-white border-none shadow-xl ${!open && 'hidden'} min-w-64 px-3`} >

@@ -36,7 +36,24 @@ const SubCategory = () => {
 
       <div className="bg-lightMain p-2">
         <div className="filters">
-          <button className="custom-btn text-mainGreen mr-1">In Stock (80)</button>
+          
+          <FilterDropdown title="Manufacturer" elements={[
+            {
+              itemName: "Black on Orange (1)"
+            },
+            {
+              itemName: "Black on White (1)"
+            },
+            {
+              itemName: "Black on Yellow (44)"
+            },
+            {
+              itemName: "White on Blue (5)"
+            }
+            
+          ]}>
+
+          </FilterDropdown>
 
           <FilterDropdown title="Manufacturer" elements={[
             {
@@ -55,16 +72,55 @@ const SubCategory = () => {
           ]}>
 
           </FilterDropdown>
-          <button className="custom-btn text-mainGreen mr-1">Colour</button>
-          <button className="custom-btn text-mainGreen mr-1">
-            Label Height
-          </button>
-          <button className="custom-btn text-mainGreen mr-1">
-            Label Width
-          </button>
-          <button className="custom-btn text-mainGreen mr-1">Language</button>
+          <FilterDropdown title="Manufacturer" elements={[
+            {
+              itemName: "Black on Orange (1)"
+            },
+            {
+              itemName: "Black on White (1)"
+            },
+            {
+              itemName: "Black on Yellow (44)"
+            },
+            {
+              itemName: "White on Blue (5)"
+            }
+            
+          ]}>
 
-          <br />
+          </FilterDropdown><FilterDropdown title="Manufacturer" elements={[
+            {
+              itemName: "Black on Orange (1)"
+            },
+            {
+              itemName: "Black on White (1)"
+            },
+            {
+              itemName: "Black on Yellow (44)"
+            },
+            {
+              itemName: "White on Blue (5)"
+            }
+            
+          ]}>
+
+          </FilterDropdown><FilterDropdown title="Manufacturer" elements={[
+            {
+              itemName: "Black on Orange (1)"
+            },
+            {
+              itemName: "Black on White (1)"
+            },
+            {
+              itemName: "Black on Yellow (44)"
+            },
+            {
+              itemName: "White on Blue (5)"
+            }
+            
+          ]}>
+
+          </FilterDropdown>
           <button className="custom-btn font-bold">View All Filters</button>
         </div>
         <div className="sorts"></div>
