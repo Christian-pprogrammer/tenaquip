@@ -39,9 +39,9 @@ function FilterDropdown({ title, elements }: Props) {
           >
             {elements.map((element, index) => (
               <div className="campaigns flex gap-1 text-sm my-5" key={index}>
-                <input type="checkbox" value="campaigns" />
+                <input id={`${index}`} type="checkbox" value="campaigns" />
                 <label
-                  htmlFor=""
+                  htmlFor={`${index}`}
                   className="custom-no-margin-label"
                   style={{
                     marginTop: "0px !important",

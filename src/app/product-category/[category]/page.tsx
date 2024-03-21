@@ -122,22 +122,26 @@ const ProductCategory = () => {
 
       <div className="grid md:grid-cols-5 justify-between gap-3">
         {categories.map((category, index) => (
-          <div className="flex flex-col items-center">
-            <Image
-              src={category.imageUrl}
-              width={130}
-              height={130}
-              objectFit="contain"
-              alt=""
-            />
+          <Link 
+          href={category.linkTo}>
+            <div className="flex flex-col items-center">
+              <Image
+                src={category.imageUrl}
+                width={130}
+                height={130}
+                objectFit="contain"
+                alt=""
+              />
 
-            <Link
-              href={category.linkTo}
-              className="text-sm font-bold text-mainColor text-center block my-3"
-            >
-              {category.title}
-            </Link>
-          </div>
+              <Link
+                href={category.linkTo}
+                className="text-sm font-bold text-mainColor text-center block my-3"
+              >
+                {category.title}
+              </Link>
+              
+            </div>
+          </Link>
         ))}
       </div>
     </div>
