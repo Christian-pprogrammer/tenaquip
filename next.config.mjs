@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "www.tenaquip.com"
-    ]
-  }
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "tenaquip.com",
+      },
+    ],
+    domains: ["www.tenaquip.com"],
+  },
 };
 
 export default nextConfig;
