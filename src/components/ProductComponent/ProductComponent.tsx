@@ -41,8 +41,8 @@ const ProductComponent = ({product: {imageUrl, model, productName, manufacturer,
         <p className="text-xs text-Gray">Buy More, Save More</p>
       </div>
 
-      <div className="flex gap-1">
-        <button className='border-[1px] border-lightMain px-4 py-2 text-Gray inline-block'>
+      <div className="flex gap-1 my-2">
+        <button className='border-[1px] border-lightMain px-5 py-2 text-Gray inline-block'>
           1
         </button>
 
