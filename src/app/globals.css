@@ -46,3 +46,7 @@
 .custom-btn {
   @apply border rounded-[3px] px-[12px] py-[10px] text-sm inline-block bg-white w-fit border-[#ddd] text-Gray mb-[5px] outline-none focus:outline-none;
 }
+
+.blue-btn {
+  @apply inline-block bg-mainColor text-white text-center w-[100%] rounded-sm text-sm p-4;
+}

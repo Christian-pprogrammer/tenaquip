@@ -24,7 +24,7 @@ function HoverDropdown({title, links}: Props) {
             {title}
           </a>
           {/* 2nd level menu */}
-          <ul className={`absolute top-full bg-white border-none shadow-xl ${!open && 'hidden'} min-w-64 px-3`} 
+          <ul className={`absolute top-full bg-white border-none shadow-xl ${!open && 'hidden'} min-w-64 px-3 z-50`} 
             onMouseEnter={() => setOpen(true)} 
             onMouseLeave={() => setOpen(false)}>
 
