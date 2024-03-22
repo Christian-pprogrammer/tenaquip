@@ -99,6 +99,52 @@ const MenuNavbar = () => {
     },
   ];
 
+  const productSubCategories = [
+    {
+      title: "Buy Now, Split Up the cost",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Tools",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Material handling & Storage",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Facility Maintainance",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Welding",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Electrical",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Office",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Fleet & Automotive",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Instruments",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Plumbing Equipment & Supplies",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+    {
+      title: "Packaging & Shipping",
+      linkUrl: "product-category/plumbing/supplies"
+    },
+  ];
 
   const company = [
     {
@@ -204,7 +250,7 @@ const MenuNavbar = () => {
         <HoverDropdown title="Company" links={company} />
 
         <HoverDropdown title="Resource centre" links={resourceCentre} />
-        <HoverDropdown title="Deals" links={} />
+        <HoverDropdown title="Deals" links={productSubCategories} />
         <Link href="/" className="px-[20px] hover:bg-darkMain">
           <Image
             src="/Shoppe.png"
