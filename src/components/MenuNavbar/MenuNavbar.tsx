@@ -1,92 +1,231 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import HoverDropdown from '../HoverDropdown/HoverDropdown'
-import { title } from 'process'
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import HoverDropdown from "../HoverDropdown/HoverDropdown";
+import { title } from "process";
 
 const MenuNavbar = () => {
-
   const productCategories = [
     {
       title: "Safety",
-      linkUrl: "safety"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Tools",
-      linkUrl: "tools"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Material handling & Storage",
-      linkUrl: "material-handling_and_storage"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Facility Maintainance",
-      linkUrl: "facility_maintainance"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Welding",
-      linkUrl: "welding"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Electrical",
-      linkUrl: "electrical"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Office",
-      linkUrl: "office"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Fleet & Automotive",
-      linkUrl: "fleet_and_automotive"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Instruments",
-      linkUrl: "instruments"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Plumbing Equipment & Supplies",
-      linkUrl: "plumbing_equipment_and_supplies"
+      linkUrl: "product-category/safety",
     },
     {
       title: "Packaging & Shipping",
-      linkUrl: "packaging_and_shipping"
-    }
-  ]
+      linkUrl: "product-category/safety",
+    },
+  ];
+
+  const serviceCategories = [
+    {
+      title: "Buy Now, Split Up the cost",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Tools",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Material handling & Storage",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Facility Maintainance",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Welding",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Electrical",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Office",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Fleet & Automotive",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Instruments",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Plumbing Equipment & Supplies",
+      linkUrl: "services/plumbing-equipment"
+    },
+    {
+      title: "Packaging & Shipping",
+      linkUrl: "services/plumbing-equipment"
+    },
+  ];
+
+
+  const company = [
+    {
+      title: "Buy Now, Split Up the cost",
+      linkUrl: "company/about-us"
+    },
+    {
+      title: "Tools",
+      linkUrl: "company/careers"
+    },
+    {
+      title: "Material handling & Storage",
+      linkUrl: "company/about-us"
+    },
+    {
+      title: "Facility Maintainance",
+      linkUrl: "company/careers"
+    },
+    {
+      title: "Welding",
+      linkUrl: "company/about-us"
+    },
+    {
+      title: "Electrical",
+      linkUrl: "company/careers"
+    },
+    {
+      title: "Office",
+      linkUrl: "company/about-us"
+    },
+    {
+      title: "Fleet & Automotive",
+      linkUrl: "company/careers"
+    },
+    {
+      title: "Instruments",
+      linkUrl: "company/about-us"
+    },
+    {
+      title: "Plumbing Equipment & Supplies",
+      linkUrl: "company/careers"
+    },
+    {
+      title: "Packaging & Shipping",
+      linkUrl: "company/about-us"
+    },
+  ];
+
+  const resourceCentre = [
+    {
+      title: "Buy Now, Split Up the cost",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Tools",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Material handling & Storage",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Facility Maintainance",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Welding",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Electrical",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Office",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Fleet & Automotive",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Instruments",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Plumbing Equipment & Supplies",
+      linkUrl: "resource-center/emergency"
+    },
+    {
+      title: "Packaging & Shipping",
+      linkUrl: "resource-center/emergency"
+    },
+  ];
+  
 
   return (
-    <div className='flex px-32 justify-between items-center bg-mainColor'>
-      <div className='flex'>
+    <div className="flex px-32 justify-between items-center bg-mainColor">
+      <div className="flex">
         {/* <Link href="/" className='text-white text-[12px] font-medium flex items-center hover:bg-darkMain py-[13px] px-[20px]'>Products</Link> */}
-        <HoverDropdown 
-          title='Products'
-          links={productCategories}
-        />
-        <HoverDropdown 
-          title='Services'
-          links={productCategories}
-        />
-        <HoverDropdown 
-          title='Company'
-          links={productCategories}
-        />
-        
-        <HoverDropdown 
-          title='Resource centre'
-          links={productCategories}
-        />
-        <HoverDropdown 
-          title='Deals'
-          links={productCategories}
-        />
-        <Link href="/" className='px-[20px] hover:bg-darkMain'>
-          <Image src='/Shoppe.png' alt='' width={200} height={50} className='py-2' />
+        <HoverDropdown title="Products" links={productCategories} />
+        <HoverDropdown title="Services" links={serviceCategories} />
+        <HoverDropdown title="Company" links={company} />
+
+        <HoverDropdown title="Resource centre" links={resourceCentre} />
+        <HoverDropdown title="Deals" links={} />
+        <Link href="/" className="px-[20px] hover:bg-darkMain">
+          <Image
+            src="/Shoppe.png"
+            alt=""
+            width={200}
+            height={50}
+            className="py-2"
+          />
         </Link>
       </div>
-      <Link href="/" className='px-[20px] hover:bg-darkMain'>
-        <Image src='/Shoppe.png' alt='' width={200} height={50} className='py-2' />
+      <Link href="/" className="px-[20px] hover:bg-darkMain">
+        <Image
+          src="/Shoppe.png"
+          alt=""
+          width={200}
+          height={50}
+          className="py-2"
+        />
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default MenuNavbar
+export default MenuNavbar;

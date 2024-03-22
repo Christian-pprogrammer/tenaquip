@@ -30,7 +30,7 @@ function HoverDropdown({title, links}: Props) {
 
               {
                 links.map((link, index) => (
-                    <Link className="block text-Gray text-sm my-3" href={`/product-category/${link.linkUrl}`} key={index}>
+                    <Link className="block text-Gray text-sm my-3" href={`/${link.linkUrl}`} key={index}>
                       <span className="whitespace-nowrap">{link.title}</span>
                     </Link>
                 ))
