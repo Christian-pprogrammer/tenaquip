@@ -17,7 +17,7 @@ export const Navbar = () => {
         <Image src='/bestmanaged.svg' alt='' width={100} height={50} />
       </div>
       <div className=''>
-        <div className='w-100% h-10 flex flex-row border-mainColor' style={{border: '1px solid'}}>
+        <div className='w-100% h-10 flex flex-row border-1 border-solid border-mainColor '>
           <input type="text" className='w-96 h-[100%] outline-none px-3' />
           <div className='bg-mainColor flex justify-center items-center px-5'>
             <FaSearch color='white' size={20} />
