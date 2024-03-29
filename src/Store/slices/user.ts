@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface IUserState {
   email: string;
   password: string;
+  user: any;
 }
 
 const initialState: IUserState = {
   email: '',
-  password: ''
+  password: '',
+  user: null
 };
 
 const userSlice = createSlice({
@@ -20,6 +22,9 @@ const userSlice = createSlice({
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
+    setUser: (state, action: PayloadAction<any>) => {
+      state.user = action.payload
+    }
   },
 });
 

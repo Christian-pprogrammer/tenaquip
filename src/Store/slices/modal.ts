@@ -18,7 +18,7 @@ const modalSlice = createSlice({
       state.showModal = action.payload
     },
 
-    setModalContent: (state, action: PayloadAction<boolean>) => {
+    setModalContent: (state, action: PayloadAction<string>) => {
       state.modalContent = action.payload
     }
   }

@@ -5,6 +5,8 @@ import Footer from "@/components/Footer/Footer";
 import { Navbar } from "@/components/Navbar/Navbar";
 import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
 import { Accordion } from 'flowbite-react';
+import { Providers } from "@/Store/provider";
+import Modal from "@/components/Modal/Modal";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,12 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <MenuNavbar />
-        {children}
-        <Footer />
-      </body>
+      <Providers>
+        <body className={inter.className}>
+          <Navbar />
+          <MenuNavbar />
+          <Modal />
+          {children}
+          <Footer />
+        </body>
+      </Providers>
     </html>
   );
 }
