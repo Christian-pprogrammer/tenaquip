@@ -2,7 +2,7 @@
 
 import { setModalContent, setShowModal } from "@/Store/slices/modal";
 import COLORS from "@/config/colors";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,6 +16,8 @@ export const Navbar = () => {
     dispatch(setModalContent("auth"));
     dispatch(setShowModal(true));
   };
+
+  const user = useAppSelector((state) => state.user.user);
 
   return (
     <div className="flex px-32 justify-between items-center bg-white py-4">
@@ -38,20 +40,35 @@ export const Navbar = () => {
       <div className="flex items-center justify-center gap-4">
         <div className="flex items-center gap-2">
           <FaUser color={COLORS.MAIN_COLOR} size={25} />
-          <div className="flex flex-col">
-            <span
-              className="text-mainColor text-sm font-bold cursor-pointer"
-              onClick={openModal}
-            >
-              Sign In
-            </span>
-            <Link
-              href="/account/register"
-              className="text-mainColor text-[12px] "
-            >
-              Register
-            </Link>
-          </div>
+
+          {user ? (
+            <div className="flex flex-col">
+              <span className="text-mainColor text-sm font-bold cursor-pointer">
+                {user.last_name}
+              </span>
+              <Link
+                href="/account/register"
+                className="text-mainColor text-[12px] "
+              >
+                Logout
+              </Link>
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <span
+                className="text-mainColor text-sm font-bold cursor-pointer"
+                onClick={openModal}
+              >
+                Sign In
+              </span>
+              <Link
+                href="/account/register"
+                className="text-mainColor text-[12px] "
+              >
+                Register
+              </Link>
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <FaBagShopping color={COLORS.MAIN_COLOR} size={25} />

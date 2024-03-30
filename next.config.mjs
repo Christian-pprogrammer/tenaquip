@@ -9,6 +9,9 @@ const nextConfig = {
     ],
     domains: ["www.tenaquip.com"],
   },
+  env: {
+    MEDUSA_BACKEND_API: process.env.MEDUSA_BACKEND_API
+  }
 };
 
 export default nextConfig;

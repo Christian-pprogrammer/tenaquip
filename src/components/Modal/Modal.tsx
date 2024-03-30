@@ -5,10 +5,12 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import React from "react";
 import { BiX } from "react-icons/bi";
 import LoginForm from "../LoginForm/LoginForm";
+import Image from "next/image";
 
 const Modal = () => {
   const dispatch = useAppDispatch();
   const showModal = useAppSelector((state: RootState) => state.modal.showModal);
+  const loading = useAppSelector((state: RootState) => state.loading.loading);
   const modalContent = useAppSelector(
     (state: RootState) => state.modal.modalContent
   );
@@ -25,6 +27,13 @@ const Modal = () => {
           : "duration-[0.5s] hidden"
       }
     >
+
+      {
+        loading && <div className="bg-black/60 h-full w-full flex justify-center items-center absolute z-[1003]">
+          <Image src={"/loader.webp"} alt="" height={100} width={100} />
+        </div>
+      }
+      
       <div className="fixed right-0 h-full overflow-hidden bg-white md:w-[500px] w-[90%]">
         <div className="header bg-mainColor py-4 px-4 flex justify-between">
           <h3 className="text-white font-bold text-lg">Sign in</h3>
