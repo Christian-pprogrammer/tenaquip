@@ -19,3 +19,8 @@ interface RegisterInterface {
   correspondence: string;
   receiveEmails: boolean;
 }
+
+interface LoginInterface {
+  email: string;
+  password: string;
+} 

@@ -9,6 +9,7 @@ import { useAppDispatch } from "@/hooks";
 import { setLoading } from "@/Store/slices/loading";
 import { setUser } from "@/Store/slices/user";
 import { useRouter } from "next/navigation";
+import { setShowModal } from "@/Store/slices/modal";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -40,12 +41,15 @@ const Register = () => {
   const formik = useFormik({
     initialValues,
     onSubmit: async (data) => {
+      console.log("submit...")
+      dispatch(setLoading(true));
+      dispatch(setShowModal(true))
       let customer = {
         ...data,
       };
       delete customer.repeatPassword;
       try {
-        dispatch(setLoading(true));
+
         const res: any = await axios.post(
           `${process.env.MEDUSA_BACKEND_API}/store/customers`,
           customer
@@ -61,13 +65,7 @@ const Register = () => {
         }
       }
       dispatch(setLoading(false));
-      // try {
-      //   const res = await axios.post("http://localhost:4000/submit-form", data);
-      //   alert(res.data.message);
-      //   return;
-      // } catch (err) {
-      //   alert("Error submitting the email");
-      // }
+      dispatch(setShowModal(false))
     },
     validationSchema: registerSchema,
   });
@@ -183,7 +181,7 @@ const Register = () => {
               Password
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
               name="password"
               className={`custom-input ${
@@ -223,7 +221,7 @@ const Register = () => {
               Repeat Password
             </label>
             <input
-              type="text"
+              type="password"
               id="repeatPassword"
               name="repeatPassword"
               className={`custom-input ${
@@ -402,7 +400,7 @@ const Register = () => {
             onChange={formik.handleChange}
             value={formik.values.country}
           >
-            <option value=""></option>
+            <option value="">Select Country</option>
             <option value="Canada">Canada</option>
             <option value="United States">United States</option>
           </select>
@@ -425,7 +423,7 @@ const Register = () => {
             onChange={formik.handleChange}
             value={formik.values.province}
           >
-            <option value=""></option>
+            <option value="">Select a Province/State</option>
             {formik.values.country && formik.values.country == "Canada" && (
               <>
                 {canadaProvinces.map((province, index) => (
