@@ -5,10 +5,28 @@ import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
 import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
 import { Navbar } from "@/components/Navbar/Navbar";
 import PostComponent from "@/components/PostComponent/PostComponent";
+import { fetchCategories } from "@/services/category-service";
 import Image from "next/image";
 
 
-export default function Home() {
+export default async function Home() {
+
+  let mainCategories = [];
+
+  //fetch categories
+
+  console.log("fetch...")
+  try {
+    const categories = await fetchCategories();
+    mainCategories = categories.filter((item: any) => {
+      console.log(item)
+      return !item.parent_category;
+    }); 
+
+  }catch (err) {
+
+  }
+  
 
   const data = [
     {
@@ -91,8 +109,8 @@ export default function Home() {
         gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr) )"
       }}>
         {
-          data.map((item, key)=>(
-            <CategoryElement imageSrc={item.imageSrc} categoryName={item.categoryName} key={key} />
+          mainCategories.map((item: MainCategory, key: number)=>(
+            <CategoryElement imageSrc={item.metadata.image} categoryName={item.name} key={key} handle={item.handle} />
           ))
         }
       </div>

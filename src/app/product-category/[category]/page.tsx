@@ -1,9 +1,26 @@
 import Breadcrump from "@/components/Breadcrump/Breadcrump";
+import Slider from "@/components/Slider/Slider";
+import { fetchByHandle } from "@/services/category-service";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const ProductCategory = () => {
+const ProductCategory = async (props: any) => {
+  
+  //fetch by it's handle
+  
+  let category: MainCategory | null = null;
+  let childCategories: Array<Category> = [];
+
+  try {
+    const categories = await fetchByHandle(props.params.category);
+    childCategories = categories[0].category_children
+  }catch (err) {
+
+  }
+
+
+  console.log(props.params.category)
   const categories = [
     {
       title: "Pipe Marking Identification (3923)",
@@ -112,38 +129,17 @@ const ProductCategory = () => {
               title: "Home",
             },
             {
-              toUrl: "safety",
-              title: "Safety",
+              toUrl: "",
+              title: "",
             },
           ]}
         />
         <h2 className="font-semibold text-2xl text-Gray my-2">Safety</h2>
       </div>
 
-      <div className="grid md:grid-cols-5 justify-between gap-3">
-        {categories.map((category, index) => (
-          <Link 
-          href={category.linkTo}>
-            <div className="flex flex-col items-center">
-              <Image
-                src={category.imageUrl}
-                width={130}
-                height={130}
-                objectFit="contain"
-                alt=""
-              />
-
-              <Link
-                href={category.linkTo}
-                className="text-sm font-bold text-mainColor text-center block my-3"
-              >
-                {category.title}
-              </Link>
-              
-            </div>
-          </Link>
-        ))}
-      </div>
+      <Slider 
+        categories={childCategories}
+      />       
     </div>
   );
 };

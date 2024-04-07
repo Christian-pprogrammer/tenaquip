@@ -1,56 +1,21 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import HoverDropdown from "../HoverDropdown/HoverDropdown";
 import { title } from "process";
+import { useAppSelector } from "@/hooks";
 
 const MenuNavbar = () => {
-  const productCategories = [
-    {
-      title: "Safety",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Tools",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Material handling & Storage",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Facility Maintainance",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Welding",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Electrical",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Office",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Fleet & Automotive",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Instruments",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Plumbing Equipment & Supplies",
-      linkUrl: "product-category/safety",
-    },
-    {
-      title: "Packaging & Shipping",
-      linkUrl: "product-category/safety",
-    },
-  ];
+
+  const productCategories = useAppSelector((state)=>state.product.productCategories);
+  const productCategoriesLinks = productCategories.map((category)=>{
+    return {
+      title: category.name,
+      linkUrl: `product-category/${category.handle}`
+    }
+  })
 
   const serviceCategories = [
     {
@@ -245,7 +210,7 @@ const MenuNavbar = () => {
     <div className="flex px-32 justify-between items-center bg-mainColor">
       <div className="flex">
         {/* <Link href="/" className='text-white text-[12px] font-medium flex items-center hover:bg-darkMain py-[13px] px-[20px]'>Products</Link> */}
-        <HoverDropdown title="Products" links={productCategories} />
+        <HoverDropdown title="Products" links={productCategoriesLinks} />
         <HoverDropdown title="Services" links={serviceCategories} />
         <HoverDropdown title="Company" links={company} />
 

@@ -6,8 +6,12 @@ const nextConfig = {
         protocol: "https",
         hostname: "tenaquip.com",
       },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1"
+      }
     ],
-    domains: ["www.tenaquip.com"],
+    domains: ["www.tenaquip.com", "127.0.0.1"],
   },
   env: {
     MEDUSA_BACKEND_API: process.env.MEDUSA_BACKEND_API

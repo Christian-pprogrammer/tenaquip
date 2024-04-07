@@ -12,6 +12,8 @@ import { FaBagShopping } from "react-icons/fa6";
 export const Navbar = () => {
   const dispatch = useAppDispatch();
 
+  const productCategories = useAppSelector((state)=>state.product.productCategories);
+
   const openModal = () => {
     dispatch(setModalContent("auth"));
     dispatch(setShowModal(true));

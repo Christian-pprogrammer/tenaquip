@@ -24,3 +24,23 @@ interface LoginInterface {
   email: string;
   password: string;
 } 
+
+interface MainCategory {
+  id: string;
+  name: string;
+  handle: string;
+  metadata: {
+    image: string
+  };
+  image: string;
+}
+
+interface Category {
+  
+  id: string;
+  name: string;
+  handle: string;
+  metadata: {
+    image: string
+  };
+}
