@@ -1,6 +1,7 @@
 "use client"
 
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { DetailedHTMLProps, HTMLAttributes, MutableRefObject, useRef } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
@@ -42,12 +43,12 @@ const Slider = ({categories}: SliderProps) => {
   console.log(categories)
   return (
     <div className='relative'>
-      <div className="slider-wrapper">
+      <div className="slider-wrapper mt-3">
         <button id='prev-slide' 
           className="slide-button material-symbols-rounded" onClick={()=>scrollLeft()} ref={prevButtonRef}>
           <FaChevronLeft 
-            size={15}
-            color='white'
+            size={27}
+            color='#4c4c4e'
           />
         </button>
         <div className="category-list" ref={categoryListRef} style={{
@@ -55,30 +56,34 @@ const Slider = ({categories}: SliderProps) => {
           gridTemplateColumns: `repeat(${categories.length},1fr)`,
           overflowX: "auto",
           scrollbarWidth: "none",
-          marginBottom: "30px"
+          marginBottom: "10px"
         }}
         onScroll={()=>onScroll()}
         >
           {
             categories.map((category, index) => (
-              <div key={index} style={{
-                width: '300px',
-                height: '300px'
-              }}>
-                <img 
+              <Link href={`/product-category/`} key={index} className='md:w-[165px] w-[110px] flex flex-col items-center gap-3'>
+                <Image 
                   src={category.metadata.image}
                   alt=''
-                  width={200}
-                  height={200}
+                  width={100}
+                  height={100}
                 />
-              </div>
+
+                <div className='text-[14px] leading-[1.4rem] px-[3px] py-[5px] text-center'>
+                  <Link href={`/`} className='text-mainColor block no-underline'>
+                    {category.name}
+                  </Link>
+                </div>
+
+              </Link>
             ))
           }
         </div>
         <button id='next-slide' className="slide-button material-symbols-rounded" onClick={()=>scrollRight()} ref={nextButtonRef}>
           <FaChevronRight 
-            size={15}
-            color='white'
+            size={27}
+            color='#4c4c4e'
           />
         </button>
       </div>

@@ -6,6 +6,7 @@ import React from "react";
 import HoverDropdown from "../HoverDropdown/HoverDropdown";
 import { title } from "process";
 import { useAppSelector } from "@/hooks";
+import { PiTruckDuotone } from "react-icons/pi";
 
 const MenuNavbar = () => {
 
@@ -207,8 +208,8 @@ const MenuNavbar = () => {
   
 
   return (
-    <div className="flex px-32 justify-between items-center bg-mainColor">
-      <div className="flex">
+    <div className="flex px-32 justify-between items-stretch bg-mainColor">
+      <div className="flex h-[100%]">
         {/* <Link href="/" className='text-white text-[12px] font-medium flex items-center hover:bg-darkMain py-[13px] px-[20px]'>Products</Link> */}
         <HoverDropdown title="Products" links={productCategoriesLinks} />
         <HoverDropdown title="Services" links={serviceCategories} />
@@ -226,15 +227,16 @@ const MenuNavbar = () => {
           />
         </Link>
       </div>
-      <Link href="/" className="px-[20px] hover:bg-darkMain">
-        <Image
-          src="/Shoppe.png"
-          alt=""
-          width={200}
-          height={50}
-          className="py-2"
-        />
-      </Link>
+      <div>
+        <Link href="/" className="px-[20px] hover:bg-darkMain flex items-center gap-x-2 h-[100%]">
+          <PiTruckDuotone 
+            size={25}
+            color="white"
+          />
+          <span className="text-white">Delivery to: <span className="font-bold">H9X 3L7</span></span>
+        </Link>
+      </div>
+      
     </div>
   );
 };

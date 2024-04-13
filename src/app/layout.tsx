@@ -32,7 +32,7 @@ export default async function RootLayout({
     mainCategories = categories.filter((item: any) => {
       console.log(item)
       return !item.parent_category;
-    }); 
+    });
 
   }catch (err) {
 

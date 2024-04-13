@@ -104,9 +104,9 @@ export default async function Home() {
   return (
     <div>
       <Disclaimer text="Shop Over 180,000 Industrial Products, Equipment & Supplies" />
-      <div className="gap-6 py-6 px-32" style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr) )"
+      <div className="gap-6 py-6 px-32 grid" style={{
+        gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr) )",
+        gridAutoRows: "1fr"
       }}>
         {
           mainCategories.map((item: MainCategory, key: number)=>(

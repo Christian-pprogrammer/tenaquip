@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaSearch, FaUser } from "react-icons/fa";
+import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 
 export const Navbar = () => {
@@ -24,7 +24,9 @@ export const Navbar = () => {
   return (
     <div className="flex px-32 justify-between items-center bg-white py-4">
       <div>
-        <Image src="/logo.svg" alt="" width={250} height={65} />
+        <Link href='/'>
+          <Image src="/logo.svg" alt="" width={220} height={65} />
+        </Link>
       </div>
       <div className="flex">
         <Image src="/100canadian.svg" alt="" width={50} height={50} />
@@ -32,8 +34,8 @@ export const Navbar = () => {
         <Image src="/bestmanaged.svg" alt="" width={100} height={50} />
       </div>
       <div className="">
-        <div className="w-100% h-10 flex flex-row border-1 border-solid border-mainColor ">
-          <input type="text" className="w-96 h-[100%] outline-none px-3" />
+        <div className="w-100% h-[42px] flex flex-row border-1 border-solid border-[#003f67]">
+          <input type="text" className="w-96 h-[100%] outline-none px-3 border-none text-[14px] placeholder:text-[#333333]" placeholder="Search Catalog/Products" />
           <div className="bg-mainColor flex justify-center items-center px-5">
             <FaSearch color="white" size={20} />
           </div>
@@ -73,7 +75,7 @@ export const Navbar = () => {
           )}
         </div>
         <div className="flex items-center gap-2">
-          <FaBagShopping color={COLORS.MAIN_COLOR} size={25} />
+          <FaShoppingCart color={COLORS.MAIN_COLOR} size={25} />
           <div className="flex flex-col">
             <Link
               href="/account/cart"
