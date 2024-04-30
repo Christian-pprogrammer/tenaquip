@@ -5,7 +5,7 @@ import COLORS from "@/config/colors";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 
@@ -15,11 +15,18 @@ export const Navbar = () => {
   const productCategories = useAppSelector((state)=>state.product.productCategories);
 
   const openModal = () => {
-    dispatch(setModalContent("auth"));
+    dispatch(setModalContent({
+      title: "Sign in",
+      content: "auth"
+    }));
     dispatch(setShowModal(true));
+    document.body.style.overflow = "hidden"
   };
 
   const user = useAppSelector((state) => state.user.user);
+  const cart = useAppSelector((state) => state.cart.cart);
+
+  const items = cart?.items;
 
   return (
     <div className="flex px-32 justify-between items-center bg-white py-4">
@@ -74,17 +81,19 @@ export const Navbar = () => {
             </div>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <Link href='/account/cart' className="flex items-center gap-2 relative">
+          <span className="bg-[#faa33b] text-white text-[14px] absolute left-[15px] top-[-12px] rounded-full w-fit text-center block min-w-[22px] h-[22px]">
+          {items ? items.length : 0}
+          </span>
           <FaShoppingCart color={COLORS.MAIN_COLOR} size={25} />
-          <div className="flex flex-col">
-            <Link
-              href="/account/cart"
-              className="text-mainColor text-sm font-bold"
+          <div className="flex flex-col ">
+            <span
+              className="text-mainColor text-sm font-bold relative"
             >
               Cart
-            </Link>
+            </span>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

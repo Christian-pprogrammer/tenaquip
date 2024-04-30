@@ -6,6 +6,7 @@ import React from "react";
 import { BiX } from "react-icons/bi";
 import LoginForm from "../LoginForm/LoginForm";
 import Image from "next/image";
+import CartComponent from "../CartComponent/CartComponent";
 
 const Modal = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,11 @@ const Modal = () => {
 
   const handleClose = () => {
     dispatch(setShowModal(false));
-    dispatch(setModalContent("empty"));
+    document.body.style.overflow = "auto";
+    dispatch(setModalContent({
+      title: "",
+      content: "empty"
+    }));
   };
   return (
     <div
@@ -36,10 +41,10 @@ const Modal = () => {
       )}
 
       {
-        modalContent && (
+        modalContent.title && (
           <div className="fixed right-0 h-full overflow-hidden bg-white md:w-[500px] w-[90%]">
             <div className="header bg-mainColor py-4 px-4 flex justify-between">
-              <h3 className="text-white font-bold text-lg">Sign in</h3>
+              <h3 className="text-white font-bold text-lg">{modalContent.title}</h3>
               <BiX
                 className="cursor-pointer"
                 onClick={handleClose}
@@ -62,15 +67,21 @@ const Modal = () => {
 };
 
 interface RenderModalElementProps {
-  modalContent: string;
+  modalContent: {
+    title: string,
+    content: string
+  };
 }
 
 const RenderModalElement: React.FC<RenderModalElementProps> = ({
   modalContent,
 }) => {
-  switch (modalContent) {
+  switch (modalContent.content) {
     case "auth":
       return <LoginForm />;
+
+    case "cart":
+      return <CartComponent />;
 
     case "empty":
       return null;

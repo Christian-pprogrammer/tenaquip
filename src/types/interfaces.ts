@@ -44,3 +44,22 @@ interface Category {
     image: string
   };
 }
+
+interface Product {
+  id: string;
+  title: string;
+  handle: string;
+  thumbnail: string;
+  variants: Array<{
+    title: string,
+    options: Array<{
+      id: string,
+      value: string
+    }>,
+    prices: Array<{
+      id: string,
+      currency_code: string,
+      amount: string
+    }>
+  }>
+}

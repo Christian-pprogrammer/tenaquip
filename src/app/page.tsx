@@ -110,7 +110,7 @@ export default async function Home() {
       }}>
         {
           mainCategories.map((item: MainCategory, key: number)=>(
-            <CategoryElement imageSrc={item.metadata.image} categoryName={item.name} key={key} handle={item.handle} />
+            <CategoryElement imageSrc={item.metadata?.image} categoryName={item.name} key={key} handle={item.handle} />
           ))
         }
       </div>

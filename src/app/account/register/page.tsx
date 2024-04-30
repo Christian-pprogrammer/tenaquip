@@ -44,6 +44,7 @@ const Register = () => {
       console.log("submit...")
       dispatch(setLoading(true));
       dispatch(setShowModal(true))
+      document.body.style.overflow = "hidden"
       let customer = {
         ...data,
       };
@@ -66,6 +67,7 @@ const Register = () => {
       }
       dispatch(setLoading(false));
       dispatch(setShowModal(false))
+      document.body.style.overflow = "auto";
     },
     validationSchema: registerSchema,
   });

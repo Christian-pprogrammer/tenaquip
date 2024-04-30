@@ -1,6 +1,8 @@
 import Breadcrump from "@/components/Breadcrump/Breadcrump";
+import ProductComponent from "@/components/ProductComponent/ProductComponent";
 import Slider from "@/components/Slider/Slider";
 import { fetchByHandle } from "@/services/category-service";
+import { fetchProductsByCategory } from "@/services/product-service";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -12,11 +14,24 @@ const ProductCategory = async (props: any) => {
   let category: MainCategory | null = null;
   let childCategories: Array<Category> = [];
 
+
+  let products: Array<Product> = [];
+
   try {
     const categories = await fetchByHandle(props.params.category);
     category = categories[0];
     childCategories = categories[0].category_children
   }catch (err) {
+
+  }
+
+  try {
+    //fetch products
+    const productsRes = await fetchProductsByCategory(category?.id || '');
+    console.log(productsRes)
+    products = productsRes;
+    console.log("products array", JSON.stringify(productsRes))
+  }catch(err) {
 
   }
 
@@ -43,7 +58,19 @@ const ProductCategory = async (props: any) => {
 
       <Slider 
         categories={childCategories}
-      />       
+      />    
+
+      {/* filter */}
+
+      <div className="grid md:grid-cols-3 xl:grid-cols-4 my-4">
+        
+      {
+        products.map((product)=>(
+          <ProductComponent product={product} />
+        ))
+      }
+
+      </div>
     </div>
   );
 };

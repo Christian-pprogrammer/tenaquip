@@ -23,7 +23,8 @@ const userSlice = createSlice({
       state.password = action.payload;
     },
     setUser: (state, action: PayloadAction<any>) => {
-      state.user = action.payload
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload))
     }
   },
 });

@@ -1,6 +1,8 @@
 "use client";
 
+import cart, { setCart } from "@/Store/slices/cart";
 import { setLoading } from "@/Store/slices/loading";
+import { setModalContent, setShowModal } from "@/Store/slices/modal";
 import { setUser } from "@/Store/slices/user";
 import COLORS from "@/config/colors";
 import { useAppDispatch } from "@/hooks";
@@ -32,6 +34,13 @@ const LoginForm = () => {
         );
         console.log(res);
         dispatch(setUser(res?.data?.customer));
+        dispatch(setShowModal(false))
+        dispatch(setModalContent({
+          title: '',
+          content: 'empty'
+        }))      
+        document.body.style.overflow = "auto"
+        
         //set user cookie
         router.push("/");
       } catch (err: any) {

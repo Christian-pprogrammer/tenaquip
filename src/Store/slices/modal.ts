@@ -2,12 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IModalState {
   showModal: boolean;
-  modalContent: any;
+  modalContent: {
+    title: string,
+    content: string
+  }
 }
 
 const initialState: IModalState = {
   showModal: false,
-  modalContent: 'empty'
+  modalContent: {
+    title: '',
+    content: 'empty'
+  }
 }
 
 const modalSlice = createSlice({
@@ -18,8 +24,11 @@ const modalSlice = createSlice({
       state.showModal = action.payload
     },
 
-    setModalContent: (state, action: PayloadAction<string>) => {
-      state.modalContent = action.payload
+    setModalContent: (state, action: PayloadAction<{title: string, content: string}>) => {
+      state.modalContent = {
+        title: action.payload.title,
+        content: action.payload.content
+      }
     }
   }
 })

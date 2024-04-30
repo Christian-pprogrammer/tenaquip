@@ -1,10 +1,17 @@
 'use client';
 
+import COLORS from '@/config/colors';
 import { Accordion } from 'flowbite-react';
+import Link from 'next/link';
+import { FaTruck } from 'react-icons/fa';
 
-const Checkout = () => {
+type Props = {
+  total: number;
+}
+
+const Checkout = ({total}: Props) => {
   return (
-    <div className='flex flex-col gap-5 my-5'>
+    <div className='flex flex-col gap-5 sticky w-[300px]'>
       <Accordion className='w-[300px] rounded-none' collapseAll>
         <Accordion.Panel>
           <Accordion.Title className='bg-lightMain w-full outline-none border-none focus:ring-0 py-2 px-[10px]'>
@@ -27,11 +34,21 @@ const Checkout = () => {
         <h3 className='text-Gray text-lg font-semibold'>Order Summary</h3>
         <div className='flex justify-between'>
           <p className='text-Gray text-sm font-semibold'>Subtotal</p>
-          <p className='text-Gray text-sm font-semibold'>$0.00</p>
+          <p className='text-Gray text-sm font-semibold'>${total}</p>
         </div>
       </div>
-      <button disabled className='inline-block bg-mainColor text-white rounded-s text-[16px] py-[15px] text-center w-[300px] cursor-pointer'>
+
+      <div className='bg-lightMain text-mainColor leading-5 text-sm p-3'>
+        <p>
+          <FaTruck color={COLORS.MAIN_COLOR} className='inline mr-2' size={20} />
+          FREE delivery on all orders over <span className='font-[700]'>$99</span> when shipping to an <span className='font-[700] underline'>eligible location.</span>
+        </p>
+      </div>
+      <Link href='/account/checkout' className='inline-block bg-mainColor text-white rounded-s text-[16px] py-[15px] text-center w-[300px] cursor-pointer'>
         Checkout
+      </Link>
+      <button disabled >
+        
       </button>
     </div>
   );

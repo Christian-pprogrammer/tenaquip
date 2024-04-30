@@ -55,6 +55,14 @@
   @apply border-1 border-[#c00000];
 }
 
+.heading {
+  @apply font-[700] text-[26px] text-Gray leading-[1.2rem];
+}
+
+.custom-text {
+  @apply text-Gray text-[13px] leading-6;
+}
+
 .error {
   @apply custom-label;
   color: #c00000 !important;
@@ -91,7 +99,7 @@
   position: absolute;
   height: 4px;
   height: 100%;
-  width: 5%;
+  width: 30%;
   background: #777;
   border-radius: inherit;
   cursor: grab;
@@ -136,4 +144,12 @@
   right: 0;
   top: -10px;
   bottom: -10px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.qty-input:focus {
+  outline: none;
 }
