@@ -21,16 +21,16 @@ interface RegisterInterface {
 
 interface AddressInterface {
   company: string;
-  first_name: string;
-  last_name: string;
+  first_name?: string;
+  last_name?: string;
   address_1: string;
   address_2: string;
   city: string;
   country_code: string;
   province: string;
   postal_code: string;
-  phone: string;
-  email: string;
+  phone?: string;
+  email?: string;
 }
 
 interface LoginInterface {
