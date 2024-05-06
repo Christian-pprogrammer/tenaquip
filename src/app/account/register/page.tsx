@@ -5,11 +5,12 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { registerSchema } from "@/util/registerSchema";
 import { canadaProvinces, usStates } from "@/Store/hard-coded";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setLoading } from "@/Store/slices/loading";
-import { setUser } from "@/Store/slices/user";
+import { setToken, setUser } from "@/Store/slices/user";
 import { useRouter } from "next/navigation";
 import { setShowModal } from "@/Store/slices/modal";
+import { headers } from "next/headers";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +34,6 @@ const Register = () => {
     province: "",
     zipCode: "",
     phone: "",
-    extension: "",
     correspondence: "",
     receiveEmails: false,
   };
@@ -46,9 +46,17 @@ const Register = () => {
       dispatch(setShowModal(true))
       document.body.style.overflow = "hidden"
       let customer = {
-        ...data,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        phone: data.phone,
+        email: data.email,
+        password: data.password,
+        resetQuestion: data.resetQuestion,
+        resetQuestionAnswer: data.resetQuestionAnswer,
+        correspondence: data.correspondence,
+        receiveEmails: data.receiveEmails,
+        jobTitle: data.jobTitle
       };
-      delete customer.repeatPassword;
       try {
 
         const res: any = await axios.post(
@@ -57,7 +65,21 @@ const Register = () => {
         );
         console.log(res?.data?.customer);
         dispatch(setUser(res?.data?.customer));
-        // //set user cookie
+
+        await loginUser({email: customer.email, password: customer.password})
+
+        await addShippingAddress({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          address_1: data.address,
+          city: data.city,
+          country_code: data.country,
+          postal_code: data.zipCode,
+          phone: data.phone,
+          company: data.companyName,
+          province: data.province,
+          email: data.email
+        });
 
         router.push('/');
       } catch (err: any) {
@@ -71,6 +93,46 @@ const Register = () => {
     },
     validationSchema: registerSchema,
   });
+
+  const loginUser = async ({email, password}: any) => {
+    try {
+      const res = await axios.post(
+        `${process.env.MEDUSA_BACKEND_API}/store/auth/token`,
+        {email, password}
+      );
+
+      const token = res.data.access_token;
+
+      dispatch(setToken(token));
+
+      
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  const addShippingAddress = async (address: any) => {
+
+    const token = useAppSelector(state => state.user.token ? state.user.token : localStorage.getItem("token"));
+
+    if(!!token) {
+      try{
+        await axios.post(
+          `${process.env.MEDUSA_BACKEND_API}/store/customers/me/addresses`,
+          address,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+      }catch(err) {
+        console.log(err);
+      }
+    }else{
+      console.log("no token");
+    }
+  }
 
   return (
     <form
@@ -488,18 +550,6 @@ const Register = () => {
             <span className="error">{formik.errors.phone}</span>
           )}
         </div>
-        <div className="extension">
-          <label htmlFor="extension" className="custom-label">
-            Extension
-          </label>
-          <input
-            type="text"
-            className="custom-input"
-            style={{
-              maxWidth: "100px !important",
-            }}
-          />
-        </div>
         <div className="col-span-2">
           <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
         </div>
@@ -544,10 +594,10 @@ const Register = () => {
             >
               French
             </label>
-            {formik.touched.correspondence && formik.errors.correspondence && (
-              <span className="error">{formik.errors.correspondence}</span>
-            )}
           </div>
+          {formik.touched.correspondence && formik.errors.correspondence && (
+            <span className="error ">{formik.errors.correspondence}</span>
+          )}
         </div>
         <div className="campaigns flex my-2 col-span-2">
           <label

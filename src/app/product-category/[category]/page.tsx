@@ -56,9 +56,8 @@ const ProductCategory = async (props: any) => {
         <p className="text-Gray text-sm">Showing 1 - 20 of 34176 listing(s)</p>
       </div>
 
-      <Slider 
-        categories={childCategories}
-      />    
+
+
 
       {/* filter */}
 

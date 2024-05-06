@@ -1,16 +1,21 @@
 "use client";
 
+import { setCart } from "@/Store/slices/cart";
 import { setModalContent, setShowModal } from "@/Store/slices/modal";
+import { setToken, setUser } from "@/Store/slices/user";
 import COLORS from "@/config/colors";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 
 export const Navbar = () => {
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   const productCategories = useAppSelector((state)=>state.product.productCategories);
 
@@ -27,6 +32,14 @@ export const Navbar = () => {
   const cart = useAppSelector((state) => state.cart.cart);
 
   const items = cart?.items;
+
+  const logout = () => {
+    dispatch(setUser(null));
+    dispatch(setToken(''));
+    dispatch(setCart(null))
+    localStorage.clear();
+    router.push('/account/register');
+  }
 
   return (
     <div className="flex px-32 justify-between items-center bg-white py-4">
@@ -57,12 +70,9 @@ export const Navbar = () => {
               <span className="text-mainColor text-sm font-bold cursor-pointer">
                 {user.last_name}
               </span>
-              <Link
-                href="/account/register"
-                className="text-mainColor text-[12px] "
-              >
+              <button className="text-mainColor text-[12px]" onClick={()=>logout()}>
                 Logout
-              </Link>
+              </button>
             </div>
           ) : (
             <div className="flex flex-col">

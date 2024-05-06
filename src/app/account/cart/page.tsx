@@ -6,7 +6,8 @@ import { setCart as setAppCart } from '@/Store/slices/cart';
 import { setShowModal } from '@/Store/slices/modal';
 import { setLoading } from '@/Store/slices/loading';
 import Image from 'next/image';
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import jwt from 'jsonwebtoken'
 
 const Cart = () => {
   
@@ -32,6 +33,7 @@ const Cart = () => {
       let currentCart = null;
 
       if(!cartId) {
+        //check if user is logged in
 
       }else{
         const id = localStorage.getItem("cart_id")
@@ -67,8 +69,6 @@ const Cart = () => {
       dispatch(setLoading(false));
       document.body.style.overflow = "auto"
     }
-
-    
 
     fetchCart()
   }, [])

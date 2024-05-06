@@ -15,9 +15,22 @@ interface RegisterInterface {
   province: string;
   zipCode: string;
   phone: string;
-  extension: string;
   correspondence: string;
   receiveEmails: boolean;
+}
+
+interface AddressInterface {
+  company: string;
+  first_name: string;
+  last_name: string;
+  address_1: string;
+  address_2: string;
+  city: string;
+  country_code: string;
+  province: string;
+  postal_code: string;
+  phone: string;
+  email: string;
 }
 
 interface LoginInterface {
@@ -51,6 +64,7 @@ interface Product {
   handle: string;
   thumbnail: string;
   variants: Array<{
+    id: string,
     title: string,
     options: Array<{
       id: string,

@@ -3,7 +3,7 @@
 import cart, { setCart } from "@/Store/slices/cart";
 import { setLoading } from "@/Store/slices/loading";
 import { setModalContent, setShowModal } from "@/Store/slices/modal";
-import { setUser } from "@/Store/slices/user";
+import { setToken, setUser } from "@/Store/slices/user";
 import COLORS from "@/config/colors";
 import { useAppDispatch } from "@/hooks";
 import { loginSchema } from "@/util/loginSchema";
@@ -11,6 +11,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
+import jwt from 'jsonwebtoken';
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -29,18 +30,29 @@ const LoginForm = () => {
       dispatch(setLoading(true));
       try {
         const res = await axios.post(
-          `${process.env.MEDUSA_BACKEND_API}/store/auth`,
+          `${process.env.MEDUSA_BACKEND_API}/store/auth/token`,
           data
         );
-        console.log(res);
-        dispatch(setUser(res?.data?.customer));
+    
+        const customerRes = await axios.get(
+          `${process.env.MEDUSA_BACKEND_API}/store/customers/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${res.data.access_token}`
+            }
+          }
+        )
+
+        const customer = customerRes?.data?.customer;
+
+        dispatch(setToken(res.data.access_token));
+        dispatch(setUser(customer));
         dispatch(setShowModal(false))
         dispatch(setModalContent({
           title: '',
           content: 'empty'
         }))      
         document.body.style.overflow = "auto"
-        
         //set user cookie
         router.push("/");
       } catch (err: any) {
