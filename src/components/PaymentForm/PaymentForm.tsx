@@ -1,6 +1,6 @@
 "use client"
 
-import { useAppSelector } from "@/hooks"
+import { useAppDispatch, useAppSelector } from "@/hooks"
 import {
     PaymentElement,
     useElements,
@@ -10,6 +10,8 @@ import BillingAddressForm from "../BillingAddressForm/BillingAddressForm"
 import { useFormik } from "formik"
 import { addressSchema } from "@/util/addressSchema"
 import { useState } from "react"
+import axios from "axios"
+import { setCart } from "@/Store/slices/cart"
 
 
 export default function Form({ clientSecret, cartId }: any) {
@@ -18,27 +20,51 @@ export default function Form({ clientSecret, cartId }: any) {
 
     const [useDeliveryAddress, setUseDeliveryAddress] = useState(true);
     const cart = useAppSelector((state)=>state.cart.cart);
+    const dispatch = useAppDispatch();
 
     async function handlePayment(data: any) {
-        const result = await stripe.confirmPayment({
-            //`Elements` instance that was used to create the Payment Element
-            elements,
-            confirmParams: {
-              return_url: "http://localhost:3000/success",
-            },
-          });
 
-          console.log(result)
-      
-      
-          if (result.error) {
-            // Show error to your customer (for example, payment details incomplete)
-            console.log(result.error.message);
-          } else {
-            // Your customer will be redirected to your `return_url`. For some payment
-            // methods like iDEAL, your customer will be redirected to an intermediate
-            // site first to authorize the payment, then redirected to the `return_url`.
-          }
+        //set the billing address
+        try {
+            const res = await axios.post(`${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}`, {
+                billing_address: {
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    phone: data.phone,
+                    address_1: data.address_1,
+                    address_2: data.address_2,
+                    postal_code: data.postal_code,
+                    city: data.city,
+                    province: data.province,
+                }
+            })
+
+            dispatch(setCart({cart: res?.data?.cart, cartType: 'unauthenticated_cart'}))
+            const result = await stripe.confirmPayment({
+                //`Elements` instance that was used to create the Payment Element
+                elements,
+                confirmParams: {
+                  return_url: "http://localhost:3000/shop/order-placed",
+                },
+              });
+        
+        
+              if (result.error) {
+                console.log(result.error.message);
+              } else {
+
+                alert("complete cart")
+                //complete cart and redirect user to success page
+
+                
+                // Your customer will be redirected to your `return_url`. For some payment
+                // methods like iDEAL, your customer will be redirected to an intermediate
+                // site first to authorize the payment, then redirected to the `return_url`.
+              }
+        }catch(err) {
+            alert("There was an error....");
+            console.log(err);
+        }
     }
 
     const initialAddressValues: AddressInterface = {
