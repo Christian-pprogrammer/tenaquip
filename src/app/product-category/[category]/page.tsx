@@ -1,6 +1,6 @@
-import Breadcrump from "@/components/Breadcrump/Breadcrump";
-import ProductComponent from "@/components/ProductComponent/ProductComponent";
-import Slider from "@/components/Slider/Slider";
+import Breadcrump from "@/components/bread-crump/Breadcrump";
+import ProductComponent from "@/components/product-component/ProductComponent";
+import Slider from "@/components/slider/Slider";
 import { fetchByHandle } from "@/services/category-service";
 import { fetchProductsByCategory } from "@/services/product-service";
 import Image from "next/image";

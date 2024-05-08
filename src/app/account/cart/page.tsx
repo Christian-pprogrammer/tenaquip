@@ -1,6 +1,6 @@
 "use client"
 
-import Checkout from '@/components/Checkout/Checkout'
+import Checkout from '@/components/checkout/Checkout'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { setCart as setAppCart } from '@/Store/slices/cart';
 import { setShowModal } from '@/Store/slices/modal';

@@ -4,9 +4,9 @@ import { RootState } from "@/Store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import React from "react";
 import { BiX } from "react-icons/bi";
-import LoginForm from "../LoginForm/LoginForm";
+import LoginForm from "../login-form/LoginForm";
 import Image from "next/image";
-import CartComponent from "../CartComponent/CartComponent";
+import CartComponent from "../cart-component/CartComponent";
 
 const Modal = () => {
   const dispatch = useAppDispatch();

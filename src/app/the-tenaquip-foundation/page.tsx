@@ -1,6 +1,6 @@
-import Breadcrump from "@/components/Breadcrump/Breadcrump";
-import HeadingAndParagraphs from "@/components/HeadingAndParagraphs/HeadingAndParagraphs";
-import Landing from "@/components/Landing/Landing";
+import Breadcrump from "@/components/bread-crump/Breadcrump";
+import HeadingAndParagraphs from "@/components/heading-and-paragraphs/HeadingAndParagraphs";
+import Landing from "@/components/landing/Landing";
 import React from "react";
 
 const SatisfactionGuarantee = () => {

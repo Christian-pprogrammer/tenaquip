@@ -1,10 +1,10 @@
-import CategoryElement from "@/components/CategoryElement/CategoryElement";
-import Disclaimer from "@/components/Disclaimer/Disclaimer";
-import Footer from "@/components/Footer/Footer";
-import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
-import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
-import { Navbar } from "@/components/Navbar/Navbar";
-import PostComponent from "@/components/PostComponent/PostComponent";
+import CategoryElement from "@/components/category-element/CategoryElement";
+import Disclaimer from "@/components/disclaimer/Disclaimer";
+import Footer from "@/components/footer/Footer";
+import ImageSwiper from "@/components/image-swiper/ImageSwiper";
+import MenuNavbar from "@/components/menu-navbar/MenuNavbar";
+import { Navbar } from "@/components/navbar/Navbar";
+import PostComponent from "@/components/post-component/PostComponent";
 import { fetchCategories } from "@/services/category-service";
 import Image from "next/image";
 

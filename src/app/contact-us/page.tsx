@@ -1,5 +1,5 @@
 "use client";
-import Breadcrump from "@/components/Breadcrump/Breadcrump";
+import Breadcrump from "@/components/bread-crump/Breadcrump";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, ChangeEvent } from "react";

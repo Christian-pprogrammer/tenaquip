@@ -1,5 +1,5 @@
-import ResourceElementComponent from "@/components/ResourceElementComponent/ResourceElementComponent";
-import ResourceNavigator from "@/components/ResourceNavigator/ResourceNavigator";
+import ResourceElementComponent from "@/components/resource-element-component/ResourceElementComponent";
+import ResourceNavigator from "@/components/resource-navigator/ResourceNavigator";
 import { title } from "process";
 import React from "react";
 

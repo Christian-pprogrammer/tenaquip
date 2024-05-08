@@ -1,5 +1,5 @@
-import Breadcrump from "@/components/Breadcrump/Breadcrump";
-import Landing from "@/components/Landing/Landing";
+import Breadcrump from "@/components/bread-crump/Breadcrump";
+import Landing from "@/components/landing/Landing";
 import React from "react";
 
 const SatisfactionGuarantee = () => {

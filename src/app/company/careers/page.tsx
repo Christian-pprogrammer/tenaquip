@@ -1,4 +1,4 @@
-import Breadcrump from "@/components/Breadcrump/Breadcrump";
+import Breadcrump from "@/components/bread-crump/Breadcrump";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

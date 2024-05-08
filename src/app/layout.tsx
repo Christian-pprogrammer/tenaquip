@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/Footer/Footer";
-import { Navbar } from "@/components/Navbar/Navbar";
-import MenuNavbar from "@/components/MenuNavbar/MenuNavbar";
+import Footer from "@/components/footer/Footer";
+import { Navbar } from "@/components/navbar/Navbar";
+import MenuNavbar from "@/components/menu-navbar/MenuNavbar";
 import { Accordion } from 'flowbite-react';
 import { Providers } from "@/Store/provider";
-import Modal from "@/components/Modal/Modal";
+import Modal from "@/components/modal/Modal";
 import { fetchCategories } from "@/services/category-service";
 import StorageOnLoad from "@/config/StorageOnLoad";
 

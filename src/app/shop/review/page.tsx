@@ -1,7 +1,7 @@
 "use client"
 
-import PaymentMethod from '@/components/PaymentMethod/PaymentMethod'
-import Progress from '@/components/Progress/Progress'
+import PaymentMethod from '@/components/payment-method/PaymentMethod'
+import Progress from '@/components/progress/Progress'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import axios from 'axios'
 import { Accordion } from 'flowbite-react'
@@ -9,7 +9,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
-import Form from '@/components/PaymentForm/PaymentForm'
+import Form from '@/components/payment-form/PaymentForm'
 import { setCart } from '@/Store/slices/cart'
 
 const stripePromise = loadStripe("pk_test_51JFxudBy7J9W92jTmsSCvnTdcD9NNq72zIyx7OYEWiHEoRvqP5Dmn6v80ZAqIQomXf45bcT58f2h024uQuzDR4UO00QUKCbj2a")

@@ -1,6 +1,6 @@
-import Breadcrump from "@/components/Breadcrump/Breadcrump";
-import Landing from "@/components/Landing/Landing";
-import Tenaway from "@/components/Tenaway/Tenaway";
+import Breadcrump from "@/components/bread-crump/Breadcrump";
+import Landing from "@/components/landing/Landing";
+import Tenaway from "@/components/tenaway/Tenaway";
 import React from "react";
 
 const SatisfactionGuarantee = () => {

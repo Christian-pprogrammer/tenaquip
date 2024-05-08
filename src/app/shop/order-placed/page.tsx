@@ -1,7 +1,7 @@
 "use client"
 
 import { setCart } from '@/Store/slices/cart';
-import Progress from '@/components/Progress/Progress'
+import Progress from '@/components/progress/Progress'
 import COLORS from '@/config/colors';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import axios from 'axios';
@@ -45,9 +45,9 @@ const OrderPlaced = () => {
     const completeCart = async () => {
       try{
         const res = await axios.post(`${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}/complete`, {})
-        console.log(res);
+        console.log("my ress....", res);
       }catch(err) {
-        console.log(err);
+        console.log("my err...", err);
       }
     }
     completeCart();

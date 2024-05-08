@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
-import LinkList, { LinkListProps } from '../LinkList/LinkList'
+import LinkList, { LinkListProps } from '../link-list/LinkList'
 import Image from 'next/image'
 
 const Footer = () => {

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import HoverDropdown from "../HoverDropdown/HoverDropdown";
+import HoverDropdown from "../hover-drop-down/HoverDropdown";
 import { title } from "process";
 import { useAppSelector } from "@/hooks";
 import { PiTruckDuotone } from "react-icons/pi";

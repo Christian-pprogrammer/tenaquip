@@ -6,7 +6,7 @@ import {
     useElements,
     useStripe,
 } from "@stripe/react-stripe-js"
-import BillingAddressForm from "../BillingAddressForm/BillingAddressForm"
+import BillingAddressForm from "../billing-address-form/BillingAddressForm"
 import { useFormik } from "formik"
 import { addressSchema } from "@/util/addressSchema"
 import { useState } from "react"
