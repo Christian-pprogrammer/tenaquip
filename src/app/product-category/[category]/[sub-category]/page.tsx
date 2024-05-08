@@ -1,7 +1,7 @@
-import Breadcrump from "@/components/bread-crump/Breadcrump";
-import DropdownComponent from "@/components/drop-down-component/DropdownComponent";
-import FilterDropdown from "@/components/filter-drop-down/FilterDropdown";
-import ProductComponent from "@/components/product-component/ProductComponent";
+import Breadcrump from "@/components/Breadcrump/Breadcrump";
+import DropdownComponent from "@/components/DropdownComponent/DropdownComponent";
+import FilterDropdown from "@/components/FilterDropdown/FilterDropdown";
+import ProductComponent from "@/components/ProductComponent/ProductComponent";
 import React from "react";
 
 const SubCategory = () => {

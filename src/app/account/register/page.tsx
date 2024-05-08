@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { registerSchema } from "@/util/registerSchema";
@@ -10,12 +10,14 @@ import { setLoading } from "@/Store/slices/loading";
 import { setToken, setUser } from "@/Store/slices/user";
 import { useRouter } from "next/navigation";
 import { setShowModal } from "@/Store/slices/modal";
-import { headers } from "next/headers";
+import { getError } from "@/util/getError";
 
 const Register = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
+
+  const [error, setError] = useState("");
 
   const initialValues: RegisterInterface = {
     first_name: "",
@@ -41,10 +43,9 @@ const Register = () => {
   const formik = useFormik({
     initialValues,
     onSubmit: async (data) => {
-      console.log("submit...")
       dispatch(setLoading(true));
-      dispatch(setShowModal(true))
-      document.body.style.overflow = "hidden"
+      dispatch(setShowModal(true));
+      document.body.style.overflow = "hidden";
       let customer = {
         first_name: data.first_name,
         last_name: data.last_name,
@@ -55,84 +56,89 @@ const Register = () => {
         resetQuestionAnswer: data.resetQuestionAnswer,
         correspondence: data.correspondence,
         receiveEmails: data.receiveEmails,
-        jobTitle: data.jobTitle
+        jobTitle: data.jobTitle,
       };
       try {
-
         const res: any = await axios.post(
           `${process.env.MEDUSA_BACKEND_API}/store/customers`,
           customer
         );
         console.log(res?.data?.customer);
+
         dispatch(setUser(res?.data?.customer));
 
-        await loginUser({email: customer.email, password: customer.password})
-
-        await addShippingAddress({
-          first_name: data.first_name,
-          last_name: data.last_name,
-          address_1: data.address,
-          city: data.city,
-          country_code: data.country,
-          postal_code: data.zipCode,
-          phone: data.phone,
-          company: data.companyName,
-          province: data.province,
-          email: data.email
+        const token = await loginUser({
+          email: customer.email,
+          password: customer.password,
         });
 
-        router.push('/');
+        await addShippingAddress(
+          {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            address_1: data.address,
+            city: data.city,
+            country_code: data.country,
+            postal_code: data.zipCode,
+            phone: data.phone,
+            company: data.companyName,
+            province: data.province,
+          },
+          token
+        );
+        router.push("/");
       } catch (err: any) {
-        if (err?.response?.data?.type === "duplicate_error") {
-          alert("Email already exist");
-        }
+        console.log(err);
+        alert(getError(err));
+        setError(getError(err));
       }
       dispatch(setLoading(false));
-      dispatch(setShowModal(false))
+      dispatch(setShowModal(false));
       document.body.style.overflow = "auto";
     },
     validationSchema: registerSchema,
   });
 
-  const loginUser = async ({email, password}: any) => {
+  const loginUser = async ({ email, password }: any) => {
     try {
       const res = await axios.post(
         `${process.env.MEDUSA_BACKEND_API}/store/auth/token`,
-        {email, password}
+        { email, password }
       );
 
       const token = res.data.access_token;
 
       dispatch(setToken(token));
 
-      
+      return token;
     } catch (err: any) {
       console.log(err);
     }
-  }
+  };
 
-  const addShippingAddress = async (address: any) => {
-
-    const token = useAppSelector(state => state.user.token ? state.user.token : localStorage.getItem("token"));
-
-    if(!!token) {
-      try{
+  const addShippingAddress = async (address: any, token: string) => {
+    if (!!token) {
+      try {
         await axios.post(
           `${process.env.MEDUSA_BACKEND_API}/store/customers/me/addresses`,
-          address,
+          {
+            address: {
+              ...address,
+            },
+          },
           {
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
-        )
-      }catch(err) {
+        );
+      } catch (err) {
         console.log(err);
       }
-    }else{
+    } else {
       console.log("no token");
     }
-  }
+  };
 
   return (
     <form
@@ -152,6 +158,11 @@ const Register = () => {
       <div>
         <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
       </div>
+      {error && (
+        <div className="text-[#a94442] bg-[#f2dede] border-1 border-[#ebccd1] my-[10px] p-[15px] rounded-[4px] max-w-[700px]">
+          {error}
+        </div>
+      )}
       <div>
         <h3 className="font-semibold text-xl text-Gray my-2">
           Your Information
@@ -465,8 +476,8 @@ const Register = () => {
             value={formik.values.country}
           >
             <option value="">Select Country</option>
-            <option value="Canada">Canada</option>
-            <option value="United States">United States</option>
+            <option value="CA">Canada</option>
+            <option value="US">United States</option>
           </select>
           {formik.touched.country && formik.errors.country && (
             <span className="error">{formik.errors.country}</span>
@@ -488,7 +499,7 @@ const Register = () => {
             value={formik.values.province}
           >
             <option value="">Select a Province/State</option>
-            {formik.values.country && formik.values.country == "Canada" && (
+            {formik.values.country && formik.values.country == "CA" && (
               <>
                 {canadaProvinces.map((province, index) => (
                   <option value={province} key={index}>
@@ -497,16 +508,15 @@ const Register = () => {
                 ))}
               </>
             )}
-            {formik.values.country &&
-              formik.values.country == "United States" && (
-                <>
-                  {usStates.map((state, index) => (
-                    <option value={state} key={index}>
-                      {state}
-                    </option>
-                  ))}
-                </>
-              )}
+            {formik.values.country && formik.values.country == "US" && (
+              <>
+                {usStates.map((state, index) => (
+                  <option value={state} key={index}>
+                    {state}
+                  </option>
+                ))}
+              </>
+            )}
           </select>
           {formik.touched.province && formik.errors.province && (
             <span className="error">{formik.errors.province}</span>

@@ -33,9 +33,9 @@ const cartSlice = createSlice({
   reducers: {
 
     setCart: (state: ICartState, action: PayloadAction<any>) => {
-      state.cart = action.payload.cart;
-      state.cartType = action.payload.cartType;
-      localStorage?.setItem("cart", JSON.stringify(action.payload.cart))
+      state.cart = action.payload?.cart;
+      state.cartType = action.payload?.cartType;
+      localStorage?.setItem("cart", JSON.stringify(action.payload?.cart))
     },
 
     setRecentCartItem: (state: ICartState, action: PayloadAction<any>) => {

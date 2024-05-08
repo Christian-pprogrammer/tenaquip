@@ -1,20 +1,19 @@
-"use client"
+"use client";
 
-import COLORS from '@/config/colors'
-import React from 'react'
+import COLORS from "@/config/colors";
+import React from "react";
 import { useFormik } from "formik";
-import { useAppDispatch } from '@/hooks';
-import { useRouter } from 'next/navigation';
-import { loginSchema } from '@/util/loginSchema';
-import { setLoading } from '@/Store/slices/loading';
-import { setModalContent, setShowModal } from '@/Store/slices/modal';
-import axios from 'axios';
-import { setUser } from '@/Store/slices/user';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useAppDispatch } from "@/hooks";
+import { useRouter } from "next/navigation";
+import { loginSchema } from "@/util/loginSchema";
+import { setLoading } from "@/Store/slices/loading";
+import { setModalContent, setShowModal } from "@/Store/slices/modal";
+import axios from "axios";
+import { setUser } from "@/Store/slices/user";
+import Image from "next/image";
+import Link from "next/link";
 
 const page = () => {
-
   const dispatch = useAppDispatch();
 
   const router = useRouter();
@@ -28,7 +27,7 @@ const page = () => {
     initialValues: initialValues,
     validationSchema: loginSchema,
     onSubmit: async (data) => {
-      dispatch(setShowModal(true))
+      dispatch(setShowModal(true));
       dispatch(setLoading(true));
       try {
         const res = await axios.post(
@@ -37,63 +36,69 @@ const page = () => {
         );
         console.log(res);
         dispatch(setUser(res?.data?.customer));
-        dispatch(setShowModal(false))
-        dispatch(setLoading(false))
-        dispatch(setModalContent({
-          title: '',
-          content: 'empty'
-        }))      
-        document.body.style.overflow = "auto"
-        
+        dispatch(setShowModal(false));
+        dispatch(setLoading(false));
+        dispatch(
+          setModalContent({
+            title: "",
+            content: "empty",
+          })
+        );
+        document.body.style.overflow = "auto";
+
         //set user cookie
         router.push("/");
       } catch (err: any) {
         console.log(err);
       }
 
-      dispatch(setShowModal(false))
-      dispatch(setLoading(false))
-      dispatch(setModalContent({
-        title: '',
-        content: 'empty'
-      }))      
-      document.body.style.overflow = "auto"
+      dispatch(setShowModal(false));
+      dispatch(setLoading(false));
+      dispatch(
+        setModalContent({
+          title: "",
+          content: "empty",
+        })
+      );
+      document.body.style.overflow = "auto";
     },
   });
 
   return (
-    <div className='flex justify-between px-32 py-10'>
-      <div className='flex flex-col gap-4'>
-        <h2 className='heading'>Guest Checkout</h2>
-        <p className='custom-text'>Checkout now and register later</p>
-        <Link 
-          href='/shop/address'
-          className='custom-btn no-underline'
+    <div className="flex justify-between px-32 py-10">
+      <div className="flex flex-col gap-4">
+        <h2 className="heading">Guest Checkout</h2>
+        <p className="custom-text">Checkout now and register later</p>
+        <Link
+          href="/shop/address"
+          className="custom-btn no-underline"
           style={{
             backgroundColor: COLORS.MAIN_COLOR,
-            color: '#fff',
-            border: 'none'
+            color: "#fff",
+            border: "none",
           }}
-        >Checkout as Guest</Link>
-        <div className='flex gap-1'>
-          <button className='bg-white rounded rounded-xs border-none outline-none py-[2px] text-xs'>
-            <img 
+        >
+          Checkout as Guest
+        </Link>
+        <div className="flex gap-1">
+          <button className="bg-white rounded rounded-xs border-none outline-none py-[2px] text-xs">
+            <img
               src="https://www.tenaquip.com/images/icon/amex_en.png?1708981900"
-              alt=''
-              style={{maxWidth: "40px"}}
+              alt=""
+              style={{ maxWidth: "40px" }}
             />
           </button>
-          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
-            <img 
+          <button className="bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs">
+            <img
               src="https://www.tenaquip.com/images/icon/mc_en.png?1708981900"
-              alt=''
-              style={{maxWidth: "50px"}}
+              alt=""
+              style={{ maxWidth: "50px" }}
             />
           </button>
-          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
-            <Image 
+          <button className="bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs">
+            <Image
               src="https://www.tenaquip.com/images/icon/visa_en.png?1708981900"
-              alt=''
+              alt=""
               width={60}
               height={60}
             />
@@ -102,21 +107,21 @@ const page = () => {
               alt=''
               style={{maxWidth: "60px"}}
             /> */}
-          </button>          
-          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
-            <Image 
+          </button>
+          <button className="bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs">
+            <Image
               src="https://www.tenaquip.com/images/icon/pp-logo-100px.png"
-              alt=''
+              alt=""
               width={80}
               height={80}
-              objectFit='cover'
+              objectFit="cover"
             />
           </button>
-          <button className='bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs'>
-            <img 
+          <button className="bg-white rounded rounded-xs border-none outline-none px-[10px] text-xs">
+            <img
               src="https://www.tenaquip.com/images/icon/affirm_black_logo-transparent_bg.svg?1700507594"
-              alt=''
-              style={{maxWidth: "60px"}}
+              alt=""
+              style={{ maxWidth: "60px" }}
             />
           </button>
         </div>
@@ -130,7 +135,9 @@ const page = () => {
           }}
         >
           <h2 className="heading">Sign in</h2>
-          <p className="custom-text my-4">Sign in for fast checkout, shopping lists, order history, and more!</p>
+          <p className="custom-text my-4">
+            Sign in for fast checkout, shopping lists, order history, and more!
+          </p>
           <div className="email">
             <label htmlFor="email" className="custom-label">
               Email
@@ -158,7 +165,9 @@ const page = () => {
               type="password"
               id="password"
               className={`custom-input ${
-                formik.touched.password && formik.errors.password && "error-input"
+                formik.touched.password &&
+                formik.errors.password &&
+                "error-input"
               }`}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -175,7 +184,7 @@ const page = () => {
               style={{
                 width: "fit-content",
                 cursor: "pointer",
-                color: COLORS.MAIN_COLOR
+                color: COLORS.MAIN_COLOR,
               }}
             >
               Forgot your passoword?
@@ -190,8 +199,8 @@ const page = () => {
                 backgroundColor: COLORS.MAIN_COLOR,
                 color: "white",
                 borderRadius: "6px",
-                border: 'none',
-                padding: '12px 20px'
+                border: "none",
+                padding: "12px 20px",
               }}
             >
               Sign In
@@ -212,9 +221,8 @@ const page = () => {
           </div>
         </form>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

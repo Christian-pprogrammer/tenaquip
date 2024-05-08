@@ -10,13 +10,16 @@ import { loginSchema } from "@/util/loginSchema";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import jwt from 'jsonwebtoken';
+import { getError } from "@/util/getError";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
+
+  const [error, setError] = useState('');
 
   const initialValues: LoginInterface = {
     email: "",
@@ -53,9 +56,11 @@ const LoginForm = () => {
           content: 'empty'
         }))      
         document.body.style.overflow = "auto"
+        setError('')
         //set user cookie
         router.push("/");
       } catch (err: any) {
+        setError(getError(err));
         console.log(err);
       }
 
@@ -70,6 +75,13 @@ const LoginForm = () => {
         formik.handleSubmit(e);
       }}
     >
+      {
+        error && (
+          <div className="text-[#a94442] bg-[#f2dede] border-1 border-[#ebccd1] my-[10px] p-[15px] rounded-[4px]">
+            {error}
+          </div>
+        )
+      }
       <div className="email">
         <label htmlFor="email" className="custom-label">
           Email
