@@ -9,10 +9,10 @@ interface IModalState {
 }
 
 const initialState: IModalState = {
-  showModal: true,
+  showModal: false,
   modalContent: {
-    title: 'Sign in',
-    content: 'auth'
+    title: '',
+    content: ''
   }
 }
 

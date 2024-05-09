@@ -23,6 +23,7 @@ const Review = () => {
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState('Credit Card');
   const [clientSecret, setClientSecret] = useState()
   const dispatch = useAppDispatch();
+  const [shippingOptions, setShippingOptions] = useState([]);
 
 
   const paymentMethods: Array<{title: string, images: Array<string>}> = [
@@ -94,7 +95,22 @@ const Review = () => {
     createStripePaymentSession();
   }, [])
 
-  console.log('.cart...', cart)
+  useEffect(()=>{
+    //get shipping options
+    const getShippingOptions = async () => {
+      try{
+        const res = await axios.get(`${process.env.MEDUSA_BACKEND_API}/store/shipping-options/${cart?.id}`)
+        setShippingOptions(res?.data?.shipping_options)
+        alert(res?.data?.shipping_options?.length)
+        console.log(res)
+      }catch(err) {
+        console.log(err);
+      }
+    }
+
+    getShippingOptions();
+
+  }, [cart])
 
   return (
     <div className='px-32 py-6'>
@@ -155,6 +171,18 @@ const Review = () => {
                 Modify
               </button>
             </div>
+
+            <hr className="w-[100%] border-t-[#ddd] mt-6" />
+            
+            <h3 className='text-Gray text-lg font-semibold my-3'>Shipping Method</h3>
+
+            {
+              shippingOptions.map((option) => (
+                <p>option</p>
+              ))
+            }
+
+
             <hr className="w-[100%] border-t-[#ddd] mt-6" />
 
             <div className='payment'>

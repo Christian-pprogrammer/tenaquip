@@ -8,8 +8,6 @@ import { Accordion } from 'flowbite-react';
 import { Providers } from "@/Store/provider";
 import Modal from "@/components/modal/Modal";
 import { fetchCategories } from "@/services/category-service";
-import StorageOnLoad from "@/config/StorageOnLoad";
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,9 +40,6 @@ export default async function RootLayout({
     <html lang="en">
       <Providers>
         <body className={inter.className}>
-          <StorageOnLoad 
-            productCategories={mainCategories}
-          />
           <Navbar />
           <MenuNavbar />
           <Modal />

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 
@@ -16,8 +16,6 @@ export const Navbar = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
-
-  const productCategories = useAppSelector((state)=>state.product.productCategories);
 
   const openModal = () => {
     dispatch(setModalContent({

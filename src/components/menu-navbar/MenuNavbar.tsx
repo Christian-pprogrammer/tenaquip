@@ -2,21 +2,45 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HoverDropdown from "../hover-drop-down/HoverDropdown";
 import { title } from "process";
 import { useAppSelector } from "@/hooks";
 import { PiTruckDuotone } from "react-icons/pi";
+import { fetchCategories as fetchProductCategories } from "@/services/category-service";
 
 const MenuNavbar = () => {
 
-  const productCategories = useAppSelector((state)=>state.product.productCategories);
-  const productCategoriesLinks = productCategories.map((category)=>{
-    return {
-      title: category.name,
-      linkUrl: `product-category/${category.handle}`
+  
+  let [categories, setCategories] = useState([]);
+
+
+  useEffect(()=>{
+    const fetchCategories = async () => {
+      let mainCategories = [];
+      try {
+        console.log("fetch categoriess...")
+        const categories:any = await fetchProductCategories();
+        console.log("finish fetch", categories)
+        mainCategories = categories.filter((item: any) => {
+          console.log(item)
+          return !item.parent_category;
+        });
+        console.log("main", mainCategories)
+        let categoryLinks = mainCategories.map((category: any)=>{
+          return {
+            title: category.name,
+            linkUrl: `product-category/${category.handle}`
+          }
+        })
+        setCategories(categoryLinks);
+      }catch (err) {
+    
+      }
     }
-  })
+    fetchCategories();
+  }, [])
+
 
   const serviceCategories = [
     {
@@ -211,7 +235,7 @@ const MenuNavbar = () => {
     <div className="flex px-32 justify-between items-stretch bg-mainColor">
       <div className="flex h-[100%]">
         {/* <Link href="/" className='text-white text-[12px] font-medium flex items-center hover:bg-darkMain py-[13px] px-[20px]'>Products</Link> */}
-        <HoverDropdown title="Products" links={productCategoriesLinks} />
+        <HoverDropdown title="Products" links={categories} />
         <HoverDropdown title="Services" links={serviceCategories} />
         <HoverDropdown title="Company" links={company} />
 
