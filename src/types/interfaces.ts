@@ -33,6 +33,16 @@ interface AddressInterface {
   email?: string;
 }
 
+interface AddressNoUserInfoInterface {
+  company: string,
+  address_1: string,
+  address_2: string,
+  city: string,
+  country_code: string,
+  province: string,
+  postal_code: string,
+}
+
 interface LoginInterface {
   email: string;
   password: string;

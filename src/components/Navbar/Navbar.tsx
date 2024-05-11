@@ -90,9 +90,13 @@ export const Navbar = () => {
         </div>
 
         <Link href='/account/cart' className="flex items-center gap-2 relative">
-          <span className="bg-[#faa33b] text-white text-[14px] absolute left-[15px] top-[-12px] rounded-full w-fit text-center block min-w-[22px] h-[22px]">
-            {items ? items.length : 0}
-          </span>
+          {
+            items && (
+              <span className="bg-[#faa33b] text-white text-[14px] absolute left-[15px] top-[-12px] rounded-full w-fit text-center block min-w-[22px] h-[22px]">
+                {items.length}
+              </span>
+            )
+          }
           <FaShoppingCart color={COLORS.MAIN_COLOR} size={25} />
           <div className="flex flex-col">
             <span
