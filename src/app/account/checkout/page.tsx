@@ -34,7 +34,6 @@ const page = () => {
           `${process.env.MEDUSA_BACKEND_API}/store/auth`,
           data
         );
-        console.log(res);
         dispatch(setUser(res?.data?.customer));
         dispatch(setShowModal(false));
         dispatch(setLoading(false));
@@ -45,8 +44,6 @@ const page = () => {
           })
         );
         document.body.style.overflow = "auto";
-
-        //set user cookie
         router.push("/");
       } catch (err: any) {
         console.log(err);

@@ -22,24 +22,26 @@ export function Paypal() {
   const dispatch = useAppDispatch();
 
   const handlePayment = (data: any, actions: any) => {
-    return actions.order.authorize().then(async (authorization: any) => {
-      if (authorization.status !== "COMPLETED") {
-        setErrorMessage(`An error occurred, status: ${authorization.status}`);
+    return actions.order.capture().then(async function (details: any) {
+      console.log(details)
+      if (details.status !== "COMPLETED") {
+        setErrorMessage(`An error occurred, status: ${details.status}`);
         setProcessing(false);
         return;
       }
-
-      //update payment session
+      // update payment session
 
       const res = await axios.post(
         `${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}/payment-sessions/paypal`,
         {
-          ...authorization,
+          data: {
+            ...details
+          },
         }
       );
       console.log(res.data);
       router.push("/shop/order-placed");
-    });
+    })
   };
 
   const initialAddressValues: AddressInterface = {
@@ -137,6 +139,8 @@ export function Paypal() {
           <PayPalScriptProvider
             options={{
               clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+              currency: "USD",
+              intent: "capture"
             }}
           >
             {errorMessage && (
