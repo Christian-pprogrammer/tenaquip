@@ -36,6 +36,7 @@ const Cart = () => {
 
       if (cartId) {
         const id = localStorage.getItem("cart_id");
+        alert(process.env.STRAPI_API)
         try{
           const response = await axios.get(
             `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`

@@ -6,7 +6,6 @@ import MenuNavbar from "@/components/menu-navbar/MenuNavbar";
 import { Navbar } from "@/components/navbar/Navbar";
 import PostComponent from "@/components/post-component/PostComponent";
 import { fetchCategories } from "@/services/category-service";
-import Image from "next/image";
 
 
 export default async function Home() {
@@ -17,11 +16,8 @@ export default async function Home() {
 
   console.log("fetch...")
   try {
-    const categories = await fetchCategories();
-    mainCategories = categories.filter((item: any) => {
-      console.log(item)
-      return !item.parent_category;
-    }); 
+    const categories = await fetchCategories(1,12);
+    mainCategories = categories;
 
   }catch (err) {
 
@@ -104,14 +100,16 @@ export default async function Home() {
   return (
     <div>
       <Disclaimer text="Shop Over 180,000 Industrial Products, Equipment & Supplies" />
-      <div className="gap-6 py-6 px-32 grid" style={{
+      <div className="gap-6 py-6 px-32 grid items-stretch" style={{
         gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr) )",
         gridAutoRows: "1fr"
       }}>
         {
-          mainCategories.map((item: MainCategory, key: number)=>(
-            <CategoryElement imageSrc={item.metadata?.image} categoryName={item.name} key={key} handle={item.handle} />
-          ))
+          mainCategories.map((item: any, key: number)=>{
+            return (
+              <CategoryElement imageSrc={`${process.env.STRAPI_UPLOADS}${item?.attributes?.thumbnail?.data?.attributes?.url}`} categoryName={item?.attributes?.name} key={key} handle={item?.attributes?.handle} />
+            )
+          })
         }
       </div>
       <Disclaimer text="Shop Preferred Brands" />

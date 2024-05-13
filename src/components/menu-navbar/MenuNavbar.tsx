@@ -14,23 +14,19 @@ const MenuNavbar = () => {
   
   let [categories, setCategories] = useState([]);
 
-
   useEffect(()=>{
     const fetchCategories = async () => {
       let mainCategories = [];
       try {
         console.log("fetch categoriess...")
-        const categories:any = await fetchProductCategories();
-        console.log("finish fetch", categories)
-        mainCategories = categories.filter((item: any) => {
-          console.log(item)
-          return !item.parent_category;
-        });
-        console.log("main", mainCategories)
+        console.log("my env.sdafdsafd", process.env.STRAPI_API)
+        mainCategories = await fetchProductCategories();
+        console.log(mainCategories)
+
         let categoryLinks = mainCategories.map((category: any)=>{
           return {
-            title: category.name,
-            linkUrl: `product-category/${category.handle}`
+            title: category?.attributes?.name,
+            linkUrl: `product-category/${category?.attributes?.handle}`
           }
         })
         setCategories(categoryLinks);

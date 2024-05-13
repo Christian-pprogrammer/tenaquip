@@ -28,11 +28,23 @@ type Props = {
         currency_code: string,
         amount: string
       }>
-    }>
+    }>,
+    model: string,
+    manufacturer_model_no: string,
+    ships_in: string,
+    brand: {
+      data: {
+        id: number,
+        attributes: {
+          name: string,
+          handle: string
+        }
+      }
+    }
   }
 }
 
-const ProductComponent = ({product: {id, title, handle, thumbnail, variants}}: Props) => {
+const ProductComponent = ({product: {id, title, handle, thumbnail, variants, model, manufacturer_model_no, ships_in, brand}}: Props) => {
 
   if(thumbnail?.startsWith("http://localhost")) {
     thumbnail = thumbnail.replace("localhost", "127.0.0.1");
@@ -123,19 +135,19 @@ const ProductComponent = ({product: {id, title, handle, thumbnail, variants}}: P
       </div>
 
       <div>
-        <p className="model text-Gray capitalize text-sm my-2">Bradly</p>
+        <p className="model text-Gray capitalize text-sm my-2">{brand.data.attributes.name}</p>
         <p className='productName text-mainColor my-2 text-sm'>{title}</p>
 
         <div className="my-3">
-          <p className='text-Gray'>Model: <span className='text-Gray font-semibold'>{variants[0].options[0].value}</span></p>
-          <p className='text-Gray'>Manufacturer Model No: <span className='text-Gray'></span></p>
+          <p className='text-Gray'>Model: <span className='text-Gray font-semibold'>{model}</span></p>
+          <p className='text-Gray'>Manufacturer Model No: <span className='text-Gray'>{manufacturer_model_no}</span></p>
         </div>
 
         <p className='text-Gray my-2'>
-          <span className='font-semibold'>$ {Number(variants[0].prices[0].amount) /100 }</span> / Each
+          <span className='font-semibold'>$ {Number(variants[0]?.prices[0]?.amount) /100 }</span> / Each
         </p>
 
-        <p className="text-Gray font-semibold my-2">Ships in 3-6 days</p>
+        <p className="text-Gray font-semibold my-2">Ships in {ships_in}</p>
 
         <p className="text-xs text-Gray">Buy More, Save More</p>
       </div>

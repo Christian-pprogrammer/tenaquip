@@ -1,18 +1,48 @@
-import axios from "axios"
+export const fetchCategories = async (page?: number, pageSize?: number) => {
+  let response = null;
 
-export const fetchCategories = async () => {
-  
-  const response = await fetch(`${process.env.MEDUSA_BACKEND_API}/store/product-categories`, {next: {revalidate: 0}});
-  if(response.ok) {
+  if(page && pageSize) {  
+    response = await fetch(`${process.env.STRAPI_API}/categories?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`, {next: {revalidate: 0}});
+  }else {
+    response = await fetch(`${process.env.STRAPI_API}/categories?populate=*`, {next: {revalidate: 0}});
+  }
+  if(response.ok) { 
     const jsonRes = await response.json();
-    return jsonRes.product_categories;  
+    console.log("json....", jsonRes)
+    return jsonRes?.data;  
   }
 }
 
 export const fetchByHandle = async (handle: string) => {
-  const response = await fetch(`${process.env.MEDUSA_BACKEND_API}/store/product-categories?handle=${handle}`, {next: {revalidate: 0}});
+  const response = await fetch(`${process.env.STRAPI_API}/categories?filters[handle][$eq]=${handle}&populate=*`, {next: {revalidate: 0}});
   if(response.ok) {
     const jsonRes = await response.json();
-    return jsonRes.product_categories;  
+    return jsonRes?.data[0];  
+  }
+}
+
+export const fetchSubCategories = async (categoryHandle: string) => {
+  const response = await fetch(`${process.env.STRAPI_API}/sub-categories?filters[category][handle][$eq]=${categoryHandle}&populate=*`, {next: {revalidate: 0}});
+  if(response.ok) {
+    const jsonRes = await response.json();
+    return jsonRes?.data;  
+  }
+}
+
+export const fetchSubSubCategories = async (subCategoryHandle: string) => {
+  const response = await fetch(`${process.env.STRAPI_API}/sub-sub-categories?filters[sub_category][handle][$eq]=${subCategoryHandle}&populate=*`, {next: {revalidate: 0}});
+  if(response.ok) {
+    const jsonRes = await response.json();
+    return jsonRes?.data;  
+  }
+}
+
+
+export const fetchSubSubCategoryByHandle = async (handle: string) => {
+  const response = await fetch(`${process.env.STRAPI_API}/sub-sub-categories?filters[handle][$eq]=${handle}&populate=*`, {next: {revalidate: 0}});
+  if(response.ok) {
+    const jsonRes = await response.json();
+    console.log("my json res", jsonRes?.data)
+    return jsonRes?.data[0];  
   }
 }

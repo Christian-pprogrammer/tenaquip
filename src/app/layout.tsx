@@ -26,12 +26,8 @@ export default async function RootLayout({
   
   let mainCategories = [];
   try {
-    const categories = await fetchCategories();
-    mainCategories = categories.filter((item: any) => {
-      console.log(item)
-      return !item.parent_category;
-    });
-
+   let categories = await fetchCategories();
+   mainCategories = categories;
   }catch (err) {
 
   }
