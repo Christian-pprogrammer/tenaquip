@@ -7,6 +7,8 @@ import { setShowModal } from "@/Store/slices/modal";
 import { setLoading } from "@/Store/slices/loading";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import axios from "axios";
+import { getError } from "@/util/getError";
 
 const Cart = () => {
   const [cart, setCart] = useState<any>();
@@ -16,6 +18,10 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
 
   const dispatch = useAppDispatch();
+
+  const user = useAppSelector(state => state.user?.user);
+
+  const appCart = useAppSelector(state => state.cart?.cart);
 
   useEffect(() => {
     dispatch(setShowModal(true));
@@ -28,22 +34,24 @@ const Cart = () => {
 
       let currentCart = null;
 
-      if (!cartId) {
-        //check if user is logged in
-      } else {
+      if (cartId) {
         const id = localStorage.getItem("cart_id");
-        const response = await fetch(
-          `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`,
-          {
-            credentials: "include",
-          }
-        );
-        const resJson = await response.json();
-        const { cart } = resJson;
-        dispatch(setAppCart({ cart: cart, cartType: "unauthenticated_cart" }));
-        console.log("my cart", cart);
-        currentCart = cart;
-        setCart(cart);
+        try{
+          const response = await axios.get(
+            `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`
+          );
+          const resJson = await response?.data;
+          let cartType = user ? "authenticated_cart":"unauthenticated_cart"
+          dispatch(setAppCart({ cart: resJson?.cart, cartType }));
+          currentCart = resJson?.cart;
+          setCart(resJson?.cart);
+        }catch(err) {
+          //if we can't fetch, use the current cart in the store
+          let cartType = user ? "authenticated_cart":"unauthenticated_cart"
+          dispatch(setAppCart({ cart: appCart, cartType }));
+          currentCart = cart;
+          setCart(appCart);
+        }
       }
 
       let currentQuantity: any;
@@ -98,7 +106,8 @@ const Cart = () => {
         return response.json();
       })
       .then(({ cart }) => {
-        dispatch(setAppCart({ cart: cart, cartType: "unauthenticated_cart" }));
+        let cartType = user ? "authenticated_cart":"unauthenticated_cart"
+        dispatch(setAppCart({ cart: cart, cartType}));
         setCart(cart);
         currentCart = cart;
         let currentQuantity: any;
@@ -116,7 +125,10 @@ const Cart = () => {
 
         setTotal(currentTotal);
         setQuantity(currentQuantity);
-      });
+      })
+      .catch((err: any) => {
+        alert(getError(err))
+      })
 
     dispatch(setShowModal(false));
     dispatch(setLoading(false));
@@ -159,7 +171,10 @@ const Cart = () => {
 
         setTotal(currentTotal);
         setQuantity(currentQuantity);
-      });
+      })
+      .catch((err: any)=>{
+        alert(getError(err));
+      })
 
     dispatch(setShowModal(false));
     dispatch(setLoading(false));

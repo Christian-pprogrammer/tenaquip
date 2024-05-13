@@ -5,7 +5,7 @@ import { setLoading } from "@/Store/slices/loading";
 import { setModalContent, setShowModal } from "@/Store/slices/modal";
 import { setToken, setUser } from "@/Store/slices/user";
 import COLORS from "@/config/colors";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { loginSchema } from "@/util/loginSchema";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -16,6 +16,8 @@ import { getError } from "@/util/getError";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
+
+  const cart = useAppSelector(state => state.cart?.cart);
 
   const router = useRouter();
 
@@ -50,7 +52,6 @@ const LoginForm = () => {
 
         dispatch(setToken(res.data.access_token));
         dispatch(setUser(customer));
-        dispatch(setShowModal(false))
         dispatch(setModalContent({
           title: '',
           content: 'empty'
@@ -58,12 +59,20 @@ const LoginForm = () => {
         document.body.style.overflow = "auto"
         setError('')
         //set user cookie
+
+        //if we already have cart, associate it with current logged in user
+        if(cart?.id) {
+          const res = await axios.post(`${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}`, {
+            customer_id: customer?.id
+          })
+          dispatch(setCart({cart: res.data?.cart, cartType: 'authenticated_cart'}))
+        }
         router.push("/");
       } catch (err: any) {
         setError(getError(err));
-        console.log(err);
       }
 
+      dispatch(setShowModal(false))
       dispatch(setLoading(false));
     },
   });
@@ -153,6 +162,14 @@ const LoginForm = () => {
             className="cursor-pointer underline"
             style={{
               color: COLORS.MAIN_COLOR,
+            }}
+            onClick={()=>{
+              router.push('/account/register')
+              dispatch(setShowModal(false));
+              setModalContent({
+                title: '',
+                content: 'empty'
+              })
             }}
           >
             Register here.

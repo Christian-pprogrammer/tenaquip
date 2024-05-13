@@ -12,6 +12,8 @@ import { addressNoUserInfoSchema } from "@/util/addressSchema";
 import { useState } from "react";
 import axios from "axios";
 import { setCart } from "@/Store/slices/cart";
+import { setLoading } from "@/Store/slices/loading";
+import { setShowModal } from "@/Store/slices/modal";
 
 export default function Form({ clientSecret, cartId }: any) {
   const stripe: any = useStripe();
@@ -22,6 +24,8 @@ export default function Form({ clientSecret, cartId }: any) {
   const dispatch = useAppDispatch();
 
   async function handlePayment(data: any) {
+    dispatch(setLoading(true));
+    dispatch(setShowModal(true))
     //set the billing address
     try {
       const res = await axios.post(
@@ -53,7 +57,11 @@ export default function Form({ clientSecret, cartId }: any) {
 
       if (result.error) {
         console.log(result.error.message);
+        dispatch(setLoading(false));
+        dispatch(setShowModal(false))
       } else {
+        dispatch(setLoading(false));
+        dispatch(setShowModal(false))
         //complete cart and redirect user to success page
         // Your customer will be redirected to your `return_url`. For some payment
         // methods like iDEAL, your customer will be redirected to an intermediate
@@ -62,6 +70,8 @@ export default function Form({ clientSecret, cartId }: any) {
     } catch (err) {
       console.log(err);
     }
+    dispatch(setLoading(false));
+    dispatch(setShowModal(false))
   }
 
   const initialAddressValues: AddressNoUserInfoInterface = {

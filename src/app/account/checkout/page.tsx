@@ -1,22 +1,28 @@
 "use client";
 
 import COLORS from "@/config/colors";
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/util/loginSchema";
 import { setLoading } from "@/Store/slices/loading";
 import { setModalContent, setShowModal } from "@/Store/slices/modal";
 import axios from "axios";
-import { setUser } from "@/Store/slices/user";
+import { setToken, setUser } from "@/Store/slices/user";
 import Image from "next/image";
 import Link from "next/link";
+import { setCart } from "@/Store/slices/cart";
+import { getError } from "@/util/getError";
 
 const page = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
+
+  const [error, setError] = useState("");
+
+  const cart = useAppSelector(cart => cart?.cart?.cart);
 
   const initialValues: LoginInterface = {
     email: "",
@@ -27,37 +33,49 @@ const page = () => {
     initialValues: initialValues,
     validationSchema: loginSchema,
     onSubmit: async (data) => {
-      dispatch(setShowModal(true));
       dispatch(setLoading(true));
+      dispatch(setShowModal(true))
       try {
         const res = await axios.post(
-          `${process.env.MEDUSA_BACKEND_API}/store/auth`,
+          `${process.env.MEDUSA_BACKEND_API}/store/auth/token`,
           data
         );
-        dispatch(setUser(res?.data?.customer));
-        dispatch(setShowModal(false));
-        dispatch(setLoading(false));
-        dispatch(
-          setModalContent({
-            title: "",
-            content: "empty",
+    
+        const customerRes = await axios.get(
+          `${process.env.MEDUSA_BACKEND_API}/store/customers/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${res.data.access_token}`
+            }
+          }
+        )
+
+        const customer = customerRes?.data?.customer;
+
+        dispatch(setToken(res.data.access_token));
+        dispatch(setUser(customer));
+        dispatch(setModalContent({
+          title: '',
+          content: 'empty'
+        }))      
+        document.body.style.overflow = "auto"
+        setError('')
+        //set user cookie
+
+        //if we already have cart, associate it with current logged in user
+        if(cart?.id) {
+          const res = await axios.post(`${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}`, {
+            customer_id: customer?.id
           })
-        );
-        document.body.style.overflow = "auto";
-        router.push("/");
+          dispatch(setCart({cart: res.data?.cart, cartType: 'authenticated_cart'}))
+        }
+        router.push("/shop/address");
       } catch (err: any) {
-        console.log(err);
+        setError(getError(err));
       }
 
-      dispatch(setShowModal(false));
+      dispatch(setShowModal(false))
       dispatch(setLoading(false));
-      dispatch(
-        setModalContent({
-          title: "",
-          content: "empty",
-        })
-      );
-      document.body.style.overflow = "auto";
     },
   });
 
@@ -131,6 +149,11 @@ const page = () => {
             formik.handleSubmit(e);
           }}
         >
+          {error && (
+            <div className="text-[#a94442] bg-[#f2dede] border-1 border-[#ebccd1] my-[10px] p-[15px] rounded-[4px]">
+              {error}
+            </div>
+          )}
           <h2 className="heading">Sign in</h2>
           <p className="custom-text my-4">
             Sign in for fast checkout, shopping lists, order history, and more!

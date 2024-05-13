@@ -1,6 +1,7 @@
 'use client';
 
 import COLORS from '@/config/colors';
+import { useAppSelector } from '@/hooks';
 import { Accordion } from 'flowbite-react';
 import Link from 'next/link';
 import { FaTruck } from 'react-icons/fa';
@@ -10,6 +11,7 @@ type Props = {
 }
 
 const Checkout = ({total}: Props) => {
+  const user = useAppSelector(state => state.user?.user);
   return (
     <div className='flex flex-col gap-5 sticky w-[300px]'>
       <Accordion className='w-[300px] rounded-none' collapseAll>
@@ -44,7 +46,7 @@ const Checkout = ({total}: Props) => {
           FREE delivery on all orders over <span className='font-[700]'>$99</span> when shipping to an <span className='font-[700] underline'>eligible location.</span>
         </p>
       </div>
-      <Link href='/account/checkout' className='inline-block bg-mainColor text-white rounded-s text-[16px] py-[15px] text-center w-[300px] cursor-pointer'>
+      <Link href={user ? '/shop/address':'/account/checkout'} className='inline-block bg-mainColor text-white rounded-s text-[16px] py-[15px] text-center w-[300px] cursor-pointer'>
         Checkout
       </Link>
       <button disabled >
