@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import HoverDropdown from "../hover-drop-down/HoverDropdown";
-import { title } from "process";
-import { useAppSelector } from "@/hooks";
 import { PiTruckDuotone } from "react-icons/pi";
 import { fetchCategories as fetchProductCategories } from "@/services/category-service";
 
@@ -41,46 +39,42 @@ const MenuNavbar = () => {
   const serviceCategories = [
     {
       title: "Buy Now, Split Up the cost",
+      linkUrl: "services/buy-now-split-cost"
+    },
+    {
+      title: "Courses, Seminars, & Surveys",
+      linkUrl: "services/courses-seminars-surveys"
+    },
+    {
+      title: "Free Delivery",
+      linkUrl: "services/free-delivery"
+    },
+    {
+      title: "Government Relations",
+      linkUrl: "services/government-relations"
+    },
+    {
+      title: "Hunter Group",
+      linkUrl: "services/hunter-group"
+    },
+    {
+      title: "Instrument Calibration",
       linkUrl: "services/plumbing-equipment"
     },
     {
-      title: "Tools",
+      title: "Key Accounts & Corporate Accounts",
       linkUrl: "services/plumbing-equipment"
     },
     {
-      title: "Material handling & Storage",
+      title: "Maintenance Shutdown Program",
       linkUrl: "services/plumbing-equipment"
     },
     {
-      title: "Facility Maintainance",
+      title: "Vendor Managed Inventory",
       linkUrl: "services/plumbing-equipment"
     },
     {
-      title: "Welding",
-      linkUrl: "services/plumbing-equipment"
-    },
-    {
-      title: "Electrical",
-      linkUrl: "services/plumbing-equipment"
-    },
-    {
-      title: "Office",
-      linkUrl: "services/plumbing-equipment"
-    },
-    {
-      title: "Fleet & Automotive",
-      linkUrl: "services/plumbing-equipment"
-    },
-    {
-      title: "Instruments",
-      linkUrl: "services/plumbing-equipment"
-    },
-    {
-      title: "Plumbing Equipment & Supplies",
-      linkUrl: "services/plumbing-equipment"
-    },
-    {
-      title: "Packaging & Shipping",
+      title: "Order Lookup",
       linkUrl: "services/plumbing-equipment"
     },
   ];
@@ -134,95 +128,91 @@ const MenuNavbar = () => {
 
   const company = [
     {
-      title: "Buy Now, Split Up the cost",
+      title: "About us",
       linkUrl: "company/about-us"
     },
     {
-      title: "Tools",
+      title: "Careers",
       linkUrl: "company/careers"
     },
     {
-      title: "Material handling & Storage",
-      linkUrl: "company/about-us"
+      title: "Contact us",
+      linkUrl: "company/contact-us"
     },
     {
-      title: "Facility Maintainance",
-      linkUrl: "company/careers"
+      title: "Global Sourcing Group",
+      linkUrl: "company/global-sourcing-group"
     },
     {
-      title: "Welding",
-      linkUrl: "company/about-us"
+      title: "Members of",
+      linkUrl: "company/members-of"
     },
     {
-      title: "Electrical",
-      linkUrl: "company/careers"
+      title: "NMSO",
+      linkUrl: "company/nmso"
     },
     {
-      title: "Office",
-      linkUrl: "company/about-us"
+      title: "Our Locations",
+      linkUrl: "company/locations"
     },
     {
-      title: "Fleet & Automotive",
-      linkUrl: "company/careers"
+      title: "Recognitions",
+      linkUrl: "company/recognitions"
     },
     {
-      title: "Instruments",
-      linkUrl: "company/about-us"
+      title: "Satisfaction Guarantee",
+      linkUrl: "company/satisfaction-guarantee"
     },
     {
-      title: "Plumbing Equipment & Supplies",
-      linkUrl: "company/careers"
+      title: "Sustainability",
+      linkUrl: "company/sustainability"
     },
     {
-      title: "Packaging & Shipping",
-      linkUrl: "company/about-us"
+      title: "The TENAQUIP Foundation",
+      linkUrl: "company/the-tenaquip-foundation"
+    },
+    {
+      title: "The TENAQUIP Way",
+      linkUrl: "company/the-tenaquip-way"
     },
   ];
 
   const resourceCentre = [
     {
-      title: "Buy Now, Split Up the cost",
-      linkUrl: "resource-center/emergency"
-    },
-    {
-      title: "Tools",
-      linkUrl: "resource-center/emergency"
-    },
-    {
-      title: "Material handling & Storage",
-      linkUrl: "resource-center/emergency"
-    },
-    {
-      title: "Facility Maintainance",
-      linkUrl: "resource-center/emergency"
-    },
-    {
-      title: "Welding",
-      linkUrl: "resource-center/emergency"
+      title: "Emergency Preparedness",
+      linkUrl: "resource-center/emergency-preparedness"
     },
     {
       title: "Electrical",
-      linkUrl: "resource-center/emergency"
+      linkUrl: "resource-center/electrical"
+    },
+    {
+      title: "Facility Maintenance",
+      linkUrl: "resource-center/facility-maintenance"
+    },
+    {
+      title: "Material Handling & Storage",
+      linkUrl: "resource-center/material-handling-storage"
     },
     {
       title: "Office",
-      linkUrl: "resource-center/emergency"
+      linkUrl: "resource-center/office"
     },
     {
-      title: "Fleet & Automotive",
-      linkUrl: "resource-center/emergency"
+      title: "Safety",
+      linkUrl: "resource-center/safety"
     },
     {
-      title: "Instruments",
-      linkUrl: "resource-center/emergency"
+      title: "Tools",
+      linkUrl: "resource-center/tools"
     },
     {
-      title: "Plumbing Equipment & Supplies",
-      linkUrl: "resource-center/emergency"
+      title: "Fleet",
+      linkUrl: "resource-center/fleet"
     },
     {
-      title: "Packaging & Shipping",
-      linkUrl: "resource-center/emergency"
+      title: "Line Card",
+      linkUrl: "resource-center/line-cards"
     },
   ];
   
@@ -236,7 +226,9 @@ const MenuNavbar = () => {
         <HoverDropdown title="Company" links={company} />
 
         <HoverDropdown title="Resource centre" links={resourceCentre} />
-        <HoverDropdown title="Deals" links={productSubCategories} />
+        <Link href="/campaign/sale-items" className="px-[20px] hover:bg-darkMain flex items-center">
+          <p className="text-sm font-medium text-yellow-400">Deals</p>
+        </Link>
         <Link href="/" className="px-[20px] hover:bg-darkMain">
           <Image
             src="/Shoppe.png"

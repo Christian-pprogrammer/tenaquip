@@ -1,4 +1,3 @@
-import Breadcrump from "@/components/bread-crump/Breadcrump";
 import SubCategoryElement from "@/components/sub-category-element/SubCategoryElement";
 import { fetchByHandle, fetchSubCategories } from "@/services/category-service";
 import React from "react";
@@ -24,22 +23,14 @@ const ProductCategory = async (props: any) => {
   return (
     <div className="px-32">
       <div className="">
-        <Breadcrump
-          links={[
-            {
-              toUrl: "/",
-              title: "Home",
-            },
-            {
-              toUrl: `/product-category/${category?.attributes?.handle}`,
-              title: `${category?.attributes?.name}`,
-            },
-          ]}
-        />
-        <h2 className="font-semibold text-[24px] text-Gray my-2">
-          {category?.name}
-        </h2>
-        {/* <p className="text-Gray text-sm">Showing 1 - 20 of 34176 listing(s)</p> */}
+        <div className="flex">
+          <h2 className="font-semibold text-[24px] text-Gray my-2">
+            {category?.attributes?.name}
+          </h2>
+          <div>
+            <span className="text-[13px] font-bold"></span>
+          </div>
+        </div>
       </div>
 
       {/* filter */}

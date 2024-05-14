@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 type Props = {
   title: string;
@@ -11,7 +12,9 @@ const ResourceElementComponent = ({ title, description, slug }: Props) => {
       <h2 className="text-2xl font-normal text-mainColor ">{title}</h2>
       <p className="text-mainGray text-sm mt-2">{description}</p>
       <button className="text-white bg-mainColor text-sm rounded-sm px-3 py-2 inline-block max-w-28 mt-5">
-        Read More
+        <Link
+          href={slug}
+        >Read More</Link>
       </button>
     </div>
   );

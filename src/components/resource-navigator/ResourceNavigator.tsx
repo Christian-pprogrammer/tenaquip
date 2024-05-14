@@ -8,7 +8,7 @@ type ResourceCategory = {
 
 type Props = {
   resourceCategories: Array<ResourceCategory>;
-  active: number;
+  active: string;
 };
 
 const ResourceNavigator = ({ active, resourceCategories }: Props) => {
@@ -17,14 +17,12 @@ const ResourceNavigator = ({ active, resourceCategories }: Props) => {
       {resourceCategories.map((category, index) => (
         <Link
           className={`p-3 text-Gray text-sm font-semibold rounded-t-sm 
-
           border-transparent border-t-1 border-l-1 border-r-1 
           hover:border-[#ddd]
-          ${active !== index + 1 && "border-b-1 border-b-[#ddd] "}
+          ${active !== category.slug && "border-b-1 border-b-[#ddd] "}
           
-
-          ${active === index + 1 && "bg-lightMain text-mainColor"}`}
-          href={`/`}
+          ${active === category.slug && "bg-lightMain text-mainColor"}`}
+          href={`/resource-center/${category.slug}`}
         >
           {category.title}
         </Link>

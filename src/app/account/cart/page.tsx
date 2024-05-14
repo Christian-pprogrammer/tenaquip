@@ -19,9 +19,9 @@ const Cart = () => {
 
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector(state => state.user?.user);
+  const user = useAppSelector((state) => state.user?.user);
 
-  const appCart = useAppSelector(state => state.cart?.cart);
+  const appCart = useAppSelector((state) => state.cart?.cart);
 
   useEffect(() => {
     dispatch(setShowModal(true));
@@ -36,19 +36,18 @@ const Cart = () => {
 
       if (cartId) {
         const id = localStorage.getItem("cart_id");
-        alert(process.env.STRAPI_API)
-        try{
+        try {
           const response = await axios.get(
             `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`
           );
           const resJson = await response?.data;
-          let cartType = user ? "authenticated_cart":"unauthenticated_cart"
+          let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
           dispatch(setAppCart({ cart: resJson?.cart, cartType }));
           currentCart = resJson?.cart;
           setCart(resJson?.cart);
-        }catch(err) {
+        } catch (err) {
           //if we can't fetch, use the current cart in the store
-          let cartType = user ? "authenticated_cart":"unauthenticated_cart"
+          let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
           dispatch(setAppCart({ cart: appCart, cartType }));
           currentCart = cart;
           setCart(appCart);
@@ -107,8 +106,8 @@ const Cart = () => {
         return response.json();
       })
       .then(({ cart }) => {
-        let cartType = user ? "authenticated_cart":"unauthenticated_cart"
-        dispatch(setAppCart({ cart: cart, cartType}));
+        let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
+        dispatch(setAppCart({ cart: cart, cartType }));
         setCart(cart);
         currentCart = cart;
         let currentQuantity: any;
@@ -128,8 +127,8 @@ const Cart = () => {
         setQuantity(currentQuantity);
       })
       .catch((err: any) => {
-        alert(getError(err))
-      })
+        alert(getError(err));
+      });
 
     dispatch(setShowModal(false));
     dispatch(setLoading(false));
@@ -173,9 +172,9 @@ const Cart = () => {
         setTotal(currentTotal);
         setQuantity(currentQuantity);
       })
-      .catch((err: any)=>{
+      .catch((err: any) => {
         alert(getError(err));
-      })
+      });
 
     dispatch(setShowModal(false));
     dispatch(setLoading(false));

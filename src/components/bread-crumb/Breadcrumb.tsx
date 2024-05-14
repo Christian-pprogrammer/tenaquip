@@ -10,7 +10,7 @@ type Props = {
   links: Array<LinkElement>
 }
 
-const Breadcrump = ({links}: Props) => {
+const Breadcrumb = ({links}: Props) => {
   return (
     <div className='mt-3'>
       {
@@ -29,4 +29,4 @@ const Breadcrump = ({links}: Props) => {
   )
 }
 
-export default Breadcrump
+export default Breadcrumb

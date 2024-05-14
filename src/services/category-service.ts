@@ -21,6 +21,17 @@ export const fetchByHandle = async (handle: string) => {
   }
 }
 
+export const fetchSubCategoryByHandle = async (handle: string) => {
+  console.log("Helloworld")
+  const response = await fetch(`${process.env.STRAPI_API}/sub-categories?filters[handle][$eq]=${handle}&populate=*`, {next: {revalidate: 0}});
+  console.log(response)
+  if(response.ok) {
+    const jsonRes = await response.json();
+    console.log("our json res", jsonRes)
+    return jsonRes?.data[0];  
+  }
+}
+
 export const fetchSubCategories = async (categoryHandle: string) => {
   const response = await fetch(`${process.env.STRAPI_API}/sub-categories?filters[category][handle][$eq]=${categoryHandle}&populate=*`, {next: {revalidate: 0}});
   if(response.ok) {

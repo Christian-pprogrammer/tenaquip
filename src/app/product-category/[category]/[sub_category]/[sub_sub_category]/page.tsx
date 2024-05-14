@@ -1,4 +1,4 @@
-import Breadcrump from "@/components/bread-crump/Breadcrump";
+import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
 import FilterDropdown from "@/components/filter-drop-down/FilterDropdown";
 import ProductComponent from "@/components/product-component/ProductComponent";
 import { fetchSubSubCategoryByHandle } from "@/services/category-service";
@@ -24,126 +24,12 @@ const SubSubCategory = async (props: any) => {
 
   return (
     <div className="mx-32">
-      <Breadcrump
-        links={[
-          {
-            toUrl: "",
-            title: "Home",
-          },
-          {
-            toUrl: ``,
-            title: ``,
-          },
-          {
-            toUrl: ``,
-            title: ``,
-          },
-          {
-            toUrl: ``,
-            title: ``,
-          },
-        ]}
-      />
 
       <div className="">
         <h2 className="font-semibold text-2xl text-Gray my-2">Pipe Marker</h2>
         <p className="my-2 text-Gray text-sm">
           Showing 1 - 20 of 3832 listing(s)
         </p>
-      </div>
-
-      <div className="bg-lightMain p-2">
-        <div className="filters">
-          <FilterDropdown
-            title="Manufacturer"
-            elements={[
-              {
-                itemName: "Black on Orange (1)",
-              },
-              {
-                itemName: "Black on White (1)",
-              },
-              {
-                itemName: "Black on Yellow (44)",
-              },
-              {
-                itemName: "White on Blue (5)",
-              },
-            ]}
-          ></FilterDropdown>
-
-          <FilterDropdown
-            title="Manufacturer"
-            elements={[
-              {
-                itemName: "Black on Orange (1)",
-              },
-              {
-                itemName: "Black on White (1)",
-              },
-              {
-                itemName: "Black on Yellow (44)",
-              },
-              {
-                itemName: "White on Blue (5)",
-              },
-            ]}
-          ></FilterDropdown>
-          <FilterDropdown
-            title="Manufacturer"
-            elements={[
-              {
-                itemName: "Black on Orange (1)",
-              },
-              {
-                itemName: "Black on White (1)",
-              },
-              {
-                itemName: "Black on Yellow (44)",
-              },
-              {
-                itemName: "White on Blue (5)",
-              },
-            ]}
-          ></FilterDropdown>
-          <FilterDropdown
-            title="Manufacturer"
-            elements={[
-              {
-                itemName: "Black on Orange (1)",
-              },
-              {
-                itemName: "Black on White (1)",
-              },
-              {
-                itemName: "Black on Yellow (44)",
-              },
-              {
-                itemName: "White on Blue (5)",
-              },
-            ]}
-          ></FilterDropdown>
-          <FilterDropdown
-            title="Manufacturer"
-            elements={[
-              {
-                itemName: "Black on Orange (1)",
-              },
-              {
-                itemName: "Black on White (1)",
-              },
-              {
-                itemName: "Black on Yellow (44)",
-              },
-              {
-                itemName: "White on Blue (5)",
-              },
-            ]}
-          ></FilterDropdown>
-          <br />
-          <button className="custom-btn font-bold">View All Filters</button>
-        </div>
-        <div className="sorts"></div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-6">

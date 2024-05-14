@@ -1,97 +1,93 @@
-import Breadcrump from "@/components/bread-crump/Breadcrump";
-import Image from "next/image";
+'use client'
+import React, {useEffect, useState} from "react";
+import axios from 'axios';
+const endpoint = process.env.STRAPI_API;
 import Link from "next/link";
-import React from "react";
+import Image from "next/image";
 
 const Careers = () => {
-  const careers = {
-    mainImage:
-      "https://www.tenaquip.com/tenaquip/images/banner/pages/careers.jpg",
-    h1: "Careers",
-  };
-  const sampleRows = [
-    {
-      id: 1,
-      jobTitle: "Software Engineer",
-      city: "New York",
-      employmentLevel: "Mid-Level",
-    },
-    {
-      id: 2,
-      jobTitle: "Data Analyst",
-      city: "San Francisco",
-      employmentLevel: "Entry-Level",
-    },
-    {
-      id: 3,
-      jobTitle: "Product Manager",
-      city: "Seattle",
-      employmentLevel: "Senior-Level",
-    },
-  ];
+  const [data, setData] = useState([{Ptext: '' , __component: '' , Title: '' , linkUrl: '', linkTitle: ''}]);
+  const [LandingData, setLandingData] = useState({title: '',imageUrl: ''});
+  const [sampleRows, setSampleRows] = useState([ {jobTitle: '', city: '', employmentLevel: '', JobLink: '', jobId: ''}]);
+
+  useEffect(() => {
+      axios.get(`${endpoint}/career?populate=*`)
+        .then(response => {
+            setLandingData(response.data.data.attributes.PageContent[0]);
+            setData(response.data.data.attributes.PageContent);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+      axios.get(`${endpoint}/job?populate=*`)
+        .then(response => {
+          setSampleRows(response.data.data.attributes.PageContent);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        }); 
+  }, []);
+
   return (
     <div className="relative">
-      <div
-        className="bg-cover bg-center bg-no-repeat px-32 min-h-96 flex flex-col justify-center"
-        style={{
-          backgroundImage: `url(${careers.mainImage})`,
-          backgroundPosition: "center",
-        }}
-      >
-        <h1 className="text-white text-3xl font-bold ">{careers.h1}</h1>
+      <div className="relative h-[70vh]">
+        <Image
+          src={LandingData?.imageUrl}
+          alt="Careers"
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: "cover"
+          }} />
+        <div className="absolute inset-0 flex items-center px-16">
+          <h1 className="text-white text-5xl font-semibold text-shadow-lg shadow-black">{LandingData?.title}</h1>
+        </div>
       </div>
 
       <div className="mt-16 px-16 w-[80vw]">
-        <h2 className="text-mainColor text-3xl mb-5">Join our team!</h2>
-        <p className="text-black mb-3">
-          TENAQUIP is a 100% Canadian company named one of "Canada's Best
-          Managed Companies" for 16 consecutive years. As a national leader in
-          the Canadian industrial marketplace, TENAQUIP takes on the challenge
-          of transforming the way people and organizations tackle their
-          procurement processes by helping them achieve efficiencies, savings
-          and gain better control over their total spend.
-        </p>
-        <p className="text-black mb-3">
-          We’re committed to extending the same unmatched support to every
-          employee. At TENAQUIP, you are empowered with the ability to influence
-          the outcome, no matter what your job. You will help shape our future
-          growth, not just follow it from the sidelines.
-        </p>
-
-        <Link href="/" className="font-bold text-mainColor hover:underline">
-          Please refer to our Confidentiality Privacy Policy for more
-          information
-        </Link>
+        {
+            data.slice(1).map((item, index) => (
+            <h2 className={item.__component === "components.main-title" ? `text-mainColor text-3xl mb-5` : `text-black mb-3`}>
+              {item.__component === "components.main-title" ? item?.Title : ( item.__component === "components.p-link" ? <Link
+                  href={item?.linkUrl}
+                  className="font-bold text-mainColor hover:underline"
+                  >
+                  {item.linkTitle}
+                </Link> : item?.Ptext)}
+            </h2>
+            )
+          )
+        }
 
         {/* table */}
         <div className="mt-16 w-full mb-8">
-          <table className="w-full table-auto">
+            <table className="w-full table-auto">
             <thead className="border-b-2">
-              <tr>
+                <tr>
                 <th className="text-left pb-2">Job Title</th>
                 <th className="text-left pb-2">City</th>
                 <th className="text-left pb-2">Employment Level</th>
-              </tr>
+                </tr>
             </thead>
             <tbody>
-              {sampleRows.map((row) => (
-                <tr key={row.id} className="border-b-2 h-16">
-                  <td className="pb-2">
-                    <Link
-                      href="/"
-                      className="text-mainColor underline font-bold"
-                    >
-                      {row.jobTitle}
+                {sampleRows.map(row => (
+                <tr key={row.jobId} className="border-b-2 h-16">
+                    <td className="pb-2">
+                    <Link href={row.JobLink} className="text-mainColor underline font-bold">
+                        {row.jobTitle}
                     </Link>
-                  </td>
-                  <td className="pb-2">{row.city}</td>
-                  <td className="pb-2">{row.employmentLevel}</td>
+                    </td>
+                    <td className="pb-2">{row.city}</td>
+                    <td className="pb-2">{row.employmentLevel}</td>
                 </tr>
-              ))}
+                ))}
             </tbody>
-          </table>
+            </table>
         </div>
+
       </div>
+      
     </div>
   );
 };

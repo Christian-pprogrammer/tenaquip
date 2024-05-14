@@ -1,5 +1,5 @@
 "use client";
-import Breadcrump from "@/components/bread-crump/Breadcrump";
+import Breadcrump from "@/components/Breadcrump/Breadcrump";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, ChangeEvent } from "react";
@@ -26,9 +26,11 @@ const Contact = () => {
         <Image
           src="https://www.tenaquip.com/tenaquip/images/banner/pages/contact-us.jpg"
           alt="Careers"
-          layout="fill"
-          objectFit="cover"
-        />
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: "cover"
+          }} />
         <div className="absolute inset-0 flex items-center px-16">
           <h1 className="text-white text-5xl font-semibold text-shadow-lg shadow-black">
             CONTACT US
@@ -49,8 +51,8 @@ const Contact = () => {
         </p>
       </div>
 
-      <div className="flex px-16 space-x-48 mb-12">
-        <div className="space-y-3">
+      <div className="flex flex-col xl:flex-row px-16 xl:space-x-48 mb-12">
+        <div className="space-y-3 mb-4">
           <h2 className="text-mainColor text-3xl mb-5">Contact Information</h2>
           <p>Customer Service: Monday – Friday: 7:30 a.m. – 5:00 p.m.</p>
           <p>
@@ -68,9 +70,9 @@ const Contact = () => {
           <p>Fax: 1 800 661-2212</p>
         </div>
 
-        <div className="px-8">
+        <div className="w-full">
           <form className="flex flex-col space-y-4">
-            <div className="flex flex-col md:flex-row md:space-x-4">
+            <div className="flex flex-col lg:flex-row lg:space-x-4">
               <div className="flex flex-col flex-1">
                 <label htmlFor="company">Company</label>
                 <input
@@ -88,8 +90,8 @@ const Contact = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row md:space-x-4">
-              <div className="flex flex-col flex-1 w-[50%]">
+            <div className="flex flex-col lg:flex-row lg:space-x-4">
+              <div className="flex flex-col flex-1 lg:w-[50%]">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -97,8 +99,8 @@ const Contact = () => {
                   className="rounded border border-gray-300"
                 />
               </div>
-              <div className="flex flex-1 w-[50%] space-x-3">
-                <div className="flex flex-col flex-1 w-[20%]">
+              <div className="flex flex-col lg:flex-row flex-1 lg:w-[50%] lg:space-x-3">
+                <div className="flex flex-col flex-1 lg:w-[20%]">
                   <label htmlFor="phone">Phone</label>
                   <input
                     type="tel"
@@ -106,7 +108,7 @@ const Contact = () => {
                     className="rounded border border-gray-300"
                   />
                 </div>
-                <div className="flex flex-col flex-1 w-[20%]">
+                <div className="flex flex-col flex-1 lg:w-[20%]">
                   <label htmlFor="extension">Extension</label>
                   <input
                     type="text"
@@ -121,7 +123,7 @@ const Contact = () => {
               <input
                 type="text"
                 id="province"
-                className="w-[48%] rounded border border-gray-300"
+                className="lg:w-[48%] rounded border border-gray-300"
               />
             </div>
             <div className="flex flex-col">
@@ -227,7 +229,7 @@ const Contact = () => {
               type="submit"
               className="bg-mainColor text-white py-2 px-4 rounded w-[19vw]"
             >
-              <Link href="/" className="font-bold text-white">
+              <Link href="/services/hunter-group" className="font-bold text-white">
                 Contact our Hunter Group
               </Link>
             </button>
