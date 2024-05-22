@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
 import SubCategoryElement from "@/components/sub-category-element/SubCategoryElement";
 import { fetchByHandle, fetchSubCategories } from "@/services/category-service";
 import React from "react";
@@ -22,6 +23,13 @@ const ProductCategory = async (props: any) => {
 
   return (
     <div className="px-32">
+
+      <Breadcrumb
+        step="category"
+        title={category?.attributes?.name}
+        handle={category?.attributes?.handle}
+      />
+
       <div className="">
         <div className="flex">
           <h2 className="font-semibold text-[24px] text-Gray my-2">

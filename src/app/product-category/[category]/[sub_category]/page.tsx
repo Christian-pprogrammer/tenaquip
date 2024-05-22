@@ -1,5 +1,9 @@
+import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
 import SubCategoryElement from "@/components/sub-category-element/SubCategoryElement";
-import { fetchSubCategoryByHandle, fetchSubSubCategories } from "@/services/category-service";
+import {
+  fetchSubCategoryByHandle,
+  fetchSubSubCategories,
+} from "@/services/category-service";
 import React from "react";
 
 const SubCategory = async (props: any) => {
@@ -9,9 +13,11 @@ const SubCategory = async (props: any) => {
   let subCategory: any = null;
 
   try {
-    const categoryRes = await fetchSubCategoryByHandle(props.params.sub_category);
-    console.log("we gonna fetch...")
-    console.log(categoryRes)
+    const categoryRes = await fetchSubCategoryByHandle(
+      props.params.sub_category
+    );
+    console.log("we gonna fetch...");
+    console.log(categoryRes);
     subCategory = categoryRes;
   } catch (err) {}
 
@@ -24,6 +30,12 @@ const SubCategory = async (props: any) => {
 
   return (
     <div className="mx-32">
+      <Breadcrumb
+        step="sub-category"
+        title={subCategory?.attributes?.name}
+        handle={subCategory?.attributes?.handle}
+      />
+
       <div className="">
         <h2 className="font-semibold text-[24px] text-Gray my-2">
           {subCategory?.attributes?.name}

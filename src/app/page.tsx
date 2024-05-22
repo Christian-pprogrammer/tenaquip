@@ -17,6 +17,7 @@ export default async function Home() {
   console.log("fetch...")
   try {
     const categories = await fetchCategories(1,12);
+    console.log("My catss.", categories)
     mainCategories = categories;
 
   }catch (err) {

@@ -1,29 +1,36 @@
 import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
-import FilterDropdown from "@/components/filter-drop-down/FilterDropdown";
 import ProductComponent from "@/components/product-component/ProductComponent";
 import { fetchSubSubCategoryByHandle } from "@/services/category-service";
 import { fetchProductsByCategory } from "@/services/product-service";
 import React from "react";
 
 const SubSubCategory = async (props: any) => {
-  
-    //fetch products
+  //fetch products
 
-    let products:any = [];
+  let products: any = [];
 
-    let subSubCategory: any = null;
+  let subSubCategory: any = null;
 
-    try {
-      const subSubCategoryRes = await fetchSubSubCategoryByHandle(props.params.sub_sub_category);
-      subSubCategory = subSubCategoryRes;
-      console.log("my sub sub cat", subSubCategory)
-      let productsRes = await fetchProductsByCategory(subSubCategory.attributes?.category_id);
-      console.log("my products....", productsRes)
-      products = productsRes;
-    } catch (err) {}
+  try {
+    const subSubCategoryRes = await fetchSubSubCategoryByHandle(
+      props.params.sub_sub_category
+    );
+    subSubCategory = subSubCategoryRes;
+    console.log("my sub sub cat", subSubCategory);
+    let productsRes = await fetchProductsByCategory(
+      subSubCategory.attributes?.category_id
+    );
+    console.log("my products....", productsRes);
+    products = productsRes;
+  } catch (err) {}
 
   return (
     <div className="mx-32">
+      <Breadcrumb
+        step="sub-sub-category"
+        title={subSubCategory?.attributes?.name}
+        handle={subSubCategory?.attributes?.handle}
+      />
 
       <div className="">
         <h2 className="font-semibold text-2xl text-Gray my-2">Pipe Marker</h2>
@@ -33,11 +40,10 @@ const SubSubCategory = async (props: any) => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-6">
-        {products?.map((product:any, index: number) => (
+        {products?.map((product: any, index: number) => (
           <ProductComponent key={index} product={product} />
         ))}
       </div>
-
     </div>
   );
 };

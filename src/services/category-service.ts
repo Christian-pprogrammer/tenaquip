@@ -1,7 +1,9 @@
 export const fetchCategories = async (page?: number, pageSize?: number) => {
   let response = null;
 
+  console.log("fetch...")
   if(page && pageSize) {  
+    console.log(`${process.env.STRAPI_API}/categories`)
     response = await fetch(`${process.env.STRAPI_API}/categories?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`, {next: {revalidate: 0}});
   }else {
     response = await fetch(`${process.env.STRAPI_API}/categories?populate=*`, {next: {revalidate: 0}});
