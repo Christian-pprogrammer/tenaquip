@@ -80,7 +80,7 @@ const page = () => {
   });
 
   return (
-    <div className="flex justify-between px-32 py-10">
+    <div className="flex justify-between padding-horizontal py-10">
       <div className="flex flex-col gap-4">
         <h2 className="heading">Guest Checkout</h2>
         <p className="custom-text">Checkout now and register later</p>

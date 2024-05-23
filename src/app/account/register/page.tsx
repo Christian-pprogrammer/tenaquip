@@ -142,7 +142,7 @@ const Register = () => {
 
   return (
     <form
-      className="px-32 mt-4 mb-11"
+      className="padding-horizontal mt-4 mb-11"
       onSubmit={(e) => {
         e.preventDefault();
         formik.handleSubmit(e);

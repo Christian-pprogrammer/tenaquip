@@ -31,7 +31,7 @@ const page = () => {
   return (
       <div>
         <div
-          className="bg-cover bg-center bg-no-repeat px-32 min-h-96 flex flex-col justify-center"
+          className="bg-cover bg-center bg-no-repeat padding-horizontal min-h-96 flex flex-col justify-center"
           style={{
             backgroundImage: `url(${LandingData?.imageUrl})`,
             backgroundPosition: "center",

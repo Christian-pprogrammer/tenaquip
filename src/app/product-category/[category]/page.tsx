@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
+import BrowseBy from "@/components/browse-by/BrowseBy";
 import SubCategoryElement from "@/components/sub-category-element/SubCategoryElement";
 import { fetchByHandle, fetchSubCategories } from "@/services/category-service";
 import React from "react";
@@ -22,26 +23,16 @@ const ProductCategory = async (props: any) => {
   } catch (err) {}
 
   return (
-    <div className="px-32">
-
+    <div className="padding-horizontal">
       <Breadcrumb
         step="category"
         title={category?.attributes?.name}
         handle={category?.attributes?.handle}
       />
 
-      <div className="">
-        <div className="flex">
-          <h2 className="font-semibold text-[24px] text-Gray my-2">
-            {category?.attributes?.name}
-          </h2>
-          <div>
-            <span className="text-[13px] font-bold"></span>
-          </div>
-        </div>
-      </div>
+      <BrowseBy title={category?.attributes?.name} />
 
-      {/* filter */}
+      
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 my-6 gap-7">
         {subCategories?.map((subcategory, index: number) => (

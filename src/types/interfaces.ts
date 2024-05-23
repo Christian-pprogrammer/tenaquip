@@ -87,3 +87,19 @@ interface Product {
     }>
   }>
 }
+
+interface Brand {
+  id: number,
+  attributes: {
+    name: string,
+    handle: string,
+    thumbnail: {
+      data: {
+        id: number,
+        attributes: {
+          url: string
+        }
+      }
+    }
+  }
+}

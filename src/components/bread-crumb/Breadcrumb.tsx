@@ -92,7 +92,7 @@ const Breadcrumb = ({ step, title, handle }: Props) => {
           </Link>
           {Object.entries(newBreadcrumb).map(([key, value], index) => (
             <>
-              <span> &gt; </span>
+              <span className="text-Gray text-sm mx-2 inline-block"> &gt; </span>
               <Link
                 href={newBreadcrumb[key].handle}
                 className="text-Gray text-sm hover:underline"

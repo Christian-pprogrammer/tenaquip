@@ -10,8 +10,8 @@ type Post = {
 
 const PostComponent = ({title, subTitle, imageUrl, titleBg}: Post) => {
   return (
-    <div className='cursor-pointer'>
-      <div className={`${titleBg} p-[10px]`}>
+    <div className="cursor-pointer">
+      <div className={`${titleBg} p-[10px] w-[100%]`}>
         <p className="text-white text-center text-lg">
           {title}
 
@@ -20,14 +20,21 @@ const PostComponent = ({title, subTitle, imageUrl, titleBg}: Post) => {
           {subTitle}
         </p>
       </div>
-      <div style={{
-        width: "100%",
-        height: "100%"
-      }}>
-        <Image src={imageUrl} alt='' width={463} height={233} />
+      <div>
+        <img 
+          src={imageUrl}
+          alt=''
+          style={{
+            objectFit: 'cover',
+            width: '100%',
+            maxHeight: "263px",
+            height: 'auto',
+            verticalAlign: "middle"
+          }}
+        />
       </div>
     </div>
-  )
+  );
 }
 
 export default PostComponent

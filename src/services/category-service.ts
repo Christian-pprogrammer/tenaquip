@@ -59,3 +59,27 @@ export const fetchSubSubCategoryByHandle = async (handle: string) => {
     return jsonRes?.data[0];  
   }
 }
+
+
+export const fetchBrands = async (page?: number, pageSize?: number) => {
+  let response = null;
+
+  if (page && pageSize) {
+    console.log(`${process.env.STRAPI_API}/categories`);
+    response = await fetch(
+      `${process.env.STRAPI_API}/brands?populate[thumbnail][fields]=url&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+      { next: { revalidate: 0 } }
+    );
+  } else {
+    response = await fetch(
+      `${process.env.STRAPI_API}/brands?populate[thumbnail][fields]=url`,
+      {
+        next: { revalidate: 0 },
+      }
+    );
+  }
+  if (response.ok) {
+    const jsonRes = await response.json();
+    return jsonRes?.data;
+  }
+};

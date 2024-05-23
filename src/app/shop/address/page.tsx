@@ -161,7 +161,7 @@ const page = () => {
   }, [cart]);
 
   return (
-    <div className="px-32 py-6">
+    <div className="padding-horizontal py-6">
       <h2
         className="heading mb-4"
         style={{

@@ -6,6 +6,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  outline: none;
 }
 
 .swiper {
@@ -153,4 +154,25 @@ button:focus {
 .qty-input:focus {
   outline: none;
 }
+.padding-horizontal {
+  padding-left: 4%;
+  padding-right: 4%;
+}
 
+@media only screen and (min-width: 768px) {
+  .padding-horizontal {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+}
+
+@media only screen and (min-width: 1540px) {
+  .padding-horizontal {
+    padding-left: 13%;
+    padding-right: 13%;
+  }
+}
+
+input.middle:focus {
+    outline-width: 0;
+}

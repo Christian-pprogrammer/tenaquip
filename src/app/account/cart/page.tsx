@@ -182,7 +182,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="px-32 pb-5">
+    <div className="padding-horizontal pb-5">
       <h1 className="text-2xl font-semibold text-Gray mt-4">Cart</h1>
       <div>
         <hr className="my-[15px] w-[100%] border-t-[#ddd]" />

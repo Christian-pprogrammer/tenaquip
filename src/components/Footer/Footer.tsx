@@ -161,7 +161,7 @@ const Footer = () => {
 
 
   return (
-    <div className='px-32 bg-mainColor'>
+    <div className='padding-horizontal bg-mainColor'>
       <div className="footer-title grid grid-cols-1 md:grid-cols-4 items-center border-t-1 border-b-1 border-lightBlue py-8" style={{
       }}>
         <div className="col-span-2">
