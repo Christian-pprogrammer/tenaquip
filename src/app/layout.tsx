@@ -8,6 +8,8 @@ import { Accordion } from 'flowbite-react';
 import { Providers } from "@/Store/provider";
 import Modal from "@/components/modal/Modal";
 import { fetchCategories } from "@/services/category-service";
+import NavbarMobile from "@/components/mobile/navbar-mobile/navbar-mobile";
+import ContainerFluid from "@/components/container-fluid/ContainerFluid";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,19 +26,21 @@ export default async function RootLayout({
 
   //should add redis
   
-  let mainCategories = [];
-  try {
-   let categories = await fetchCategories();
-   mainCategories = categories;
-  }catch (err) {
+  // let mainCategories = [];
+  // try {
+  //  let categories = await fetchCategories();
+  //  mainCategories = categories;
+  // }catch (err) {
 
-  }
+  // }
 
   return (
     <html lang="en">
       <Providers>
         <body className={inter.className}>
+          <ContainerFluid />
           <Navbar />
+          <NavbarMobile />
           <MenuNavbar />
           <Modal />
           {children}

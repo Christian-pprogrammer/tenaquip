@@ -46,7 +46,8 @@ module.exports = {
       lineGray: "#dddddd",
       Gray: "#4c4c4e",
       mainGreen: "#00873c",
-      secondaryGreen: "#27A745"
+      secondaryGreen: "#27A745",
+      darkCharcoal: "#333333"
     },
   },
   plugins: [

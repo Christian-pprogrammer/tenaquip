@@ -30,7 +30,7 @@ const ImageSwiper = ({ brands }: Props) => {
             : 6
         }
         spaceBetween={30}
-        navigation={true}
+        navigation={false}
         mousewheel={true}
         keyboard={true}
         modules={[FreeMode, Pagination, Navigation]}
@@ -52,7 +52,7 @@ const ImageSwiper = ({ brands }: Props) => {
               <Image
                 src={`${process.env.STRAPI_UPLOADS}${brand?.attributes?.thumbnail?.data?.attributes?.url}`}
                 alt={brand?.attributes?.name}
-                width={100}
+                width={90}
                 height={60}
               />
             </div>

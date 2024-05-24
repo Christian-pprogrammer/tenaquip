@@ -39,10 +39,7 @@ export const Navbar = () => {
   }
 
   return (
-    <div
-      className="gap-x-5 lg:gap-x-20 flex padding-horizontal items-center bg-white py-3"
-      style={{}}
-    >
+    <div className="hidden md:flex gap-x-5 lg:gap-x-20 padding-horizontal items-center bg-white py-3">
       <div className="lg:col-span-2 md:col-span-3 sm:col-span-3 flex w-[auto] max-w-56">
         <Link href="/" className="block">
           <Image src="/logo.svg" alt="" width={200} height={65} />
@@ -57,10 +54,10 @@ export const Navbar = () => {
         <div className="w-100% h-[42px] flex flex-row border-1 border-solid">
           <input
             type="text"
-            className="ring-0 focus:ring-transparent w-64 flex-1 h-[100%] outline-none px-3 border-none text-[14px] placeholder:text-[#333333]"
+            className="ring-0 focus:ring-transparent w-64 flex-1 h-[100%] outline-none px-3 border-none text-[14px] placeholder:text-darkCharcoal"
             style={{
-              outline: 'none',
-              border: 'none'
+              outline: "none",
+              border: "none",
             }}
             placeholder="Search Catalog/Products"
           />
