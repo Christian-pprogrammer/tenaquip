@@ -13,8 +13,8 @@ type Props = {
 const Checkout = ({total}: Props) => {
   const user = useAppSelector(state => state.user?.user);
   return (
-    <div className='flex flex-col gap-5 sticky w-[300px]'>
-      <Accordion className='w-[300px] rounded-none' collapseAll>
+    <div className='flex flex-col gap-5 sticky md:w-[300px] w-[100%]'>
+      <Accordion className='md:w-[300px] rounded-none' collapseAll>
         <Accordion.Panel>
           <Accordion.Title className='bg-lightMain w-full outline-none border-none focus:ring-0 py-2 px-[10px]'>
             <h2 className='text-Gray text-lg font-semibold'>Promo Code</h2>
@@ -32,7 +32,7 @@ const Checkout = ({total}: Props) => {
         </Accordion.Panel>
       </Accordion>
 
-      <div className='bg-lightMain border-[#ddd] border-[1px] p-[10px] flex flex-col gap-y-3 w-[300px]'>
+      <div className='bg-lightMain border-[#ddd] border-[1px] p-[10px] flex flex-col gap-y-3 md:w-[300px]'>
         <h3 className='text-Gray text-lg font-semibold'>Order Summary</h3>
         <div className='flex justify-between'>
           <p className='text-Gray text-sm font-semibold'>Subtotal</p>
@@ -46,7 +46,7 @@ const Checkout = ({total}: Props) => {
           FREE delivery on all orders over <span className='font-[700]'>$99</span> when shipping to an <span className='font-[700] underline'>eligible location.</span>
         </p>
       </div>
-      <Link href={user ? '/shop/address':'/account/checkout'} className='inline-block bg-mainColor text-white rounded-s text-[16px] py-[15px] text-center w-[300px] cursor-pointer'>
+      <Link href={user ? '/shop/address':'/account/checkout'} className='inline-block bg-mainColor text-white rounded-s text-[16px] py-[15px] text-center md:w-[300px] cursor-pointer'>
         Checkout
       </Link>
       <button disabled >

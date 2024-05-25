@@ -204,7 +204,7 @@ const Cart = () => {
                       <div>
                         <Image src={image} alt="" width={120} height={60} />
                       </div>
-                      <div className="ml-3 flex flex-1 justify-between">
+                      <div className="ml-3 md:flex flex-1 justify-between">
                         <div>
                           <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">
                             Brady
@@ -213,7 +213,7 @@ const Cart = () => {
                           <p className="text-sm leading-[1.25em] text-mainColor font-[700] mb-2">
                             {item.title}
                           </p>
-                          <ul>
+                          <ul className="hidden md:block">
                             {[1, 2, 3, 4].map((item) => (
                               <li className="text-[13px] text-Gray list-disc ml-4 leading-[19px]">
                                 Material: Plastic
@@ -233,9 +233,51 @@ const Cart = () => {
                               <span className="text-Gray"></span>
                             </p>
                           </div>
+                          <p className="md:hidden block text-sm leading-[1.25em] text-Gray font-[700] mb-2 mt-2">
+                            Price: $30.57{" "}
+                            <span className="font-[400]"> / Each</span>
+                          </p>
+
+                          <div className="flex md:hidden items-center">
+                            <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">
+                              Qty.:
+                            </p>
+                            <input
+                              type="text"
+                              className="border-1 text-[12px] text-center w-[45px] h-[35px] outline-none rounded border-[#ddd] mx-2 qty-input"
+                              style={{
+                                outline: "none",
+                                padding: 0,
+                              }}
+                              value={quantity[item.id]}
+                              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                setQuantity({
+                                  ...quantity,
+                                  [item.id]: e.target.value,
+                                });
+                              }}
+                              // onChange={()=>}
+                            />
+
+                            <button
+                              className="bg-transparent text-[13px] text-mainColor"
+                              onClick={(e: any) => updateLineItem(e, item.id)}
+                            >
+                              Update
+                            </button>
+                          </div>
+                          <p className="md:hidden block text-sm leading-[1.25em] text-Gray font-[700] mb-2 mt-2">
+                            Subtotal: ${item.total / 100}
+                          </p>
+                          <button
+                            className="block md:hidden underline bg-transparent text-[13px] text-mainColor bg-black text-right"
+                            onClick={(e: any) => deleteCartItem(e, item?.id)}
+                          >
+                            Remove
+                          </button>
                         </div>
 
-                        <div className="flex flex-col justify-between">
+                        <div className="hidden md:flex flex-col justify-between">
                           <div className="flex flex-col gap-y-1 text-right">
                             <div className="flex gap-x-14 items-end">
                               <div className="flex items-center">

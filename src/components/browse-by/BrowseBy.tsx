@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 
 type Props = {
   title: string
@@ -8,9 +8,6 @@ type Props = {
 
 const BrowseBy = ({title}: Props) => {
 
-  useEffect(()=>{
-    alert(screen.width)
-  }, [])
   return (
     <div className="flex items-center justify-between">
       <h2 className="font-semibold text-[24px] text-Gray my-2">{title}</h2>

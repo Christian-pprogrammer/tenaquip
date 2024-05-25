@@ -51,7 +51,7 @@ export const Navbar = () => {
         <Image src="/bestmanaged.svg" alt="" width={100} height={50} />
       </div>
       <div className="flex-1 col-sm-7 bg-gray-300">
-        <div className="w-100% h-[42px] flex flex-row border-1 border-solid">
+        <div className="w-100% h-[42px] flex flex-row border-1 border-solid border-[#003f67]">
           <input
             type="text"
             className="ring-0 focus:ring-transparent w-64 flex-1 h-[100%] outline-none px-3 border-none text-[14px] placeholder:text-darkCharcoal"

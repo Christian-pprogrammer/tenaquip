@@ -131,9 +131,6 @@ export default function ContainerFluid() {
           <SwiperSlide
             style={{
               backgroundColor: "#00253e",
-              alignItems: "center",
-              display: "flex",
-              
             }}
           >
             <div className="w-[100%] h-[100%]">
