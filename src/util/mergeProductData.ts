@@ -6,7 +6,7 @@ export function mergeProductData(backendProducts: Array<any>, strapiProducts: Ar
   });
 
   // Iterate through Strapi products and merge with corresponding backend products
-  const mergedProducts = strapiProducts.map(strapiProduct => {
+  const mergedProducts:any = strapiProducts.map(strapiProduct => {
       const backendProduct = backendProductMap.get(strapiProduct.attributes?.product_id);
       if (backendProduct) {
           return {

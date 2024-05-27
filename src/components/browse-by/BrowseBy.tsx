@@ -1,27 +1,42 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
 type Props = {
-  title: string
-}
+  title: string;
+  browseBy: string;
+  toggleBrowseBy: (by: string)=>void
+};
 
-const BrowseBy = ({title}: Props) => {
-
+const BrowseBy = ({ title, browseBy, toggleBrowseBy }: Props) => {
   return (
     <div className="flex items-center justify-between">
       <h2 className="font-semibold text-[24px] text-Gray my-2">{title}</h2>
-      <div>
-        <p></p>
-        <button className="text-[13px] text-[#fff] mr-[10px] bg-[#00497d] p-2 rounded-[20px] inline-block font-bold">
+      <div className="flex items-center gap-3">
+        <p className="text-[13px] font-bold text-mainColor">Browse by:</p>
+        <button
+          className={`text-[13px] p-2 rounded-[20px] inline-block font-bold ${
+            browseBy == "Categories"
+              ? "text-[rgb(255,255,255)] bg-[#00497d]"
+              : "text-Gray bg-lightMain"
+          }`}
+          onClick={() => toggleBrowseBy("Categories")}
+        >
           Categories
         </button>
-        <button className="text-[13px] text-Gray mr-[10px] bg-lightMain p-2 rounded-[20px] inline-block font-bold">
+        <button
+          className={`text-[13px] p-2 rounded-[20px] inline-block font-bold ${
+            browseBy == "Product Listings"
+              ? "text-[rgb(255,255,255)] bg-[#00497d]"
+              : "text-Gray bg-lightMain"
+          }`}
+          onClick={() => toggleBrowseBy("Product Listings")}
+        >
           Product Listings
         </button>
       </div>
     </div>
   );
-}
+};
 
-export default BrowseBy
+export default BrowseBy;

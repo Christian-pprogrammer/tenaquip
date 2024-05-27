@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
+import CategoryComponent from "@/components/category-component/category-component";
 import SubCategoryElement from "@/components/sub-category-element/SubCategoryElement";
 import {
   fetchSubCategoryByHandle,
@@ -29,28 +30,20 @@ const SubCategory = async (props: any) => {
   } catch (err) {}
 
   return (
-    <div className="mx-32">
+    <div className="padding-horizontal">
       <Breadcrumb
         step="sub-category"
         title={subCategory?.attributes?.name}
         handle={subCategory?.attributes?.handle}
       />
-
-      <div className="">
-        <h2 className="font-semibold text-[24px] text-Gray my-2">
-          {subCategory?.attributes?.name}
-        </h2>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 my-6 gap-7">
-        {subSubCategories?.map((subcategory, index: number) => (
-          <SubCategoryElement
-            key={index}
-            name={subcategory?.attributes?.name}
-            handle={`/product-category/${props.params.category}/${props.params.sub_category}/${subcategory?.attributes?.handle}/`}
-            image={`${process.env.STRAPI_UPLOADS}${subcategory?.attributes?.thumbnail?.data?.attributes?.url}`}
-          />
-        ))}
-      </div>
+      <CategoryComponent
+        subCategories={subSubCategories}
+        handle={props.params.category}
+        title={subCategory?.attributes?.name}
+        isSubCategory={true}
+        subHandle={props.params.sub_category}
+        id={subCategory?.attributes?.category_id}
+      />
     </div>
   );
 };

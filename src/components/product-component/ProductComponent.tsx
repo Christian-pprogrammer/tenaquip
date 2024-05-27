@@ -1,8 +1,10 @@
 "use client";
 import { setCart, setRecentCartItem } from "@/Store/slices/cart";
 import { setModalContent, setShowModal } from "@/Store/slices/modal";
+import product from "@/Store/slices/product";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 type Props = {
@@ -147,13 +149,15 @@ const ProductComponent = ({
   return (
     <div className="border-[1px] border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end">
       <div className="flex justify-center">
-        <Image
-          src={thumbnail}
-          alt=""
-          width={200}
-          height={100}
-          objectFit="contain"
-        />
+        <Link href={`/product/${handle}`}>
+          <Image
+            src={thumbnail}
+            alt=""
+            width={200}
+            height={100}
+            objectFit="contain"
+          />
+        </Link>
       </div>
 
       <div>

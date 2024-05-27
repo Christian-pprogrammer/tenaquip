@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
 import ProductComponent from "@/components/product-component/ProductComponent";
 import { fetchSubSubCategoryByHandle } from "@/services/category-service";
-import { fetchProductsByCategory } from "@/services/product-service";
+import { fetchProductsBySubSubCategory } from "@/services/product-service";
 import React from "react";
 
 const SubSubCategory = async (props: any) => {
@@ -17,7 +17,7 @@ const SubSubCategory = async (props: any) => {
     );
     subSubCategory = subSubCategoryRes;
     console.log("my sub sub cat", subSubCategory);
-    let productsRes = await fetchProductsByCategory(
+    let productsRes = await fetchProductsBySubSubCategory(
       subSubCategory.attributes?.category_id
     );
     console.log("my products....", productsRes);

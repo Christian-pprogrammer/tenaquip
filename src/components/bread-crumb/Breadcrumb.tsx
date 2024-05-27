@@ -6,9 +6,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 type Props = {
-  step: string;
-  title: string;
-  handle: string;
+  step?: string;
+  title?: string;
+  handle?: string;
 };
 
 const Breadcrumb = ({ step, title, handle }: Props) => {
@@ -20,7 +20,7 @@ const Breadcrumb = ({ step, title, handle }: Props) => {
 
   useEffect(() => {
     const updateBreadcrumb = () => {
-      console.log(breadcrumb);
+      setNewBreadcrumb(breadcrumb);
       if (step && title && handle) {
         if (step == "category") {
           setNewBreadcrumb({
