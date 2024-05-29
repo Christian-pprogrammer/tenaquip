@@ -13,7 +13,7 @@ const BrowseBy = ({ title, browseBy, toggleBrowseBy }: Props) => {
     <div className="flex items-center justify-between">
       <h2 className="font-semibold text-[24px] text-Gray my-2">{title}</h2>
       <div className="flex items-center gap-3">
-        <p className="text-[13px] font-bold text-mainColor">Browse by:</p>
+        <p className="text-[13px] font-bold text-Gray">Browse by:</p>
         <button
           className={`text-[13px] p-2 rounded-[20px] inline-block font-bold ${
             browseBy == "Categories"

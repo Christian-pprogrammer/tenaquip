@@ -1,7 +1,6 @@
 import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
-import BrowseBy from "@/components/browse-by/BrowseBy";
 import CategoryComponent from "@/components/category-component/category-component";
-import SubCategoryElement from "@/components/sub-category-element/SubCategoryElement";
+import CategoryFilter from "@/components/category-filter/CategoryFilter";
 import { fetchByHandle, fetchSubCategories } from "@/services/category-service";
 import React, { useState } from "react";
 

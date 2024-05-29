@@ -201,11 +201,9 @@ const NavbarMobile = () => {
 
   const toggle = () => {
     if(!isOpen) {
-      document.body.style.overflow = "hidden";
       setOpen(true);
     }else{
       setOpen(false)
-      document.body.style.overflow = "auto";
     }
     
   }

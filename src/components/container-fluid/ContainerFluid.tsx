@@ -100,7 +100,7 @@ const RightBtn = () => {
 export default function ContainerFluid() {
   return (
     <div className="padding-horizontal bg-[#00253e] py-1">
-      <div className="padding-horizontal">
+      <div className="">
         <Swiper
           navigation={false}
           modules={[Navigation]}

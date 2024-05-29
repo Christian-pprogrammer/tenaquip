@@ -5,6 +5,7 @@ import SubCategoryElement from '../sub-category-element/SubCategoryElement';
 import { fetchProductsByCategory, fetchSubCategoryProducts } from '@/services/product-service';
 import ProductComponent from '../product-component/ProductComponent';
 import CategorySwiper from '../image-swiper/CategorySwiper';
+import CategoryFilter from '../category-filter/CategoryFilter';
 
 type Props = {
   title: string,
@@ -32,7 +33,6 @@ const CategoryComponent = ({title, subCategories, handle, isSubCategory, subHand
     const fetchCategoryProducts = async () => {
       console.log("hello fetch ...")
       try{
-        alert(id)
         if(isSubCategory) {
           //fetch sub category products
           const products = await fetchSubCategoryProducts(id, 1, 20);
@@ -63,6 +63,9 @@ const CategoryComponent = ({title, subCategories, handle, isSubCategory, subHand
 
       {browseBy == "Categories" ? (
         <>
+          <CategoryFilter 
+            subCategories={subCategories}
+          />
           {isSubCategory ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-7">
               {subCategories?.map((subcategory, index: number) => (
@@ -89,10 +92,7 @@ const CategoryComponent = ({title, subCategories, handle, isSubCategory, subHand
         </>
       ) : (
         <>
-          <CategorySwiper 
-            categories={subCategories}
-            type="category"
-          />
+          <CategorySwiper categories={subCategories} type="category" />
           {products && (
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-6">
               {products?.map(
