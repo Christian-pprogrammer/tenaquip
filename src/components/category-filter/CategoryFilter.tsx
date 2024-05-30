@@ -41,12 +41,12 @@ const CategoryFilter = ({subCategories}: {subCategories: Array<any>}) => {
           >
             <span>Category</span>
             <FaChevronDown
-              size={15}
+              size={12}
               color={COLORS.GRAY}
               className={
                 toogleId != 1
-                  ? "rotate-0 transition-all duration-[0.5s]"
-                  : "rotate-180 duration-[0.5s]"
+                  ? "rotate-0 transition-all duration-[0.2s]"
+                  : "rotate-180 duration-[0.2s]"
               }
             />
           </div>
@@ -77,12 +77,12 @@ const CategoryFilter = ({subCategories}: {subCategories: Array<any>}) => {
           >
             <span>Manufacturer</span>
             <FaChevronDown
-              size={15}
+              size={12}
               color={COLORS.GRAY}
               className={
                 toogleId != 2
-                  ? "rotate-0 transition-all duration-[0.5s]"
-                  : "rotate-180 duration-[0.5s]"
+                  ? "rotate-0 transition-all duration-[0.2s]"
+                  : "rotate-180 duration-[0.2s]"
               }
             />
           </div>
