@@ -2,11 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   outline: none;
+  font-family: "Arimo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .swiper {
@@ -100,7 +107,6 @@
   position: absolute;
   height: 4px;
   height: 100%;
-  width: 30%;
   background: #777;
   border-radius: inherit;
   cursor: grab;

@@ -25,7 +25,7 @@ const SubSubCategory = async (props: any) => {
   } catch (err) {}
 
   return (
-    <div className="mx-32">
+    <div className="padding-horizontal">
       <Breadcrumb
         step="sub-sub-category"
         title={subSubCategory?.attributes?.name}

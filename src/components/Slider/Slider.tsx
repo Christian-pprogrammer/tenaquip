@@ -40,7 +40,6 @@ const Slider = ({categories}: SliderProps) => {
     scrollbarThumb.current.style.left = `${thumbPosition}px`
   }
 
-  console.log(categories)
   return (
     <div className='relative'>
       <div className="slider-wrapper mt-3">

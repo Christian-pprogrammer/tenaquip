@@ -34,8 +34,18 @@ export const fetchSubCategoryByHandle = async (handle: string) => {
   }
 }
 
-export const fetchSubCategories = async (categoryHandle: string) => {
-  const response = await fetch(`${process.env.STRAPI_API}/sub-categories?filters[category][handle][$eq]=${categoryHandle}&populate=*`, {next: {revalidate: 0}});
+export const fetchSubCategories = async (categoryHandle: string, page?: number, pageSize?: number, start?:number) => {
+  
+  const apiUrl = start
+    ? `${process.env.STRAPI_API}/sub-categories?filters[category][handle][$eq]=${categoryHandle}&populate[products][fields][0]=id&populate[thumbnail][fields]=url&pagination[start]=${start}`
+    : page && pageSize
+    ? `${process.env.STRAPI_API}/sub-categories?filters[category][handle][$eq]=${categoryHandle}&populate[products][fields][0]=id&populate[thumbnail][fields]=url&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+    : `${process.env.STRAPI_API}/sub-categories?filters[category][handle][$eq]=${categoryHandle}&populate[products][fields][0]=id&populate[thumbnail][fields]=url`;
+
+  const response = await fetch(
+    apiUrl,
+    { next: { revalidate: 0 } }
+  );
   if(response.ok) {
     const jsonRes = await response.json();
     return jsonRes?.data;  

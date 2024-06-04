@@ -32,7 +32,7 @@ const Cart = () => {
 
       const cartId = localStorage.getItem("cart_id");
 
-      let currentCart = null;
+      let currentCart = null; 
 
       if (cartId) {
         const id = localStorage.getItem("cart_id");

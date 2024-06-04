@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
@@ -11,36 +11,41 @@ import LeftSliderBtn from "./LeftSliderBtn";
 import RightSliderBtn from "./RightSliderBtn";
 import SubCategoryElement from "../sub-category-element/SubCategoryElement";
 import { useParams } from "next/navigation";
+import SliderElement from "../slider-elemet/SliderElement";
 
 type Props = {
   categories: Array<any>;
-  type: string
+  type: string;
 };
 
 const CategorySwiper = ({ categories, type }: Props) => {
-
   const params = useParams();
+  const thumb: MutableRefObject<any> = useRef();
+  const wrapper: MutableRefObject<any> = useRef();
+  const prevButtonRef: MutableRefObject<any> = useRef();
+  const nextButtonRef: MutableRefObject<any> = useRef();
+  const [scrollValue, setScrollValue] = useState(0);
 
-  useEffect(()=>{
-    console.log(params)
-  }, [params])
 
-  console.log(params)
+  useEffect(() => {
+    console.log(params);
+  }, [params]);
+
+  const slidesPerView =
+    screen.width < 400
+      ? 3
+      : screen.width < 550
+      ? 5
+      : screen.width < 800
+      ? 6
+      : screen.width < 1000
+      ? 9
+      : 9;
 
   return (
-    <div className="flex items-center relative my-5">
+    <div className="flex items-center relative my-5" ref={wrapper}>
       <Swiper
-        slidesPerView={
-          screen.width < 400
-            ? 3
-            : screen.width < 550
-            ? 5
-            : screen.width < 800
-            ? 6
-            : screen.width < 1000
-            ? 8
-            : 8
-        }
+        slidesPerView={slidesPerView}
         spaceBetween={30}
         navigation={false}
         mousewheel={true}
@@ -48,7 +53,28 @@ const CategorySwiper = ({ categories, type }: Props) => {
         modules={[FreeMode, Pagination, Navigation]}
         className="mySwiper"
       >
-        <LeftSliderBtn />
+        <LeftSliderBtn ref={prevButtonRef} onScroll={()=>{
+          const thumbWidth = parseFloat((thumb.current.style.width).replace(/%/g, ""));
+          const remainder = 100 - thumbWidth;
+          if(scrollValue > 0) {
+            setScrollValue(
+              (prev) => prev - (remainder / (categories.length-slidesPerView))
+            );
+          }
+
+          // setScrollValue((prev)=>{
+          //   if(prev > 0) {
+          //     const thumbWidth = (slidesPerView * 100) / categories.length
+          //     const wrapperWidth = wrapper.current.style.width;
+          //     const remainder = wrapperWidth - thumbWidth;
+          //     alert((remainder * 100) / categories.length);
+          //     return (remainder * 100 / categories.length)
+          //   }else{
+
+          //   }
+          //   return 0
+          // })
+        }} />
         {categories.map((brand, index) => {
           console.log(brand);
           return null;
@@ -61,13 +87,13 @@ const CategorySwiper = ({ categories, type }: Props) => {
             }}
           >
             {type == "category" ? (
-              <SubCategoryElement
+              <SliderElement
                 image={`${process.env.STRAPI_UPLOADS}${category?.attributes?.thumbnail?.data?.attributes?.url}`}
                 name={category?.attributes?.name}
                 handle={`/product-category/${params?.category}/${category?.attributes?.handle}`}
               />
             ) : (
-              <SubCategoryElement
+              <SliderElement
                 image={`${process.env.STRAPI_UPLOADS}${category?.attributes?.thumbnail?.data?.attributes?.url}`}
                 name={category?.attributes?.name}
                 handle={`/product-category/${params?.category}/${params?.sub_category}/${category?.attributes?.handle}`}
@@ -75,7 +101,29 @@ const CategorySwiper = ({ categories, type }: Props) => {
             )}
           </SwiperSlide>
         ))}
-        <RightSliderBtn />
+        <RightSliderBtn ref={nextButtonRef} onScroll={()=>{
+          const thumbWidth = parseFloat(
+            thumb.current.style.width.replace(/%/g, "")
+          );
+          const remainder = 100 - thumbWidth;
+          if (scrollValue < remainder) {
+            setScrollValue(
+              (prev) => prev + (remainder / (categories.length - slidesPerView))
+            );
+          }
+        }} />
+        <div className="slider-scrollbar">
+          <div className="scrollbar-track">
+            <div
+              className="scrollbar-thumb"
+              ref={thumb}
+              style={{
+                width: `${(slidesPerView * 100) / categories.length}%`,
+                left: scrollValue + '%'
+              }}
+            ></div>
+          </div>
+        </div>
       </Swiper>
     </div>
   );

@@ -25,6 +25,7 @@ export const fetchProductsByCategory = async (
     if (strapiResponse.ok) {
       const jsonRes = await response.json();
       const jsonStrapiRes = await strapiResponse.json();
+      console.log("Json strapi res...", jsonStrapiRes);
       return mergeProductData(jsonRes.products, jsonStrapiRes.data);
     }
   }

@@ -14,13 +14,12 @@ const ProductCategory = async (props: any) => {
   try {
     const categoryRes = await fetchByHandle(props.params.category);
     category = categoryRes;
-    console.log("szobo", categoryRes)
   } catch (err) {}
 
   //fetch sub categories
 
   try {
-    const subCategoriesRes = await fetchSubCategories(props.params.category);
+    const subCategoriesRes = await fetchSubCategories(props.params.category, 1, 5);
     subCategories = subCategoriesRes;
   } catch (err) {}
 
