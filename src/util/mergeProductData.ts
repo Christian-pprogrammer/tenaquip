@@ -17,3 +17,7 @@ export function mergeProductData(backendProducts: Array<any>, strapiProducts: Ar
   });
   return mergedProducts;
 }
+
+export const getCategories = () => {
+  
+}

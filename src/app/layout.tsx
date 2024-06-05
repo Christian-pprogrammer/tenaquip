@@ -38,12 +38,14 @@ export default async function RootLayout({
     <html lang="en">
       <Providers>
         <body className={inter.className}>
-          <ContainerFluid />
-          <Navbar />
-          <NavbarMobile />
-          <MenuNavbar />
-          <Modal />
-          {children}
+          <div>
+            <ContainerFluid />
+            <Navbar />
+            <NavbarMobile />
+            <MenuNavbar />
+            <Modal />
+            {children}
+          </div>
           <Footer />
         </body>
       </Providers>

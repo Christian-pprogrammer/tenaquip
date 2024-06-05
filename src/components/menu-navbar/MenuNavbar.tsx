@@ -36,7 +36,7 @@ const MenuNavbar = () => {
   }, [])
 
   return (
-    <div className="hidden md:flex padding-horizontal justify-between items-stretch bg-mainColor">
+    <div className="hidden md:flex padding-horizontal dektop-menubar justify-between items-stretch bg-mainColor">
       <div className="flex h-[100%]">
         {/* <Link href="/" className='text-white text-[12px] font-medium flex items-center hover:bg-darkMain py-[13px] px-[20px]'>Products</Link> */}
         <HoverDropdown title="Products" links={categories} />

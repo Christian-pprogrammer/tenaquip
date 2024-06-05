@@ -85,7 +85,9 @@ interface Product {
       currency_code: string,
       amount: string
     }>
-  }>
+  }>;
+  
+
 }
 
 interface Brand {

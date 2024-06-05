@@ -25,7 +25,6 @@ export const fetchProductsByCategory = async (
     if (strapiResponse.ok) {
       const jsonRes = await response.json();
       const jsonStrapiRes = await strapiResponse.json();
-      console.log("Json strapi res...", jsonStrapiRes);
       return mergeProductData(jsonRes.products, jsonStrapiRes.data);
     }
   }
@@ -117,3 +116,32 @@ export const fetchProductByHandle = async (
 };
 
 
+export const fetchProductsByBrand = async (
+  brand_id: string,
+  page?: number,
+  pageSize?: number
+) => {
+  let api_url =
+    page && pageSize
+      ? `${
+          process.env.MEDUSA_BACKEND_API
+        }/store/products?category_id[]=${brand_id}&limit=${pageSize}&offset=${
+          page && pageSize && pageSize * (page - 1)
+        }`
+      : `${process.env.MEDUSA_BACKEND_API}/store/products?category_id[]=${brand_id}`;
+
+  let strapi_url =
+    page && pageSize
+      ? `${process.env.STRAPI_API}/products?filters[brand][brand_id][$eq]=${brand_id}&populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+      : `${process.env.STRAPI_API}/products?filters[brand][brand_id][$eq]=${brand_id}&populate=*`;
+
+  const response = await fetch(api_url, { next: { revalidate: 0 } });
+  if (response.ok) {
+    const strapiResponse = await fetch(strapi_url, { next: { revalidate: 0 } });
+    if (strapiResponse.ok) {
+      const jsonRes = await response.json();
+      const jsonStrapiRes = await strapiResponse.json();
+      return mergeProductData(jsonRes.products, jsonStrapiRes.data);
+    }
+  }
+};

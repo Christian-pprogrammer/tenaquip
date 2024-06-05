@@ -9,6 +9,7 @@ import { FreeMode, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import LeftSliderBtn from "./LeftSliderBtn";
 import RightSliderBtn from "./RightSliderBtn";
+import Link from "next/link";
 
 type Props = {
   brands: Array<Brand>;
@@ -48,14 +49,17 @@ const ImageSwiper = ({ brands }: Props) => {
               marginLeft: index == 0 ? "40px" : "0px",
             }}
           >
-            <div className="flex flex-col items-center justify-center border-1 border-lightMain hover:border-mainColor text-center cursor-pointer transition-all duration-1000">
+            <Link
+              href={`/brands/${brand?.attributes?.handle}`}
+              className="flex flex-col items-center justify-center border-1 border-lightMain hover:border-mainColor text-center cursor-pointer transition-all duration-1000"
+            >
               <Image
                 src={`${process.env.STRAPI_UPLOADS}${brand?.attributes?.thumbnail?.data?.attributes?.url}`}
                 alt={brand?.attributes?.name}
                 width={90}
                 height={60}
               />
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
         <RightSliderBtn />

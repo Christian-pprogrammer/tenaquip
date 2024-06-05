@@ -1,13 +1,6 @@
 import React from 'react'
 
-const page = async () => {
-
-  try {
-
-  }catch(err) {
-    
-  }
-
+const page = () => {
   return (
     <div>page</div>
   )
