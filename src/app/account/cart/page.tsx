@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import axios from "axios";
 import { getError } from "@/util/getError";
+import { fetchCartProductsFromStrapi } from "@/services/product-service";
 
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -70,7 +71,10 @@ const Cart = () => {
         currentTotal = currentTotal + item.total / 100;
       });
 
-      console.log("my current quantity....", currentQuantity)
+      //fetch cart items from strapi
+
+      const cartData = await fetchCartProductsFromStrapi(currentCart.items);
+      console.log(JSON.stringify(cartData))
 
       setTotal(currentTotal);
       setQuantity(currentQuantity);

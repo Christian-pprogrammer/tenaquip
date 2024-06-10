@@ -177,3 +177,17 @@ export const fetchProductsByBrandAndSubSubCategory = async (
     }
   }
 };
+
+export const fetchCartProductsFromStrapi = async (items: Array<any>) => {
+  let api_url = `${process.env.STRAPI_API}/products?`;
+  items.map((item, index)=>{
+    console.log("hello")
+    api_url += `filters[product_id][$in][${index}]=${item.id}`
+  })
+
+  const response = await fetch(api_url, {next: {revalidate: 0}});
+  if(response.ok) {
+    const jsonRes = await response.json();
+    return mergeProductData(items, jsonRes.data)
+  }
+}
