@@ -179,15 +179,18 @@ export const fetchProductsByBrandAndSubSubCategory = async (
 };
 
 export const fetchCartProductsFromStrapi = async (items: Array<any>) => {
-  let api_url = `${process.env.STRAPI_API}/products?`;
+  let api_url = `${process.env.STRAPI_API}/products?populate[0]=description`;
+  let productData:any[] = [];
   items.map((item, index)=>{
-    console.log("hello")
-    api_url += `filters[product_id][$in][${index}]=${item.id}`
+    api_url += `&filters[product_id][$in][${index}]=${item?.variant?.product_id}`;
+    productData.push(item.variant?.product)
   })
+  
+  console.log("api urll....",api_url)
 
   const response = await fetch(api_url, {next: {revalidate: 0}});
   if(response.ok) {
     const jsonRes = await response.json();
-    return mergeProductData(items, jsonRes.data)
+    return mergeProductData(productData, jsonRes.data)
   }
 }
