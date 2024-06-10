@@ -41,7 +41,7 @@ const SubSubCategory = async (props: any) => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-6">
         {products?.map((product: any, index: number) => (
-          <ProductComponent key={index} product={product} />
+          product && <ProductComponent key={index} product={product} />
         ))}
       </div>
     </div>

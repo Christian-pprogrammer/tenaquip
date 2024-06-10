@@ -11,6 +11,7 @@ import axios from "axios";
 import { getError } from "@/util/getError";
 
 const Cart = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [cart, setCart] = useState<any>();
 
   const [quantity, setQuantity] = useState<any>({});
@@ -26,16 +27,18 @@ const Cart = () => {
   useEffect(() => {
     dispatch(setShowModal(true));
     dispatch(setLoading(true));
+    setIsLoading(false);
 
     const fetchCart = async () => {
       document.body.style.overflow = "hidden";
 
-      const cartId = localStorage.getItem("cart_id");
+      const cartId = appCart?.id;
 
       let currentCart = null; 
 
       if (cartId) {
-        const id = localStorage.getItem("cart_id");
+
+        const id = cartId;
         try {
           const response = await axios.get(
             `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`
@@ -54,10 +57,10 @@ const Cart = () => {
         }
       }
 
-      let currentQuantity: any;
+      let currentQuantity: any = {};
 
       let currentTotal: number = 0;
-
+      console.log("current cart...",currentCart)
       currentCart?.items?.map((item: any) => {
         currentQuantity = {
           ...currentQuantity,
@@ -66,6 +69,8 @@ const Cart = () => {
 
         currentTotal = currentTotal + item.total / 100;
       });
+
+      console.log("my current quantity....", currentQuantity)
 
       setTotal(currentTotal);
       setQuantity(currentQuantity);
@@ -187,6 +192,11 @@ const Cart = () => {
       <div>
         <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
       </div>
+
+
+      {isLoading && <div className="flex justify-between items-center">
+        <Image src={"/loader.webp"} alt="" height={100} width={100} className="mx-auto" />
+      </div>}
 
       <div className="lg:flex justify-between relative gap-3">
         <div className="flex-1">

@@ -177,7 +177,7 @@ button:focus {
     padding-right: 6%;
   }
   .dektop-menubar {
-    padding-left: calc(13% - 13px) !important;
+    padding-left: calc(6% - 13px) !important;
   }
 }
 

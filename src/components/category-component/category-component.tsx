@@ -22,8 +22,6 @@ type Props = {
   isSubCategory?: Boolean;
   subHandle?: any;
   id: string;
-  isBrand?: Boolean;
-  brandProducts?: Array<any>;
 };
 
 const CategoryComponent = ({
@@ -33,8 +31,6 @@ const CategoryComponent = ({
   isSubCategory,
   subHandle,
   id,
-  isBrand,
-  brandProducts,
 }: Props) => {
   // const [browseBy, setBrowseBy] = useState("Product Listings");
   const [browseBy, setBrowseBy] = useState("Categories");
@@ -71,24 +67,22 @@ const CategoryComponent = ({
 
   useEffect(() => {
     const fetchCategoryProducts = async () => {
-      if (!isBrand) {
-        try {
-          if (isSubCategory) {
-            //fetch sub category products
-            const products = await fetchSubCategoryProducts(id, 1, 20);
-            if (products) {
-              setProducts(products);
-            }
-          } else {
-            const products = await fetchProductsByCategory(id, 1, 20);
-            console.log("My products...", products);
-            if (products) {
-              setProducts(products);
-            }
+      try {
+        if (isSubCategory) {
+          //fetch sub category products
+          const products = await fetchSubCategoryProducts(id, 1, 20);
+          if (products) {
+            setProducts(products);
           }
-        } catch (err) {
-          console.log(err);
+        } else {
+          const products = await fetchProductsByCategory(id, 1, 20);
+          console.log("My products...", products);
+          if (products) {
+            setProducts(products);
+          }
         }
+      } catch (err) {
+        console.log(err);
       }
     };
     fetchCategoryProducts();
@@ -96,107 +90,88 @@ const CategoryComponent = ({
 
   return (
     <div>
-      {!isBrand ? (
-        <>
-          <BrowseBy
-            title={title ? title : ""}
-            browseBy={browseBy}
-            toggleBrowseBy={toggleBrowseBy}
-          />
+      <BrowseBy
+        title={title ? title : ""}
+        browseBy={browseBy}
+        toggleBrowseBy={toggleBrowseBy}
+      />
 
-          {browseBy == "Categories" ? (
-            <>
-              <CategoryFilter subCategories={subCategories} />
-              {isSubCategory ? (
-                <div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-7">
-                    {subCategories?.map((subcategory, index: number) => (
-                      <SubCategoryElement
-                        key={index}
-                        name={subcategory?.attributes?.name}
-                        handle={`/product-category/${handle}/${subHandle}/${subcategory?.attributes?.handle}/`}
-                        image={`${process.env.STRAPI_UPLOADS}${subcategory?.attributes?.thumbnail?.data?.attributes?.url}`}
-                        numberOfProducts={0}
-                      />
-                    ))}
-                  </div>
-                  {!viewAll && (
-                    <button
-                      className="custom-btn"
-                      style={{
-                        width: "30rem",
-                        maxWidth: "100%",
-                        color: "#fff",
-                        backgroundColor: COLORS.MAIN_COLOR,
-                        border: "none",
-                        margin: "20px auto",
-                        display: "block",
-                      }}
-                      onClick={() => viewMore()}
-                    >
-                      View more
-                    </button>
-                  )}
-                </div>
-              ) : (
-                <div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-7">
-                    {subCats?.map((subcategory, index: number) => (
-                      <SubCategoryElement
-                        key={index}
-                        name={subcategory?.attributes?.name}
-                        handle={`/product-category/${handle}/${subcategory?.attributes?.handle}`}
-                        image={`${process.env.STRAPI_UPLOADS}${subcategory?.attributes?.thumbnail?.data?.attributes?.url}`}
-                        numberOfProducts={
-                          subcategory?.attributes?.products?.data?.length
-                        }
-                      />
-                    ))}
-                  </div>
-                  {!viewAll && (
-                    <button
-                      className="custom-btn"
-                      style={{
-                        width: "30rem",
-                        maxWidth: "100%",
-                        color: "#fff",
-                        backgroundColor: COLORS.MAIN_COLOR,
-                        border: "none",
-                        margin: "20px auto",
-                        display: "block",
-                      }}
-                      onClick={() => viewMore()}
-                    >
-                      View more
-                    </button>
-                  )}
-                </div>
+      {browseBy == "Categories" ? (
+        <>
+          <CategoryFilter subCategories={subCategories} />
+          {isSubCategory ? (
+            <div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-7">
+                {subCategories?.map((subcategory, index: number) => (
+                  <SubCategoryElement
+                    key={index}
+                    name={subcategory?.attributes?.name}
+                    handle={`/product-category/${handle}/${subHandle}/${subcategory?.attributes?.handle}/`}
+                    image={`${process.env.STRAPI_UPLOADS}${subcategory?.attributes?.thumbnail?.data?.attributes?.url}`}
+                    numberOfProducts={0}
+                  />
+                ))}
+              </div>
+              {!viewAll && (
+                <button
+                  className="custom-btn"
+                  style={{
+                    width: "30rem",
+                    maxWidth: "100%",
+                    color: "#fff",
+                    backgroundColor: COLORS.MAIN_COLOR,
+                    border: "none",
+                    margin: "20px auto",
+                    display: "block",
+                  }}
+                  onClick={() => viewMore()}
+                >
+                  View more
+                </button>
               )}
-            </>
+            </div>
           ) : (
-            <>
-              <CategorySwiper categories={subCategories} type="category" />
-              <ProductFilter subCategories={subCategories} />
-              {products && (
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-6">
-                  {products?.map(
-                    (product: any, index: number) =>
-                      product && (
-                        <ProductComponent key={index} product={product} />
-                      )
-                  )}
-                </div>
+            <div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-7">
+                {subCats?.map((subcategory, index: number) => (
+                  <SubCategoryElement
+                    key={index}
+                    name={subcategory?.attributes?.name}
+                    handle={`/product-category/${handle}/${subcategory?.attributes?.handle}`}
+                    image={`${process.env.STRAPI_UPLOADS}${subcategory?.attributes?.thumbnail?.data?.attributes?.url}`}
+                    numberOfProducts={
+                      subcategory?.attributes?.products?.data?.length
+                    }
+                  />
+                ))}
+              </div>
+              {!viewAll && (
+                <button
+                  className="custom-btn"
+                  style={{
+                    width: "30rem",
+                    maxWidth: "100%",
+                    color: "#fff",
+                    backgroundColor: COLORS.MAIN_COLOR,
+                    border: "none",
+                    margin: "20px auto",
+                    display: "block",
+                  }}
+                  onClick={() => viewMore()}
+                >
+                  View more
+                </button>
               )}
-            </>
+            </div>
           )}
         </>
       ) : (
         <>
           <CategorySwiper categories={subCategories} type="category" />
           <ProductFilter subCategories={subCategories} />
-          {brandProducts && (
+          {products && (
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 my-6">
-              {brandProducts?.map(
+              {products?.map(
                 (product: any, index: number) =>
                   product && <ProductComponent key={index} product={product} />
               )}

@@ -19,10 +19,13 @@ const ProductCategory = async (props: any) => {
   //fetch sub categories
 
   try {
-    const subCategoriesRes = await fetchSubCategories(props.params.category, 1, 5);
+    const subCategoriesRes = await fetchSubCategories(
+      props.params.category,
+      1,
+      5
+    );
     subCategories = subCategoriesRes;
   } catch (err) {}
-
 
   return (
     <div className="padding-horizontal">

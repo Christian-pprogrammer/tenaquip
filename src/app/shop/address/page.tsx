@@ -49,6 +49,8 @@ const page = () => {
 
       const cartId = cart.id ? cart.id : localStorage.getItem("cart_id");
 
+      
+
       try {
         //associate guest customer with the cart
         await axios.post(
@@ -90,7 +92,6 @@ const page = () => {
         setCart(cart);
 
         console.log(".cart", cart);
-
         router.push("/shop/review");
       } catch (err: any) {
         console.log("there was ane rroor...");

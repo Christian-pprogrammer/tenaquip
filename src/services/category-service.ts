@@ -22,7 +22,7 @@ export const fetchCategories = async (page?: number, pageSize?: number) => {
 
 export const fetchCategoriesByIdsList = async (idsList: Array<string>) => {
 
-  let api_url = `${process.env.STRAPI_API}/categories?`;
+  let api_url = `${process.env.STRAPI_API}/categories?populate[0]=thumbnail`;
 
   idsList.map((id, index: number)=>{
     api_url =
@@ -130,3 +130,15 @@ export const fetchBrands = async (page?: number, pageSize?: number) => {
     return jsonRes?.data;
   }
 };
+
+
+export const fetchCategoriesByBrand = async (brandId: string) => {
+  const response = await fetch(
+    `${process.env.STRAPI_API}/sub-sub-categories?filters[products][brand][id][$eq]=${brandId}&populate[thumbnail][fields]=url`,
+    { next: { revalidate: 0 } }
+  );
+  if (response.ok) {
+    const jsonRes = await response.json();
+    return jsonRes?.data;
+  }
+}

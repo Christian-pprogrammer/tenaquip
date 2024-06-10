@@ -14,7 +14,8 @@ import React, { useState } from "react";
 import jwt from 'jsonwebtoken';
 import { getError } from "@/util/getError";
 
-const LoginForm = () => {
+const 
+LoginForm = () => {
   const dispatch = useAppDispatch();
 
   const cart = useAppSelector(state => state.cart?.cart);
@@ -59,20 +60,19 @@ const LoginForm = () => {
         document.body.style.overflow = "auto"
         setError('')
         //set user cookie
-
         //if we already have cart, associate it with current logged in user
         if(cart?.id) {
           const res = await axios.post(`${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}`, {
             customer_id: customer?.id
           })
+          console.log("my res...", res)
           dispatch(setCart({cart: res.data?.cart, cartType: 'authenticated_cart'}))
         }
         router.push("/");
+        dispatch(setShowModal(false));
       } catch (err: any) {
         setError(getError(err));
       }
-
-      dispatch(setShowModal(false))
       dispatch(setLoading(false));
     },
   });

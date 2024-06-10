@@ -20,10 +20,23 @@ const loadCartFromLocalStorage = () => {
   }
 };
 
+const getCartType = () => {
+  try{
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem("token");
+      return token ? "authenticated_cart" : "unauthenticated_cart";
+    } else {
+      return "unauthenticated_cart"; // Handle the case when localStorage is not available
+    }
+  }catch(err) {
+    return "unauthenticated_cart";
+  }
+}
+
 
 const initialState: ICartState = {
   cart: loadCartFromLocalStorage(),
-  cartType: 'unauthenticated_cart',
+  cartType: getCartType(),
   recentCartItem: null
 }
 

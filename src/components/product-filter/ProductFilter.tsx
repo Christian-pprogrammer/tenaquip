@@ -6,7 +6,7 @@ import { FaChevronDown, FaChevronLeft } from "react-icons/fa";
 import COLORS from "@/config/colors";
 import Link from "next/link";
 
-const ProductFilter = ({ subCategories }: { subCategories: Array<any> }) => {
+const ProductFilter = ({ subCategories }: { subCategories?: Array<any> }) => {
   console.log(subCategories);
 
   const [toogleId, setToggleId] = useState(0);
@@ -31,42 +31,44 @@ const ProductFilter = ({ subCategories }: { subCategories: Array<any> }) => {
         <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
           Sale Items
         </button>
-        <div className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white relative">
-          <div
-            className="flex items-center justify-between w-[100%] h-[100%] px-2 gap-x-2 cursor-pointer"
-            onClick={() => toggleDropdown(1)}
-          >
-            <span>Category</span>
-            <FaChevronDown
-              size={12}
-              color={COLORS.GRAY}
-              className={
-                toogleId != 1
-                  ? "rotate-0 transition-all duration-[0.2s]"
-                  : "rotate-180 duration-[0.2s]"
-              }
-            />
-          </div>
-          <ul
-            className={`absolute top-full bg-white border-none shadow-xl left-0 mt-2 ${
-              toogleId != 1 && "hidden"
-            } min-w-64 px-3 z-50 max-h-96 overflow-y-auto`}
-          >
-            {subCategories.map((sub, index) => (
-              <Link
-                className="block text-Gray text-sm my-3"
-                href={`${sub.attributes?.handle}`}
-                key={index}
-              >
-                <span className="whitespace-nowrap">
-                  {`${sub.attributes?.name}`}
-                </span>
-              </Link>
-            ))}
+        {subCategories && (
+          <div className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white relative">
+            <div
+              className="flex items-center justify-between w-[100%] h-[100%] px-2 gap-x-2 cursor-pointer"
+              onClick={() => toggleDropdown(1)}
+            >
+              <span>Category</span>
+              <FaChevronDown
+                size={12}
+                color={COLORS.GRAY}
+                className={
+                  toogleId != 1
+                    ? "rotate-0 transition-all duration-[0.2s]"
+                    : "rotate-180 duration-[0.2s]"
+                }
+              />
+            </div>
+            <ul
+              className={`absolute top-full bg-white border-none shadow-xl left-0 mt-2 ${
+                toogleId != 1 && "hidden"
+              } min-w-64 px-3 z-50 max-h-96 overflow-y-auto`}
+            >
+              {subCategories.map((sub, index) => (
+                <Link
+                  className="block text-Gray text-sm my-3"
+                  href={`${sub.attributes?.handle}`}
+                  key={index}
+                >
+                  <span className="whitespace-nowrap">
+                    {`${sub.attributes?.name}`}
+                  </span>
+                </Link>
+              ))}
 
-            {/* Add other menu items here */}
-          </ul>
-        </div>
+              {/* Add other menu items here */}
+            </ul>
+          </div>
+        )}
         <div className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white relative">
           <div
             className="flex items-center justify-between w-[100%] h-[100%] px-2 gap-x-2 cursor-pointer"
@@ -88,7 +90,7 @@ const ProductFilter = ({ subCategories }: { subCategories: Array<any> }) => {
               toogleId != 2 && "hidden"
             } min-w-64 px-3 z-50`}
           >
-            {subCategories.map((sub, index) => (
+            {subCategories && subCategories.map((sub, index) => (
               <Link
                 className="block text-Gray text-sm my-3"
                 href={`${sub.handle}`}
@@ -124,7 +126,7 @@ const ProductFilter = ({ subCategories }: { subCategories: Array<any> }) => {
                 toogleId != 3 && "hidden"
               } min-w-64 px-3 z-50 max-h-96 overflow-y-auto`}
             >
-              {subCategories.map((sub, index) => (
+              {subCategories && subCategories.map((sub, index) => (
                 <Link
                   className="block text-Gray text-sm my-3"
                   href={`${sub.attributes?.handle}`}
@@ -160,7 +162,7 @@ const ProductFilter = ({ subCategories }: { subCategories: Array<any> }) => {
                 toogleId != 4 && "hidden"
               } min-w-64 px-3 z-50 max-h-96 overflow-y-auto`}
             >
-              {subCategories.map((sub, index) => (
+              {subCategories && subCategories.map((sub, index) => (
                 <Link
                   className="block text-Gray text-sm my-3"
                   href={`${sub.attributes?.handle}`}
@@ -176,7 +178,6 @@ const ProductFilter = ({ subCategories }: { subCategories: Array<any> }) => {
             </ul>
           </div>
         </div>
-        
       </div>
     </div>
   );
