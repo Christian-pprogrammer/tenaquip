@@ -30,54 +30,53 @@ const Cart = () => {
     const fetchCart = async () => {
       dispatch(setShowModal(true));
       dispatch(setLoading(true));
-      try {
-      } catch (err) {}
       setIsLoading(false);
       document.body.style.overflow = "hidden";
 
-      const cartId = appCart?.id;
+      try {
+        const cartId = appCart?.id;
 
-      let currentCart = null;
+        let currentCart = null;
 
-      if (cartId) {
-        const id = cartId;
-        try {
-          const response = await axios.get(
-            `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`
-          );
-          const resJson = await response?.data;
-          let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
-          dispatch(setAppCart({ cart: resJson?.cart, cartType }));
-          currentCart = resJson?.cart;
-          setCart(resJson?.cart);
-        } catch (err) {
-          //if we can't fetch, use the current cart in the store
-          let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
-          dispatch(setAppCart({ cart: appCart, cartType }));
-          currentCart = cart;
-          setCart(appCart);
+        if (cartId) {
+          const id = cartId;
+          try {
+            const response = await axios.get(
+              `${process.env.MEDUSA_BACKEND_API}/store/carts/${id}`
+            );
+            const resJson = await response?.data;
+            let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
+            dispatch(setAppCart({ cart: resJson?.cart, cartType }));
+            currentCart = resJson?.cart;
+            setCart(resJson?.cart);
+          } catch (err) {
+            //if we can't fetch, use the current cart in the store
+            let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
+            dispatch(setAppCart({ cart: appCart, cartType }));
+            currentCart = cart;
+            setCart(appCart);
+          }
         }
-      }
 
-      let currentQuantity: any = {};
+        let currentQuantity: any = {};
 
-      let currentTotal: number = 0;
-      console.log("current cart...", currentCart);
-      currentCart?.items?.map((item: any) => {
-        currentQuantity = {
-          ...currentQuantity,
-          [item.id]: item.quantity,
-        };
-        currentTotal = currentTotal + item.total / 100;
-      });
+        let currentTotal: number = 0;
+        console.log("current cart...", currentCart);
+        currentCart?.items?.map((item: any) => {
+          currentQuantity = {
+            ...currentQuantity,
+            [item.id]: item.quantity,
+          };
+          currentTotal = currentTotal + item.total / 100;
+        });
+        const cartData = await fetchCartProductsFromStrapi(currentCart.items);
+        setCartData(cartData);
+        setTotal(currentTotal);
+        setQuantity(currentQuantity);
+        console.log("current quantity", currentQuantity);
+      } catch (err) {}
 
       //fetch cart items from strapi
-
-      const cartData = await fetchCartProductsFromStrapi(currentCart.items);
-      setCartData(cartData);
-      setTotal(currentTotal);
-      setQuantity(currentQuantity);
-      console.log("current quantity", currentQuantity);
       dispatch(setShowModal(false));
       dispatch(setLoading(false));
       document.body.style.overflow = "auto";
@@ -210,7 +209,7 @@ const Cart = () => {
 
       <div className="lg:flex justify-between relative gap-3">
         <div className="flex-1">
-          {cartData ? (
+          {cartData.length > 0 && (
             <div>
               {cartData.map((item: any) => {
                 let image: string = item.thumbnail;
@@ -274,14 +273,14 @@ const Cart = () => {
                               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 setQuantity({
                                   ...quantity,
-                                  [item.id]: e.target.value,
+                                  [item.item_id]: e.target.value,
                                 });
                               }}
                             />
 
                             <button
                               className="bg-transparent text-[13px] text-mainColor"
-                              onClick={(e: any) => updateLineItem(e, item.id)}
+                              onClick={(e: any) => updateLineItem(e, item.item_id)}
                             >
                               Update
                             </button>
@@ -318,7 +317,7 @@ const Cart = () => {
                                     ) => {
                                       setQuantity({
                                         ...quantity,
-                                        [item.id]: e.target.value,
+                                        [item.item_id]: e.target.value,
                                       });
                                     }}
                                   />
@@ -326,7 +325,7 @@ const Cart = () => {
                                   <button
                                     className="bg-transparent text-[13px] text-mainColor"
                                     onClick={(e: any) =>
-                                      updateLineItem(e, item.id)
+                                      updateLineItem(e, item.item_id)
                                     }
                                   >
                                     Update
@@ -351,7 +350,7 @@ const Cart = () => {
                           </div>
                           <button
                             className="underline bg-transparent text-[13px] text-mainColor float-right bg-black text-right"
-                            onClick={(e: any) => deleteCartItem(e, item?.id)}
+                            onClick={(e: any) => deleteCartItem(e, item?.item_id)}
                           >
                             Remove
                           </button>
@@ -363,7 +362,10 @@ const Cart = () => {
                 );
               })}
             </div>
-          ) : (
+          )}
+          
+          {cartData.length == 0 && !isLoading && 
+          (
             <h2 className="text-xl font-semibold text-Gray mt-4">
               Your cart is currently empty
             </h2>
