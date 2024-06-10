@@ -17,6 +17,7 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
 
   const [quantity, setQuantity] = useState<any>(null);
+  const [itemsTotalPrices, setItemsTotalPrices] = useState<any>({});
 
   const [total, setTotal] = useState(0);
 
@@ -68,6 +69,7 @@ const Cart = () => {
             [item.id]: item.quantity,
           };
           currentTotal = currentTotal + item.total / 100;
+          setItemsTotalPrices({ ...itemsTotalPrices, [item.id]: item.total });
         });
         const cartData = await fetchCartProductsFromStrapi(currentCart.items);
         setCartData(cartData);
@@ -109,7 +111,6 @@ const Cart = () => {
       }
     )
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then(({ cart }) => {
@@ -128,6 +129,7 @@ const Cart = () => {
           };
 
           currentTotal = currentTotal + item.total / 100;
+          setItemsTotalPrices({ ...itemsTotalPrices, [item.id]: item.total });
         });
 
         setTotal(currentTotal);
@@ -174,6 +176,7 @@ const Cart = () => {
           };
 
           currentTotal = currentTotal + item.total / 100;
+          setItemsTotalPrices({ ...itemsTotalPrices, [item.id]: item.total });
         });
 
         setTotal(currentTotal);
@@ -280,13 +283,15 @@ const Cart = () => {
 
                             <button
                               className="bg-transparent text-[13px] text-mainColor"
-                              onClick={(e: any) => updateLineItem(e, item.item_id)}
+                              onClick={(e: any) =>
+                                updateLineItem(e, item.item_id)
+                              }
                             >
                               Update
                             </button>
                           </div>
                           <p className="md:hidden block text-sm leading-[1.25em] text-Gray font-[700] mb-2 mt-2">
-                            Subtotal: ${item.total / 100}
+                            Subtotal: ${itemsTotalPrices[item.item_id] / 100}
                           </p>
                           <button
                             className="block md:hidden underline bg-transparent text-[13px] text-mainColor bg-black text-right"
@@ -343,14 +348,17 @@ const Cart = () => {
                                 </p>
 
                                 <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">
-                                  Subtotal: ${item.total / 100}
+                                  Subtotal: $
+                                  {itemsTotalPrices[item.item_id] / 100}
                                 </p>
                               </div>
                             </div>
                           </div>
                           <button
                             className="underline bg-transparent text-[13px] text-mainColor float-right bg-black text-right"
-                            onClick={(e: any) => deleteCartItem(e, item?.item_id)}
+                            onClick={(e: any) =>
+                              deleteCartItem(e, item?.item_id)
+                            }
                           >
                             Remove
                           </button>
@@ -363,9 +371,8 @@ const Cart = () => {
               })}
             </div>
           )}
-          
-          {cartData.length == 0 && !isLoading && 
-          (
+
+          {cartData.length == 0 && !isLoading && (
             <h2 className="text-xl font-semibold text-Gray mt-4">
               Your cart is currently empty
             </h2>
