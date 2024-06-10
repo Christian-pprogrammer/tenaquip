@@ -16,7 +16,7 @@ const Cart = () => {
   const [cart, setCart] = useState<any>();
   const [cartData, setCartData] = useState([]);
 
-  const [quantity, setQuantity] = useState<any>({});
+  const [quantity, setQuantity] = useState<any>(null);
 
   const [total, setTotal] = useState(0);
 
@@ -27,19 +27,19 @@ const Cart = () => {
   const appCart = useAppSelector((state) => state.cart?.cart);
 
   useEffect(() => {
-    dispatch(setShowModal(true));
-    dispatch(setLoading(true));
-    setIsLoading(false);
-
     const fetchCart = async () => {
+      dispatch(setShowModal(true));
+      dispatch(setLoading(true));
+      try {
+      } catch (err) {}
+      setIsLoading(false);
       document.body.style.overflow = "hidden";
 
       const cartId = appCart?.id;
 
-      let currentCart = null; 
+      let currentCart = null;
 
       if (cartId) {
-
         const id = cartId;
         try {
           const response = await axios.get(
@@ -62,27 +62,22 @@ const Cart = () => {
       let currentQuantity: any = {};
 
       let currentTotal: number = 0;
-      console.log("current cart...",currentCart)
+      console.log("current cart...", currentCart);
       currentCart?.items?.map((item: any) => {
-        console.log("item", item)
         currentQuantity = {
           ...currentQuantity,
           [item.id]: item.quantity,
         };
-
         currentTotal = currentTotal + item.total / 100;
       });
 
       //fetch cart items from strapi
 
       const cartData = await fetchCartProductsFromStrapi(currentCart.items);
-      console.log("cart data...", cartData)
       setCartData(cartData);
-
-
       setTotal(currentTotal);
       setQuantity(currentQuantity);
-
+      console.log("current quantity", currentQuantity);
       dispatch(setShowModal(false));
       dispatch(setLoading(false));
       document.body.style.overflow = "auto";
@@ -201,10 +196,17 @@ const Cart = () => {
         <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
       </div>
 
-
-      {isLoading && <div className="flex justify-between items-center">
-        <Image src={"/loader.webp"} alt="" height={100} width={100} className="mx-auto" />
-      </div>}
+      {isLoading && (
+        <div className="flex justify-between items-center">
+          <Image
+            src={"/loader.webp"}
+            alt=""
+            height={100}
+            width={100}
+            className="mx-auto"
+          />
+        </div>
+      )}
 
       <div className="lg:flex justify-between relative gap-3">
         <div className="flex-1">
@@ -252,7 +254,7 @@ const Cart = () => {
                             </p>
                           </div>
                           <p className="md:hidden block text-sm leading-[1.25em] text-Gray font-[700] mb-2 mt-2">
-                            Price: 
+                            Price:
                             {Number(item.unit_price) / 100}{" "}
                             <span className="font-[400]"> / Each</span>
                           </p>
@@ -275,7 +277,6 @@ const Cart = () => {
                                   [item.id]: e.target.value,
                                 });
                               }}
-                              // onChange={()=>}
                             />
 
                             <button
@@ -311,7 +312,7 @@ const Cart = () => {
                                       outline: "none",
                                       padding: 0,
                                     }}
-                                    value={quantity[item.id]}
+                                    value={quantity[item.item_id]}
                                     onChange={(
                                       e: ChangeEvent<HTMLInputElement>
                                     ) => {
@@ -320,7 +321,6 @@ const Cart = () => {
                                         [item.id]: e.target.value,
                                       });
                                     }}
-                                    // onChange={()=>}
                                   />
 
                                   <button
@@ -335,12 +335,12 @@ const Cart = () => {
                               </div>
                               <div>
                                 <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">
-                                  Price: $30.57{" "}
+                                  Price: {Number(item.unit_price) / 100}{" "}
                                   <span className="font-[400]"> / Each</span>
                                 </p>
 
                                 <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">
-                                  Ships in 7-10 days
+                                  Ships in {item.ships_in}
                                 </p>
 
                                 <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">

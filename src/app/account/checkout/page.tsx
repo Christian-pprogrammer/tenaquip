@@ -80,8 +80,8 @@ const page = () => {
   });
 
   return (
-    <div className="flex justify-between padding-horizontal py-10">
-      <div className="flex flex-col gap-4">
+    <div className="block md:flex justify-between padding-horizontal py-10">
+      <div className="flex flex-col gap-4 mb-5">
         <h2 className="heading">Guest Checkout</h2>
         <p className="custom-text">Checkout now and register later</p>
         <Link
