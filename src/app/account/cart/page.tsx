@@ -14,6 +14,7 @@ import { fetchCartProductsFromStrapi } from "@/services/product-service";
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [cart, setCart] = useState<any>();
+  const [cartData, setCartData] = useState([]);
 
   const [quantity, setQuantity] = useState<any>({});
 
@@ -63,6 +64,7 @@ const Cart = () => {
       let currentTotal: number = 0;
       console.log("current cart...",currentCart)
       currentCart?.items?.map((item: any) => {
+        console.log("item", item)
         currentQuantity = {
           ...currentQuantity,
           [item.id]: item.quantity,
@@ -74,7 +76,9 @@ const Cart = () => {
       //fetch cart items from strapi
 
       const cartData = await fetchCartProductsFromStrapi(currentCart.items);
-      console.log(JSON.stringify(cartData))
+      console.log("cart data...", cartData)
+      setCartData(cartData);
+
 
       setTotal(currentTotal);
       setQuantity(currentQuantity);
@@ -204,9 +208,9 @@ const Cart = () => {
 
       <div className="lg:flex justify-between relative gap-3">
         <div className="flex-1">
-          {cart?.items ? (
+          {cartData ? (
             <div>
-              {cart?.items?.map((item: any) => {
+              {cartData.map((item: any) => {
                 let image: string = item.thumbnail;
                 if (image.includes("localhost")) {
                   image = image.replace("localhost", "127.0.0.1");
@@ -221,16 +225,16 @@ const Cart = () => {
                       <div className="ml-3 md:flex flex-1 justify-between">
                         <div>
                           <p className="text-sm leading-[1.25em] text-Gray font-[700] mb-2">
-                            Brady
+                            {item.brand.data.attributes.name}
                           </p>
 
                           <p className="text-sm leading-[1.25em] text-mainColor font-[700] mb-2">
                             {item.title}
                           </p>
                           <ul className="hidden md:block">
-                            {[1, 2, 3, 4].map((item) => (
+                            {item.description?.map((desc: any) => (
                               <li className="text-[13px] text-Gray list-disc ml-4 leading-[19px]">
-                                Material: Plastic
+                                {desc?.descriptionTitle}
                               </li>
                             ))}
                           </ul>
@@ -239,16 +243,17 @@ const Cart = () => {
                             <p className="text-Gray text-[13px]">
                               Model:{" "}
                               <span className="text-Gray font-semibold">
-                                MDSDI
+                                {item.model}
                               </span>
                             </p>
                             <p className="text-Gray text-sm text-[13px]">
-                              Manufacturer Model No:{" "}
+                              Manufacturer Model No:{item.manufacturer_model_no}
                               <span className="text-Gray"></span>
                             </p>
                           </div>
                           <p className="md:hidden block text-sm leading-[1.25em] text-Gray font-[700] mb-2 mt-2">
-                            Price: $30.57{" "}
+                            Price: 
+                            {Number(item.unit_price) / 100}{" "}
                             <span className="font-[400]"> / Each</span>
                           </p>
 
@@ -263,7 +268,7 @@ const Cart = () => {
                                 outline: "none",
                                 padding: 0,
                               }}
-                              value={quantity[item.id]}
+                              value={quantity[item.item_id]}
                               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 setQuantity({
                                   ...quantity,
