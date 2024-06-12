@@ -223,10 +223,10 @@ export const fetchRelatedProducts = async (
       ? `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
       : `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand`;
 
-  brand_ids.map((item, index)=>{
-    api_url += `&category_id[${index}]=${item}`
-    strapi_url += `&filters[$and][0][brand][brand_id][$in][${index}]=${item}`
-  })
+  // brand_ids.map((item, index)=>{
+  //   api_url += `&category_id[${index}]=${item}`
+  //   strapi_url += `&filters[$and][0][brand][brand_id][$in][${index}]=${item}`
+  // })
   category_ids.map((item, index) => {
     api_url += `&category_id[${index}]=${item}`
     strapi_url += `&filters[$and][1][sub_sub_category][category_id][$in][${index}]=${item}`;
