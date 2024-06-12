@@ -179,7 +179,7 @@ export const fetchProductsByBrandAndSubSubCategory = async (
 };
 
 export const fetchCartProductsFromStrapi = async (items: Array<any>) => {
-  let api_url = `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand`;
+  let api_url = `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand&populate[2]=sub_sub_category`;
   let productData:any[] = [];
   items.map((item, index)=>{
     api_url += `&filters[product_id][$in][${index}]=${item?.variant?.product_id}`;
@@ -199,3 +199,43 @@ export const fetchCartProductsFromStrapi = async (items: Array<any>) => {
     return mergeProductData(productData, jsonRes.data)
   }
 }
+
+export const fetchRelatedProducts = async (
+  brand_ids: Array<string>,
+  category_ids: Array<string>,
+  page?: number,
+  pageSize?: number
+) => {
+  let api_url =
+    page && pageSize
+      ? `${
+          process.env.MEDUSA_BACKEND_API
+        }/store/products?limit=${pageSize}&offset=${
+          page && pageSize && pageSize * (page - 1)
+        }`
+      : `${process.env.MEDUSA_BACKEND_API}/store/products?`;
+
+  let strapi_url =
+    page && pageSize
+      ? `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+      : `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand`;
+
+  brand_ids.map((item, index)=>{
+    api_url += `&category_id[${index}]=${item}`
+    strapi_url += `&filters[$and][0][brand][brand_id][$in][${index}]=${item}`
+  })
+  category_ids.map((item, index) => {
+    api_url += `&category_id[${index}]=${item}`
+    strapi_url += `&filters[$and][1][sub_sub_category][category_id][$in][${index}]=${item}`;
+  })
+
+  const response = await fetch(api_url, { next: { revalidate: 0 } });
+  if (response.ok) {
+    const strapiResponse = await fetch(strapi_url, { next: { revalidate: 0 } });
+    if (strapiResponse.ok) {
+      const jsonRes = await response.json();
+      const jsonStrapiRes = await strapiResponse.json();
+      return mergeProductData(jsonRes.products, jsonStrapiRes.data);
+    }
+  }
+};

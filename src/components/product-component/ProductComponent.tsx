@@ -162,7 +162,7 @@ const ProductComponent = ({
 
       <div>
         <p className="model text-Gray capitalize text-sm my-2 font-[700]">
-          {brand.data.attributes.name}
+          {brand?.data.attributes.name}
         </p>
         <p className="productName text-mainColor my-2 text-sm font-[700]">{title}</p>
 

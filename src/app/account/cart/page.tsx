@@ -1,7 +1,7 @@
 "use client";
 
 import Checkout from "@/components/checkout/Checkout";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { setCart as setAppCart } from "@/Store/slices/cart";
 import { setShowModal } from "@/Store/slices/modal";
 import { setLoading } from "@/Store/slices/loading";
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import axios from "axios";
 import { getError } from "@/util/getError";
 import { fetchCartProductsFromStrapi } from "@/services/product-service";
+import RelatedProducts from "@/components/related-products/RelatedProducts";
 
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +27,9 @@ const Cart = () => {
   const user = useAppSelector((state) => state.user?.user);
 
   const appCart = useAppSelector((state) => state.cart?.cart);
+
+  const [sub_sub_categoryIds, setSub_sub_categoryIds] = useState<any>([]);
+  const [brandIds, setBrandIds] = useState<any>([]);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -72,6 +76,12 @@ const Cart = () => {
           setItemsTotalPrices({ ...itemsTotalPrices, [item.id]: item.total });
         });
         const cartData = await fetchCartProductsFromStrapi(currentCart.items);
+
+        cartData.length > 0 && cartData.map((item: any, index: number)=>{
+          setSub_sub_categoryIds((prev: Array<any>)=>[...prev, item?.sub_sub_category?.category_id])
+          setBrandIds((prev: Array<any>)=>[...prev, item?.brand?.brand_id])
+        })
+
         setCartData(cartData);
         setTotal(currentTotal);
         setQuantity(currentQuantity);
@@ -381,6 +391,11 @@ const Cart = () => {
 
         <Checkout total={total} />
       </div>
+
+      <RelatedProducts 
+        sub_sub_ids={sub_sub_categoryIds}
+        brand_ids={brandIds}
+      />
     </div>
   );
 };
