@@ -29,14 +29,14 @@ const ProductSwiper = ({ products }: Props) => {
 
   const slidesPerView =
     screen.width < 400
-      ? 3
+      ? 1
       : screen.width < 550
-      ? 5
+      ? 2
       : screen.width < 800
-      ? 6
+      ? 3
       : screen.width < 1000
-      ? 9
-      : 9;
+      ? 6
+      : 5;
 
   return (
     <div className="flex items-center relative my-5" ref={wrapper}>
@@ -48,6 +48,9 @@ const ProductSwiper = ({ products }: Props) => {
         keyboard={true}
         modules={[FreeMode, Pagination, Navigation]}
         className="mySwiper"
+        style={{
+          
+        }}
       >
         <LeftSliderBtn
           style={{
@@ -71,6 +74,7 @@ const ProductSwiper = ({ products }: Props) => {
             style={{
               marginRight: index == 0 ? "50px" : "10px",
               marginLeft: index == 0 ? "40px" : "0px",
+              height: "100%"
             }}
           >
             <ProductComponent 

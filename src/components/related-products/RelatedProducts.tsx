@@ -17,8 +17,6 @@ const RelatedProducts = ({sub_sub_ids, brand_ids}: Props) => {
   const [products, setProducts] = useState([]);
 
   useEffect(()=>{
-    //fetch related products
-
     const fetchProductsRelated = async () => {
       try{
         const products = await fetchRelatedProducts(brand_ids, sub_sub_ids);
@@ -34,6 +32,7 @@ const RelatedProducts = ({sub_sub_ids, brand_ids}: Props) => {
 
   return (
     <div>
+      <h2 className='mt-5'>Related Products</h2>
       <ProductSwiper 
         products={products}
       />

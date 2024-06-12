@@ -206,6 +206,9 @@ export const fetchRelatedProducts = async (
   page?: number,
   pageSize?: number
 ) => {
+  if(brand_ids.length == 0 || category_ids.length == 0) {
+    return []
+  }
   let api_url =
     page && pageSize
       ? `${

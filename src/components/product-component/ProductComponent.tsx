@@ -147,15 +147,18 @@ const ProductComponent = ({
   };
 
   return (
-    <div className="border-[1px] border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end">
+    <div className="lg:border-[1px] lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end h-[450px] xl:h-[460px] overflow-hidden">
       <div className="flex justify-center">
         <Link href={`/product/${handle}`}>
           <Image
             src={thumbnail}
             alt=""
-            width={200}
+            width={100}
             height={100}
-            objectFit="contain"
+            objectFit="cover"
+            style={{
+              width: "100%!important",
+            }}
           />
         </Link>
       </div>
@@ -164,28 +167,32 @@ const ProductComponent = ({
         <p className="model text-Gray capitalize text-sm my-2 font-[700]">
           {brand?.data.attributes.name}
         </p>
-        <p className="productName text-mainColor my-2 text-sm font-[700]">{title}</p>
+        <p className="productName text-mainColor my-2 text-sm font-[700]">
+          {title}
+        </p>
 
         <div className="my-3">
-          <p className="text-Gray">
+          <p className="text-Gray text-sm">
             Model: <span className="text-Gray font-semibold">{model}</span>
           </p>
-          <p className="text-Gray">
+          <p className="text-Gray text-sm">
             Manufacturer Model No:{" "}
             <span className="text-Gray">{manufacturer_model_no}</span>
           </p>
         </div>
 
-        <p className="text-Gray my-2">
+        <p className="text-Gray my-2 text-sm">
           <span className="font-semibold">
             $ {Number(variants[0]?.prices[0]?.amount) / 100}
           </span>{" "}
           / Each
         </p>
 
-        <p className="text-Gray font-semibold my-2">Ships in {ships_in}</p>
+        <p className="text-Gray font-semibold my-2 text-sm">
+          Ships in {ships_in}
+        </p>
 
-        <p className="text-xs text-Gray">Buy More, Save More</p>
+        <p className="text-Gray text-sm">Buy More, Save More</p>
       </div>
 
       <div className="flex gap-1 my-2 mt-4">
