@@ -77,10 +77,18 @@ const Cart = () => {
         });
         const cartData = await fetchCartProductsFromStrapi(currentCart.items);
 
+        let subCategoryIds: any[] = [];
+        let brandIds: any[] = [];
+
         cartData.length > 0 && cartData.map((item: any, index: number)=>{
-          setSub_sub_categoryIds((prev: Array<any>)=>[...prev, item?.sub_sub_category?.category_id])
-          setBrandIds((prev: Array<any>)=>[...prev, item?.brand?.brand_id])
+          subCategoryIds.push(
+            item?.sub_sub_category?.data?.attributes?.category_id
+          );
+          brandIds.push(item?.brand?.data?.attributes?.brand_id);
         })
+
+        setSub_sub_categoryIds(subCategoryIds);
+        setBrandIds(brandIds);
 
         setCartData(cartData);
         setTotal(currentTotal);
@@ -207,7 +215,6 @@ const Cart = () => {
       <div>
         <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
       </div>
-
       {isLoading && (
         <div className="flex justify-between items-center">
           <Image
@@ -219,7 +226,6 @@ const Cart = () => {
           />
         </div>
       )}
-
       <div className="lg:flex justify-between relative gap-3">
         <div className="flex-1">
           {cartData.length > 0 && (
@@ -391,11 +397,12 @@ const Cart = () => {
 
         <Checkout total={total} />
       </div>
-
-      <RelatedProducts 
-        sub_sub_ids={sub_sub_categoryIds}
-        brand_ids={brandIds}
-      />
+      {sub_sub_categoryIds.length > 0 && brandIds.length > 0 && (
+        <RelatedProducts
+          sub_sub_ids={sub_sub_categoryIds}
+          brand_ids={brandIds}
+        />
+      )}
     </div>
   );
 };

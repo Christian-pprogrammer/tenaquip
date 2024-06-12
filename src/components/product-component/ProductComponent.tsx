@@ -8,6 +8,7 @@ import Link from "next/link";
 import React from "react";
 
 type Props = {
+  hideAddToCart?: Boolean;
   product: {
     id: string;
     title: string;
@@ -42,6 +43,7 @@ type Props = {
 };
 
 const ProductComponent = ({
+  hideAddToCart,
   product: {
     id,
     title,
@@ -147,18 +149,15 @@ const ProductComponent = ({
   };
 
   return (
-    <div className="lg:border-[1px] lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end h-[450px] xl:h-[460px] overflow-hidden">
+    <div className="lg:border-[1px] lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end overflow-hidden gap-y-4 lg:min-h-[500px]">
       <div className="flex justify-center">
         <Link href={`/product/${handle}`}>
           <Image
             src={thumbnail}
             alt=""
-            width={100}
+            width={150}
             height={100}
             objectFit="cover"
-            style={{
-              width: "100%!important",
-            }}
           />
         </Link>
       </div>
@@ -195,18 +194,20 @@ const ProductComponent = ({
         <p className="text-Gray text-sm">Buy More, Save More</p>
       </div>
 
-      <div className="flex gap-1 my-2 mt-4">
-        <button className="border-[1px] border-lightMain px-5 py-[6px] text-sm text-Gray inline-block">
-          1
-        </button>
+      {!hideAddToCart && (
+        <div className="flex gap-1 my-2 mt-4">
+          <button className="border-[1px] border-lightMain px-5 py-[6px] text-sm text-Gray inline-block">
+            1
+          </button>
 
-        <button
-          className="text-white bg-mainColor rounded-sm border-none outline-none block w-full text-sm"
-          onClick={addOrSetCart}
-        >
-          Add to Cart
-        </button>
-      </div>
+          <button
+            className="text-white bg-mainColor rounded-sm border-none outline-none block w-full text-sm"
+            onClick={addOrSetCart}
+          >
+            Add to Cart
+          </button>
+        </div>
+      )}
     </div>
   );
 };

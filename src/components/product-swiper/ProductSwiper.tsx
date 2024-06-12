@@ -13,9 +13,10 @@ import ProductComponent from "../product-component/ProductComponent";
 
 type Props = {
   products: Array<any>;
+  hideAddToCart?: Boolean;
 };
 
-const ProductSwiper = ({ products }: Props) => {
+const ProductSwiper = ({ products, hideAddToCart }: Props) => {
   const params = useParams();
   const thumb: MutableRefObject<any> = useRef();
   const wrapper: MutableRefObject<any> = useRef();
@@ -48,9 +49,7 @@ const ProductSwiper = ({ products }: Props) => {
         keyboard={true}
         modules={[FreeMode, Pagination, Navigation]}
         className="mySwiper"
-        style={{
-          
-        }}
+        style={{}}
       >
         <LeftSliderBtn
           style={{
@@ -70,17 +69,16 @@ const ProductSwiper = ({ products }: Props) => {
           }}
         />
         {products.map((product, index) => (
-          <SwiperSlide
-            style={{
-              marginRight: index == 0 ? "50px" : "10px",
-              marginLeft: index == 0 ? "40px" : "0px",
-              height: "100%"
-            }}
-          >
-            <ProductComponent 
-              product={product}
-            />
-          </SwiperSlide>
+          product && 
+            <SwiperSlide
+              style={{
+                marginRight: index == 0 ? "50px" : "10px",
+                marginLeft: index == 0 ? "40px" : "0px",
+                height: "100%",
+              }}
+            >
+              <ProductComponent product={product} hideAddToCart={hideAddToCart} />
+            </SwiperSlide>
         ))}
         <RightSliderBtn
           style={{

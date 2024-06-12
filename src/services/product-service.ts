@@ -237,7 +237,9 @@ export const fetchRelatedProducts = async (
     const strapiResponse = await fetch(strapi_url, { next: { revalidate: 0 } });
     if (strapiResponse.ok) {
       const jsonRes = await response.json();
+      console.log("json res", jsonRes);
       const jsonStrapiRes = await strapiResponse.json();
+      console.log("strapi res", jsonStrapiRes)
       return mergeProductData(jsonRes.products, jsonStrapiRes.data);
     }
   }
