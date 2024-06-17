@@ -149,7 +149,11 @@ const ProductComponent = ({
   };
 
   return (
-    <div className="lg:border-[1px] lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end overflow-hidden gap-y-4 lg:min-h-[500px]">
+    <div
+      className={`${
+        hideAddToCart ? "" : "lg:border-[1px]"
+      } lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end overflow-hidden gap-y-4 lg:min-h-[500px]`}
+    >
       <div className="flex justify-center">
         <Link href={`/product/${handle}`}>
           <Image
@@ -166,9 +170,13 @@ const ProductComponent = ({
         <p className="model text-Gray capitalize text-sm my-2 font-[700]">
           {brand?.data.attributes.name}
         </p>
-        <p className="productName text-mainColor my-2 text-sm font-[700]">
+
+        <Link
+          href={`/product/${handle}`}
+          className="productName text-mainColor my-2 text-sm font-[700]"
+        >
           {title}
-        </p>
+        </Link>
 
         <div className="my-3">
           <p className="text-Gray text-sm">

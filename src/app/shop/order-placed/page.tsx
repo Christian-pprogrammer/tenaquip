@@ -45,17 +45,13 @@ const OrderPlaced = () => {
   //complete cart
   useEffect(()=> {
     const completeCart = async () => {
-      dispatch(setShowModal(true));
-      dispatch(setLoading(true));
-      document.body.style.overflow = "hidden";
       try{
         await axios.post(`${process.env.MEDUSA_BACKEND_API}/store/carts/${cart.id}/complete`, {})
+        console.log("completed...")
         dispatch(clearCart())
       }catch(err) {
         console.log("my err...", err);
       }
-      dispatch(setShowModal(false));
-      dispatch(setLoading(false));
       document.body.style.overflow = "auto";
     }
     completeCart();

@@ -22,7 +22,7 @@ const ProductCategory = async (props: any) => {
     const subCategoriesRes = await fetchSubCategories(
       props.params.category,
       1,
-      5
+      10
     );
     subCategories = subCategoriesRes;
   } catch (err) {}

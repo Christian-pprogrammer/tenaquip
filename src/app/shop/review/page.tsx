@@ -238,7 +238,7 @@ const Review = () => {
             style={{
               fontWeight: "600",
               marginTop: "10px",
-              fontSize: "15px"
+              fontSize: "15px",
             }}
           >
             Select shipping option to continue
@@ -274,7 +274,7 @@ const Review = () => {
                       onChange={(checked: boolean) => {
                         if (checked) {
                           setCurrentPaymentMethod(method.title);
-                          if(method.title == 'PayPal') {
+                          if (method.title == "PayPal") {
                             //create paypal payment session
                             createPaypalPaymentSession();
                           }
@@ -285,7 +285,7 @@ const Review = () => {
                 </div>
 
                 {currentPaymentMethod == "Credit Card" && !!cart?.id && (
-                  <div className="mt-4">
+                  <div className="mt-4 w-[100%] md:w-[70%]">
                     {clientSecret && (
                       <Elements
                         stripe={stripePromise}
@@ -299,13 +299,11 @@ const Review = () => {
                   </div>
                 )}
 
-                {
-                  currentPaymentMethod == "PayPal" && !!cart?.id && (
-                    <div className="mt-4">
-                      <Paypal />
-                    </div>
-                  )
-                }
+                {currentPaymentMethod == "PayPal" && !!cart?.id && (
+                  <div className="mt-4 w-[100%] md:w-[70%]">
+                    <Paypal />
+                  </div>
+                )}
               </div>
             </>
           )}

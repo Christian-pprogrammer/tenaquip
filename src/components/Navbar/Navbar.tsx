@@ -5,14 +5,46 @@ import { setModalContent, setShowModal } from "@/Store/slices/modal";
 import { setToken, setUser } from "@/Store/slices/user";
 import COLORS from "@/config/colors";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import useDebounce from "@/hooks/useDebounce";
+import { searchProducts } from "@/services/product-service";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
-import { FaBagShopping } from "react-icons/fa6";
+import SearchElement from "../search-element/SearchElement";
 
 export const Navbar = () => {
+
+  const [inputValue, setInputValue] = useState("");
+  const debouncedSearchTerm = useDebounce(inputValue, 500); // 500ms delay
+  const [searchResults, setSearchResults] = useState([]);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const resetOpen = () => {
+      setSearchResults([]);
+    };
+    resetOpen();
+  }, [pathname]);
+
+  useEffect(() => {
+    const search = async () => {
+      if(inputValue == '') {
+        setSearchResults([]);
+      }else{
+        if (debouncedSearchTerm) {
+          console.log("Search for:", debouncedSearchTerm);
+          try {
+            const prods = await searchProducts(debouncedSearchTerm);
+            setSearchResults(prods);
+          } catch (err) {}
+        }
+      }
+    }
+    search();
+  }, [debouncedSearchTerm]);
+
   const dispatch = useAppDispatch();
 
   const router = useRouter();
@@ -50,7 +82,7 @@ export const Navbar = () => {
         <Image src="/55years.svg" alt="" width={50} height={50} />
         <Image src="/bestmanaged.svg" alt="" width={100} height={50} />
       </div>
-      <div className="flex-1 col-sm-7 bg-gray-300">
+      <div className="flex-1 col-sm-7 bg-gray-300 relative">
         <div className="w-100% h-[42px] flex flex-row border-1 border-solid border-[#003f67]">
           <input
             type="text"
@@ -59,12 +91,33 @@ export const Navbar = () => {
               outline: "none",
               border: "none",
             }}
+            value={inputValue}
             placeholder="Search Catalog/Products"
+            onChange={(e) => setInputValue(e.target.value)}
           />
+
           <div className="bg-mainColor flex justify-center items-center px-5">
             <FaSearch color="white" size={20} />
           </div>
         </div>
+
+        {searchResults?.length > 0 && (
+          <div className="relative w-[100%] bg-white shadow-md">
+            <div className="bg-white absolute top-0 left-0 w-[100%] z-[100]">
+              <>
+                {searchResults.map((prod: any) => {
+                  let image: string = prod?.thumbnail;
+                  if (image.includes("localhost")) {
+                    image = image.replace("localhost", "127.0.0.1");
+                    prod.thumbnail = image;
+                  }
+
+                  return <SearchElement product={prod} />;
+                })}
+              </>
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-center gap-4 md:col-span-2">
         <div className="flex items-center gap-2">

@@ -179,10 +179,14 @@ export const fetchProductsByBrandAndSubSubCategory = async (
 };
 
 export const fetchCartProductsFromStrapi = async (items: Array<any>) => {
+  if(items.length == 0) {
+    return []
+  }
   let api_url = `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand&populate[2]=sub_sub_category`;
   let productData:any[] = [];
   items.map((item, index)=>{
     api_url += `&filters[product_id][$in][${index}]=${item?.variant?.product_id}`;
+    console.log("my item...", item)
     productData.push({
       ...item.variant?.product,
       total: item.total,
@@ -201,12 +205,11 @@ export const fetchCartProductsFromStrapi = async (items: Array<any>) => {
 }
 
 export const fetchRelatedProducts = async (
-  brand_ids: Array<string>,
   category_ids: Array<string>,
   page?: number,
   pageSize?: number
 ) => {
-  if(brand_ids.length == 0 || category_ids.length == 0) {
+  if(category_ids.length == 0) {
     return []
   }
   let api_url =
@@ -223,10 +226,6 @@ export const fetchRelatedProducts = async (
       ? `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
       : `${process.env.STRAPI_API}/products?populate[0]=description&populate[1]=brand`;
 
-  // brand_ids.map((item, index)=>{
-  //   api_url += `&category_id[${index}]=${item}`
-  //   strapi_url += `&filters[$and][0][brand][brand_id][$in][${index}]=${item}`
-  // })
   category_ids.map((item, index) => {
     api_url += `&category_id[${index}]=${item}`
     strapi_url += `&filters[$and][1][sub_sub_category][category_id][$in][${index}]=${item}`;
@@ -244,3 +243,23 @@ export const fetchRelatedProducts = async (
     }
   }
 };
+
+
+export const searchProducts = async (search: string) => {
+  console.log(search)
+  const response = await fetch(
+    `${process.env.MEDUSA_BACKEND_API}/store/products/search`,
+    {
+      method: "POST",
+      body: JSON.stringify({ q: search }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if(response.ok) {
+    const jsonRes = await response.json();
+    
+    return jsonRes?.hits;
+  }
+}

@@ -71,11 +71,6 @@ const ProductSwiper = ({ products, hideAddToCart }: Props) => {
         {products.map((product, index) => (
           product && 
             <SwiperSlide
-              style={{
-                marginRight: index == 0 ? "50px" : "10px",
-                marginLeft: index == 0 ? "40px" : "0px",
-                height: "100%",
-              }}
             >
               <ProductComponent product={product} hideAddToCart={hideAddToCart} />
             </SwiperSlide>

@@ -72,22 +72,32 @@ interface Product {
   id: string;
   title: string;
   handle: string;
-  thumbnail: string;
+  thumbnail?: string;
   variants: Array<{
-    id: string,
-    title: string,
+    id: string;
+    title: string;
     options: Array<{
-      id: string,
-      value: string
-    }>,
+      id: string;
+      value: string;
+    }>;
     prices: Array<{
-      id: string,
-      currency_code: string,
-      amount: string
-    }>
+      id: string;
+      currency_code: string;
+      amount: string;
+    }>;
   }>;
-  
-
+  model: string;
+  manufacturer_model_no: string;
+  ships_in: string;
+  brand: {
+    data: {
+      id: number;
+      attributes: {
+        name: string;
+        handle: string;
+      };
+    };
+  };
 }
 
 interface Brand {

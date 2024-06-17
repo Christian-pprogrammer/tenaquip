@@ -51,8 +51,9 @@ const CategoryComponent = ({
         params.category,
         undefined,
         undefined,
-        5
+        20
       );
+      alert(moreSubCategories.length)
       setSubCats((prev) => {
         console.log(prev);
         return [...prev, ...moreSubCategories];

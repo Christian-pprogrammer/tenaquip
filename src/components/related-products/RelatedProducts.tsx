@@ -7,30 +7,10 @@ import ProductSwiper from '../product-swiper/ProductSwiper'
 
 type Props = {
   //use sub sub categories and brands to fetch related products
-
-  sub_sub_ids: Array<string>,
-  brand_ids: Array<string>
+  products: Array<Product>
 }
 
-const RelatedProducts = ({sub_sub_ids, brand_ids}: Props) => {
-
-
-  const [products, setProducts] = useState([]);
-
-  useEffect(()=>{
-    const fetchProductsRelated = async () => {
-      console.log("ids...", sub_sub_ids, brand_ids)
-      try{
-        const products = await fetchRelatedProducts(brand_ids, sub_sub_ids);
-        console.log("my prods.", products)
-        setProducts(products)
-      }catch(err) {
-
-      }
-    }
-
-    fetchProductsRelated();
-  }, [])
+const RelatedProducts = ({products}: Props) => {
 
   return (
     <div>
