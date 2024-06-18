@@ -103,8 +103,16 @@ export const Navbar = () => {
 
         {searchResults?.length > 0 && (
           <div className="relative w-[100%] bg-white shadow-md">
-            <div className="bg-white absolute top-0 left-0 w-[100%] z-[100]">
+            <div
+              className="bg-white absolute top-0 left-0 w-[100%] z-[100] max-h-[400px] overflow-y-scroll"
+              style={{
+                boxShadow:
+                  "0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15)",
+                border: "1px solid #d4d4d5",
+              }}
+            >
               <>
+                <h2 className="text-mainColor text-[18px] m-[10px] font-bold">Top Product Results For "{debouncedSearchTerm}"</h2>
                 {searchResults.map((prod: any) => {
                   let image: string = prod?.thumbnail;
                   if (image.includes("localhost")) {
