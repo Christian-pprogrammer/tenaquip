@@ -50,6 +50,9 @@ const CategorySwiper = ({ categories, type, isBrand }: Props) => {
         keyboard={true}
         modules={[FreeMode, Pagination, Navigation]}
         className="mySwiper"
+        style={{
+          paddingRight: "40px",
+        }}
       >
         <LeftSliderBtn
           style={{
@@ -98,9 +101,7 @@ const CategorySwiper = ({ categories, type, isBrand }: Props) => {
                 name={category?.attributes?.name}
                 handle={`${
                   isBrand ? `/brands/${params.brand}` : ""
-                }/product-category/${
-                  category?.attributes?.handle
-                }`}
+                }/product-category/${category?.attributes?.handle}`}
               />
             ) : type == "category" ? (
               <SliderElement

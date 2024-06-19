@@ -20,7 +20,7 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
 
   const [quantity, setQuantity] = useState<any>(null);
-  
+
   const [prices, setPrices] = useState<any>(null);
 
   const dispatch = useAppDispatch();
@@ -38,29 +38,34 @@ const Cart = () => {
       setIsLoading(false);
       document.body.style.overflow = "hidden";
       try {
+        console.log("cart items", cart);
         const cartData = await fetchCartProductsFromStrapi(cart?.items);
 
         let subCategoryIds: any[] = [];
-        let prices: any = {}
+        let prices: any = {};
+        let quantity: any = {};
 
         cartData.length > 0 &&
           cartData.map((item: any, index: number) => {
-            console.log("item....", item)
+            console.log("item....", item);
             subCategoryIds.push(
               item?.sub_sub_category?.data?.attributes?.category_id
             );
 
-            prices = {...prices, [item.item_id]: item.total}
-
+            prices = { ...prices, [item.item_id]: item.total };
+            quantity = {
+              ...quantity,
+              [item.item_id]: item?.total / item?.unit_price,
+            };
           });
-          console.log("prices", prices)
+        console.log("prices", prices);
 
         const relatedProductData = await fetchRelatedProducts(subCategoryIds);
 
+        setQuantity(quantity);
         setPrices(prices);
         setRelatedProducts(relatedProductData);
         setCartData(cartData);
-        
       } catch (err) {}
 
       //fetch cart items from strapi
@@ -72,124 +77,100 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  // const updateLineItem = async (e: any, itemId: string) => {
-  //   dispatch(setShowModal(true));
-  //   dispatch(setLoading(true));
-  //   document.body.style.overflow = "hidden";
-  //   let currentCart = null;
+  const updateLineItem = async (e: any, itemId: string) => {
+    dispatch(setShowModal(true));
+    dispatch(setLoading(true));
+    document.body.style.overflow = "hidden";
 
-  //   const newQuantity = quantity[itemId];
+    const cartId = cart?.id ? cart.id : localStorage.getItem("cart_id");
 
-  //   const cartId = cart?.id ? cart.id : localStorage.getItem("cart_id");
+    try {
+      const response = await fetch(
+        `${process.env.MEDUSA_BACKEND_API}/store/carts/${cartId}/line-items/${itemId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quantity: Number(quantity[itemId]),
+          }),
+        }
+      );
 
-  //   fetch(
-  //     `${process.env.MEDUSA_BACKEND_API}/store/carts/${cartId}/line-items/${itemId}`,
-  //     {
-  //       method: "POST",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         quantity: Number(newQuantity),
-  //       }),
-  //     }
-  //   )
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then(({ cart }) => {
-  //       let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
-  //       dispatch(setAppCart({ cart: cart, cartType }));
-  //       setCart(cart);
-  //       currentCart = cart;
-  //       let currentQuantity: any;
+      const resJson: any = await response.json();
 
-  //       let currentTotal: number = 0;
+      const newCart = resJson?.cart;
+      let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
+      dispatch(setAppCart({ cart: newCart, cartType }));
 
-  //       currentCart?.items?.map((item: any) => {
-  //         currentQuantity = {
-  //           ...currentQuantity,
-  //           [item.id]: item.quantity,
-  //         };
+      let newPrices: any = null;
+      let myQuantity: any = null;
 
-  //         currentTotal = currentTotal + item.total / 100;
-  //         setItemsTotalPrices({ ...itemsTotalPrices, [item.id]: item.total });
-  //       });
+      console.log("new cart items", newCart?.items)
 
-  //       setTotal(currentTotal);
-  //       setQuantity(currentQuantity);
-  //     })
-  //     .catch((err: any) => {
-  //       alert(getError(err));
-  //     });
+      newCart?.items?.length > 0 &&
+        newCart?.items?.map((item: any, index: number) => {
+          newPrices = { ...newPrices, [item.id]: item.total };
+          myQuantity = {
+            ...myQuantity,
+            [item.id]: item?.total / item?.unit_price,
+          };
+        });
+      console.log("new prices", newPrices)
+      setQuantity(myQuantity);
+      setPrices(newPrices);
+    } catch (err) {}
 
-  //   dispatch(setShowModal(false));
-  //   dispatch(setLoading(false));
-  //   document.body.style.overflow = "auto";
-  // };
+    dispatch(setShowModal(false));
+    dispatch(setLoading(false));
+    document.body.style.overflow = "auto";
+  };
 
-  // const deleteCartItem = async (e: any, itemId: string) => {
-  //   dispatch(setShowModal(true));
-  //   dispatch(setLoading(true));
-  //   document.body.style.overflow = "hidden";
-  //   let currentCart = null;
+  const deleteCartItem = async (e: any, itemId: string) => {
+    dispatch(setShowModal(true));
+    dispatch(setLoading(true));
+    document.body.style.overflow = "hidden";
+    let currentCart = null;
 
-  //   const newQuantity = quantity[itemId];
+    const cartId = cart?.id ? cart.id : localStorage.getItem("cart_id");
+    try {
+      const res = await fetch(
+        `${process.env.MEDUSA_BACKEND_API}/store/carts/${cartId}/line-items/${itemId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      const { cart } = await res.json();
+      let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
+      dispatch(setAppCart({ cart: cart, cartType: cartType }));
 
-  //   const cartId = cart?.id ? cart.id : localStorage.getItem("cart_id");
-  //   try {
-  //     const res = await fetch(
-  //       `${process.env.MEDUSA_BACKEND_API}/store/carts/${cartId}/line-items/${itemId}`,
-  //       {
-  //         method: "DELETE",
-  //         credentials: "include",
-  //       }
-  //     );
-  //     const { cart } = await res.json();
-  //     let cartType = user ? "authenticated_cart" : "unauthenticated_cart";
-  //     dispatch(setAppCart({ cart: cart, cartType: cartType }));
-  //     setCart(cart);
-  //     currentCart = cart;
-  //     let currentQuantity: any;
+      let newCartData = cartData.filter((item: any)=>item.item_id != itemId)
 
-  //     let currentTotal: number = 0;
+      setCartData(newCartData);
 
-  //     currentCart?.items?.map((item: any) => {
-  //       currentQuantity = {
-  //         ...currentQuantity,
-  //         [item.id]: item.quantity,
-  //       };
+      let subCategoryIds: any[] = [];
 
-  //       currentTotal = currentTotal + item.total / 100;
-  //       setItemsTotalPrices({ ...itemsTotalPrices, [item.id]: item.total });
-  //     });
+      newCartData.map((item: any, index: number) => {
+        subCategoryIds.push(
+          item?.sub_sub_category?.data?.attributes?.category_id
+        );
+      });
 
-  //     setTotal(currentTotal);
-  //     setQuantity(currentQuantity);
-  //     let newCartData = cartData.filter((item: any) => item.item_id != itemId);
-  //     setCartData(newCartData);
+      const relatedProductData = await fetchRelatedProducts(subCategoryIds);
 
-  //     let subCategoryIds: any[] = [];
+      setRelatedProducts(relatedProductData);
 
-  //     cartData.length > 0 &&
-  //       cartData.map((item: any, index: number) => {
-  //         subCategoryIds.push(
-  //           item?.sub_sub_category?.data?.attributes?.category_id
-  //         );
-  //       });
+    } catch (err) {
+      alert(getError(err));
+    }
 
-  //     console.log("cart data...", subCategoryIds);
-  //     const relatedProductData = await fetchRelatedProducts(subCategoryIds);
-  //     setRelatedProducts(relatedProductData);
-  //   } catch (err) {
-  //     alert(getError(err));
-  //   }
-
-  //   dispatch(setShowModal(false));
-  //   dispatch(setLoading(false));
-  //   document.body.style.overflow = "auto";
-  // };
+    dispatch(setShowModal(false));
+    dispatch(setLoading(false));
+    document.body.style.overflow = "auto";
+  };
 
   return (
     <div className="padding-horizontal pb-5">
@@ -270,20 +251,19 @@ const Cart = () => {
                                 outline: "none",
                                 padding: 0,
                               }}
-                              value={prices[item.item_id] / item.unit_price}
-                              // onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                              //   setQuantity({
-                              //     ...quantity,
-                              //     [item.item_id]: e.target.value,
-                              //   });
-                              // }}
+                              value={quantity[item.item_id]}
+                              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                setQuantity({
+                                  ...quantity,
+                                  [item.item_id]: e.target.value,
+                                });
+                              }}
                             />
 
                             <button
                               className="bg-transparent text-[13px] text-mainColor"
                               onClick={(e: any) =>
-                                // updateLineItem(e, item.item_id)
-                                console.log(e)
+                                updateLineItem(e, item.item_id)
                               }
                             >
                               Update
@@ -294,7 +274,9 @@ const Cart = () => {
                           </p>
                           <button
                             className="block md:hidden underline bg-transparent text-[13px] text-mainColor bg-black text-right"
-                            // onClick={(e: any) => deleteCartItem(e, item?.id)}
+                            onClick={(e: any) =>
+                              deleteCartItem(e, item.item_id)
+                            }
                           >
                             Remove
                           </button>
@@ -315,24 +297,22 @@ const Cart = () => {
                                       outline: "none",
                                       padding: 0,
                                     }}
-                                    value={
-                                      prices[item.item_id] / item.unit_price
-                                    }
-                                    // onChange={(
-                                    //   e: ChangeEvent<HTMLInputElement>
-                                    // ) => {
-                                    //   setQuantity({
-                                    //     ...quantity,
-                                    //     [item.item_id]: e.target.value,
-                                    //   });
-                                    // }}
+                                    value={quantity[item.item_id]}
+                                    onChange={(
+                                      e: ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      setQuantity({
+                                        ...quantity,
+                                        [item.item_id]: e.target.value,
+                                      });
+                                      console.log(quantity[item.item_id]);
+                                    }}
                                   />
 
                                   <button
                                     className="bg-transparent text-[13px] text-mainColor"
                                     onClick={(e: any) =>
-                                      // updateLineItem(e, item.item_id)
-                                      console.log(e)
+                                      updateLineItem(e, item.item_id)
                                     }
                                   >
                                     Update
@@ -357,9 +337,8 @@ const Cart = () => {
                           </div>
                           <button
                             className="underline bg-transparent text-[13px] text-mainColor float-right bg-black text-right"
-                            onClick={
-                              (e: any) => console.log(e)
-                              // deleteCartItem(e, item?.item_id)
+                            onClick={(e: any) =>
+                              deleteCartItem(e, item?.item_id)
                             }
                           >
                             Remove
@@ -380,7 +359,7 @@ const Cart = () => {
             </h2>
           )}
         </div>
-        <Checkout total={2}/>
+        <Checkout total={0} />
       </div>
       {relatedProducts.length > 0 && (
         <RelatedProducts products={relatedProducts} />

@@ -49,7 +49,10 @@ const ProductSwiper = ({ products, hideAddToCart }: Props) => {
         keyboard={true}
         modules={[FreeMode, Pagination, Navigation]}
         className="mySwiper"
-        style={{}}
+        style={{
+          paddingLeft: "40px",
+          paddingRight: "40px"
+        }}
       >
         <LeftSliderBtn
           style={{
@@ -71,6 +74,11 @@ const ProductSwiper = ({ products, hideAddToCart }: Props) => {
         {products.map((product, index) => (
           product && 
             <SwiperSlide
+              style={{
+                height: "550px",
+                overflowY: "hidden",
+                textAlign: "left"
+              }}
             >
               <ProductComponent product={product} hideAddToCart={hideAddToCart} />
             </SwiperSlide>

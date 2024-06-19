@@ -152,9 +152,9 @@ const ProductComponent = ({
     <div
       className={`${
         hideAddToCart ? "" : "lg:border-[1px]"
-      } lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-end overflow-hidden gap-y-4 lg:min-h-[500px]`}
+      } lg:border-lightMain rounded-sm px-4 pt-5 flex flex-col justify-start overflow-hidden gap-y-4 h-[100%]`}
     >
-      <div className="flex justify-center">
+      <div className="flex justify-center h-[200px]">
         <Link href={`/product/${handle}`}>
           <Image
             src={thumbnail}
@@ -166,17 +166,19 @@ const ProductComponent = ({
         </Link>
       </div>
 
-      <div>
-        <p className="model text-Gray capitalize text-sm my-2 font-[700]">
-          {brand?.data.attributes.name}
-        </p>
+      <div className="flex justify-between flex-col flex-1">
+        <div>
+          <p className="model text-Gray capitalize text-sm my-2 font-[700]">
+            {brand?.data.attributes.name}
+          </p>
 
-        <Link
-          href={`/product/${handle}`}
-          className="productName text-mainColor my-2 text-sm font-[700]"
-        >
-          {title}
-        </Link>
+          <Link
+            href={`/product/${handle}`}
+            className="productName text-mainColor my-2 text-sm font-[700]"
+          >
+            {title}
+          </Link>
+        </div>
 
         <div className="my-3">
           <p className="text-Gray text-sm">
@@ -188,34 +190,34 @@ const ProductComponent = ({
           </p>
         </div>
 
-        <p className="text-Gray my-2 text-sm">
-          <span className="font-semibold">
-            $ {Number(variants[0]?.prices[0]?.amount) / 100}
-          </span>{" "}
-          / Each
-        </p>
+        <div>
+          <p className="text-Gray my-2 text-sm">
+            <span className="font-semibold">
+              $ {Number(variants[0]?.prices[0]?.amount) / 100}
+            </span>{" "}
+            / Each
+          </p>
+          <p className="text-Gray font-semibold my-2 text-sm">
+            Ships in {ships_in}
+          </p>
 
-        <p className="text-Gray font-semibold my-2 text-sm">
-          Ships in {ships_in}
-        </p>
-
-        <p className="text-Gray text-sm">Buy More, Save More</p>
-      </div>
-
-      {!hideAddToCart && (
-        <div className="flex gap-1 my-2 mt-4">
-          <button className="border-[1px] border-lightMain px-5 py-[6px] text-sm text-Gray inline-block">
-            1
-          </button>
-
-          <button
-            className="text-white bg-mainColor rounded-sm border-none outline-none block w-full text-sm"
-            onClick={addOrSetCart}
-          >
-            Add to Cart
-          </button>
+          <p className="text-Gray text-sm">Buy More, Save More</p>
         </div>
-      )}
+        {!hideAddToCart && (
+          <div className="flex gap-1 my-2 mt-4">
+            <button className="border-[1px] border-lightMain px-5 py-[6px] text-sm text-Gray inline-block">
+              1
+            </button>
+
+            <button
+              className="text-white bg-mainColor rounded-sm border-none outline-none block w-full text-sm"
+              onClick={addOrSetCart}
+            >
+              Add to Cart
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

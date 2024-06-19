@@ -36,6 +36,9 @@ const ImageSwiper = ({ brands }: Props) => {
         keyboard={true}
         modules={[FreeMode, Pagination, Navigation]}
         className="mySwiper"
+        style={{
+          paddingRight: "40px",
+        }}
       >
         <LeftSliderBtn />
         {brands.map((brand, index) => {
