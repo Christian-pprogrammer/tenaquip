@@ -11,10 +11,16 @@ import { setModalContent, setShowModal } from '@/Store/slices/modal';
 import { fetchCategories as fetchProductCategories } from "@/services/category-service";
 import NavbarDropdown from '../navbar-dropdown/navbar-dropdown';
 import { usePathname } from 'next/navigation';
+import useDebounce from '@/hooks/useDebounce';
+import { searchProducts } from '@/services/product-service';
+import SearchElement from '@/components/search-element/SearchElement';
 
 const NavbarMobile = () => {
   
   const [isOpen, setOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const debouncedSearchTerm = useDebounce(inputValue, 500); // 500ms delay
+  const [searchResults, setSearchResults] = useState([]);
 
   const cart = useAppSelector((state) => state?.cart?.cart);
   const dispatch = useAppDispatch();
@@ -26,6 +32,7 @@ const NavbarMobile = () => {
   useEffect(()=>{
     const resetOpen = () => {
       setOpen(false);
+      setSearchResults([]);
     }
     resetOpen();
   }, [pathname])
@@ -50,6 +57,24 @@ const NavbarMobile = () => {
       };
       fetchCategories();
     }, []);
+
+
+      useEffect(() => {
+        const search = async () => {
+          if (inputValue == "") {
+            setSearchResults([]);
+          } else {
+            if (debouncedSearchTerm) {
+              console.log("Search for:", debouncedSearchTerm);
+              try {
+                const prods = await searchProducts(debouncedSearchTerm);
+                setSearchResults(prods);
+              } catch (err) {}
+            }
+          }
+        };
+        search();
+      }, [debouncedSearchTerm]);
 
       const serviceCategories = [
         {
@@ -274,11 +299,40 @@ const NavbarMobile = () => {
               border: "none",
             }}
             placeholder="Search Catalog/Products"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <div className="bg-mainColor flex justify-center items-center px-5">
             <FaSearch color="white" size={20} />
           </div>
         </div>
+        {searchResults?.length > 0 && (
+          <div className="relative w-[100%] bg-white shadow-md">
+            <div
+              className="bg-white absolute top-0 left-0 w-[100%] z-[100] max-h-[400px] overflow-y-scroll"
+              style={{
+                boxShadow:
+                  "0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15)",
+                border: "1px solid #d4d4d5",
+              }}
+            >
+              <>
+                <h2 className="text-mainColor text-[18px] m-[10px] font-bold">
+                  Top Product Results For "{debouncedSearchTerm}"
+                </h2>
+                {searchResults.map((prod: any) => {
+                  let image: string = prod?.thumbnail;
+                  if (image.includes("localhost")) {
+                    image = image.replace("localhost", "127.0.0.1");
+                    prod.thumbnail = image;
+                  }
+
+                  return <SearchElement product={prod} />;
+                })}
+              </>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
