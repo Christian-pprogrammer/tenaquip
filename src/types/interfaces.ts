@@ -115,3 +115,14 @@ interface Brand {
     }
   }
 }
+
+
+interface Review {
+  id: number,
+  __component: string,
+  rating: number,
+  headline: string,
+  reviewComment: string,
+  nickname: string,
+  email: string,
+}

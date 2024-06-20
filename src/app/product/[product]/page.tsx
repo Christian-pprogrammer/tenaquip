@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/bread-crumb/Breadcrumb";
+import Reviews from "@/components/reviews/Reviews";
 import COLORS from "@/config/colors";
 import { fetchProductByHandle } from "@/services/product-service";
 import Image from "next/image";
@@ -10,16 +11,12 @@ const page = async (props: any) => {
   //fetch product
   let product: any;
   let image: string = "";
+  let relatedProducts: any[] = [];
 
   try {
-    console.log("fetch... helloworld");
-    console.log("my params...", props.params);
-    console.log(props.params);
     let productRes: any = await fetchProductByHandle(props.params.product);
     product = productRes[0];
-    console.log(JSON.stringify(product));
 
-    console.log(product.thumbnail);
     if (product.thumbnail?.includes("localhost")) {
       image = product.thumbnail.replace("localhost", "127.0.0.1");
     } else {
@@ -30,7 +27,7 @@ const page = async (props: any) => {
   return (
     <div className="padding-horizontal mb-14">
       <div className="grid grid-cols-12">
-        <div className="col-span-4">
+        <div className="col-span-4 flex justify-center items-center">
           <Image
             alt={product?.title}
             src={image && image}
@@ -76,9 +73,9 @@ const page = async (props: any) => {
           <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
 
           <div className="flex gap-1 my-2 mt-4">
-            <input className="border-[1px] border-lightMain text-sm text-Gray inline-block rounded-md w-10 px-1 text-center" />
+            <input className="border-[1px] border-lightMain text-sm text-Gray inline-block rounded-md w-16 px-1 text-center" />
             <button
-              className="text-white bg-mainColor rounded-sm px-20 py-2 block"
+              className="text-white bg-mainColor rounded-sm px-24 py-3 block"
               // onClick={addOrSetCart}
             >
               Add to Cart
@@ -108,6 +105,15 @@ const page = async (props: any) => {
           </li>
         ))}
       </ul>
+
+      <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
+      <Reviews
+        product_id={product?.p_id}
+        product_name={product?.title}
+        thumbnail={product?.thumbnail}
+        reviews={product?.reviews}
+      />
+      <hr className="my-[15px] w-[100%] border-t-[#ddd]" />
     </div>
   );
 };

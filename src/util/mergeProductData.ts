@@ -10,6 +10,7 @@ export function mergeProductData(backendProducts: Array<any>, strapiProducts: Ar
       const backendProduct = backendProductMap.get(strapiProduct.attributes?.product_id);
       if (backendProduct) {
           return {
+            p_id: strapiProduct.id, //product id from strapi
             ...backendProduct,
             ...strapiProduct.attributes
           };

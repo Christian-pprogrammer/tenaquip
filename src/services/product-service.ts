@@ -263,3 +263,23 @@ export const searchProducts = async (search: string) => {
     return jsonRes?.hits;
   }
 }
+
+
+export const writeReview = async (product_id: number, reviews: Array<Review>) => {
+  const response = await fetch(
+    `${process.env.STRAPI_API}/products/${product_id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ body: {reviews: reviews} }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (response.ok) {
+    const jsonRes = await response.json();
+    console.log(jsonRes)
+    return []
+    // return jsonRes?.hits;
+  }
+};
