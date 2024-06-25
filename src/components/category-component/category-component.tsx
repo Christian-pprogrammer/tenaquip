@@ -51,9 +51,8 @@ const CategoryComponent = ({
         params.category,
         undefined,
         undefined,
-        20
+        10
       );
-      alert(moreSubCategories.length)
       setSubCats((prev) => {
         console.log(prev);
         return [...prev, ...moreSubCategories];
@@ -109,7 +108,10 @@ const CategoryComponent = ({
                     name={subcategory?.attributes?.name}
                     handle={`/product-category/${handle}/${subHandle}/${subcategory?.attributes?.handle}/`}
                     image={`${process.env.STRAPI_UPLOADS}${subcategory?.attributes?.thumbnail?.data?.attributes?.url}`}
-                    numberOfProducts={0}
+                    
+                    numberOfProducts={
+                      subcategory?.attributes?.products?.data?.length
+                    }
                   />
                 ))}
               </div>

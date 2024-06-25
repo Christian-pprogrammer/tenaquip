@@ -10,8 +10,10 @@ type Props = {
 }
 
 const SubCategoryElement = ({name, handle, image, numberOfProducts}: Props) => {
+  console.log(image)
   return (
     <Link href={handle} className='flex flex-col items-center gap-3'>
+
       <Image src={image} alt='' width={130} height={130} />
       <span className='hover:underline text-sm font-bold text-mainColor'>
         {name}({numberOfProducts})

@@ -88,11 +88,12 @@ export const fetchSubCategories = async (
 
 export const fetchSubSubCategories = async (subCategoryHandle: string) => {
   const response = await fetch(
-    `${process.env.STRAPI_API}/sub-sub-categories?filters[sub_category][handle][$eq]=${subCategoryHandle}&populate=*`,
+    `${process.env.STRAPI_API}/sub-sub-categories?filters[sub_category][handle][$eq]=${subCategoryHandle}&populate[products][fields][0]=id&populate[thumbnail][fields]=url`,
     { next: { revalidate: 0 } }
   );
   if (response.ok) {
     const jsonRes = await response.json();
+    console.log("json res...", jsonRes.data.attributes)
     return jsonRes?.data;
   }
 };

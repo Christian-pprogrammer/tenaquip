@@ -26,13 +26,16 @@ const CategoryFilter = ({subCategories}: {subCategories: Array<any>}) => {
     <div className="bg-lightMain p-2 pb-4 mt-2 mb-4">
       <div className="filters flex gap-x-1">
         <button className="text-mainGreen font-bold text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
-          In Stock (3000)
+          In Stock
         </button>
         <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
           Liquidation
         </button>
         <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
           Sale Items
+        </button>
+        <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
+          Green Edge
         </button>
         <div className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white relative">
           <div

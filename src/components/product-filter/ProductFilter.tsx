@@ -23,13 +23,16 @@ const ProductFilter = ({ subCategories }: { subCategories?: Array<any> }) => {
     <div className="bg-lightMain p-2 pb-4 mt-2 mb-4 flex justify-between">
       <div className="filters flex gap-x-1">
         <button className="text-mainGreen font-bold text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
-          In Stock (3000)
+          In Stock
         </button>
         <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
           Liquidation
         </button>
         <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
           Sale Items
+        </button>
+        <button className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white py-[10px] px-2 cursor-pointer">
+          Green Edge
         </button>
         {subCategories && (
           <div className="text-Gray text-[13px] rounded-[3px] border-lineGray border-1 bg-white relative">
@@ -90,15 +93,16 @@ const ProductFilter = ({ subCategories }: { subCategories?: Array<any> }) => {
               toogleId != 2 && "hidden"
             } min-w-64 px-3 z-50`}
           >
-            {subCategories && subCategories.map((sub, index) => (
-              <Link
-                className="block text-Gray text-sm my-3"
-                href={`${sub.handle}`}
-                key={index}
-              >
-                <span className="whitespace-nowrap">{"Hello"}</span>
-              </Link>
-            ))}
+            {subCategories &&
+              subCategories.map((sub, index) => (
+                <Link
+                  className="block text-Gray text-sm my-3"
+                  href={`${sub.handle}`}
+                  key={index}
+                >
+                  <span className="whitespace-nowrap">{"Hello"}</span>
+                </Link>
+              ))}
           </ul>
         </div>
       </div>
@@ -126,17 +130,18 @@ const ProductFilter = ({ subCategories }: { subCategories?: Array<any> }) => {
                 toogleId != 3 && "hidden"
               } min-w-64 px-3 z-50 max-h-96 overflow-y-auto`}
             >
-              {subCategories && subCategories.map((sub, index) => (
-                <Link
-                  className="block text-Gray text-sm my-3"
-                  href={`${sub.attributes?.handle}`}
-                  key={index}
-                >
-                  <span className="whitespace-nowrap">
-                    {`${sub.attributes?.name}`}
-                  </span>
-                </Link>
-              ))}
+              {subCategories &&
+                subCategories.map((sub, index) => (
+                  <Link
+                    className="block text-Gray text-sm my-3"
+                    href={`${sub.attributes?.handle}`}
+                    key={index}
+                  >
+                    <span className="whitespace-nowrap">
+                      {`${sub.attributes?.name}`}
+                    </span>
+                  </Link>
+                ))}
 
               {/* Add other menu items here */}
             </ul>
@@ -162,17 +167,18 @@ const ProductFilter = ({ subCategories }: { subCategories?: Array<any> }) => {
                 toogleId != 4 && "hidden"
               } min-w-64 px-3 z-50 max-h-96 overflow-y-auto`}
             >
-              {subCategories && subCategories.map((sub, index) => (
-                <Link
-                  className="block text-Gray text-sm my-3"
-                  href={`${sub.attributes?.handle}`}
-                  key={index}
-                >
-                  <span className="whitespace-nowrap">
-                    {`${sub.attributes?.name}`}
-                  </span>
-                </Link>
-              ))}
+              {subCategories &&
+                subCategories.map((sub, index) => (
+                  <Link
+                    className="block text-Gray text-sm my-3"
+                    href={`${sub.attributes?.handle}`}
+                    key={index}
+                  >
+                    <span className="whitespace-nowrap">
+                      {`${sub.attributes?.name}`}
+                    </span>
+                  </Link>
+                ))}
 
               {/* Add other menu items here */}
             </ul>
